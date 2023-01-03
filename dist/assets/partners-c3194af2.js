@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as r,a as s}from"./index-43152387.js";const n={},o=s("h1",null," Distributor & Partners ",-1),c=[o];function a(_,i){return t(),r("main",null,c)}const d=e(n,[["render",a]]);export{d as default};
