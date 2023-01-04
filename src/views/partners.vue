@@ -101,20 +101,20 @@ export default {
 <template>
   <main>
     <h1>
-      Distributor
+      Distributörer  
 
   </h1>
   <div class="all-partners">
   <div class="single-partner" v-for="(i,index) in partners" :key="index"> 
     <img :src="i.pic" alt="">
-    <h3>{{i.name}}</h3><br>
+   <!-- <h3>{{i.name}}</h3><br>
     <p>{{i.adress1}}</p>
     <p>{{ i.adress2 }}</p>
     <p>{{ i.adress3 }}</p> <br>
 <p>{{ i.phone }}</p>
 <p>{{ i.email }}</p>
 <p>{{ i.website }}</p>
-
+-->
   </div>
 </div>
   <h1>
@@ -123,14 +123,14 @@ export default {
   <div class="all-partners">
   <div class="single-partner" v-for="(i,index) in partners" :key="index"> 
     <img :src="i.pic" alt="">
-    <h3>{{i.name}}</h3><br>
+    <!-- <h3>{{i.name}}</h3><br>
     <p>{{i.adress1}}</p>
     <p>{{ i.adress2 }}</p>
     <p>{{ i.adress3 }}</p> <br>
 <p>{{ i.phone }}</p>
 <p>{{ i.email }}</p>
 <p>{{ i.website }}</p>
-
+-->
   </div>
 </div>
   </main>

@@ -201,11 +201,18 @@ footer {
   }
 
   .one-personal {
-    width: 15%;
-    cursor: pointer;
-    transition: 0.3s;
+    width: 30%;
+    background-color: #eee;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-left: 0;
+    padding: 0.5vw;
+    margin-bottom: 1vw;
   }
-
+  .one-personal img {
+    width: 50%;
+  }
   .all-personal {
     display: flex;
     margin-top: 4vw;
@@ -221,20 +228,7 @@ footer {
     font-size: 1vw;
   }
 
-  .one-personal:hover {
-    border: 0.0833vw dotted #ccc;
-  }
 
-  .one-personal-selected {
-    border: 0.5vw double #000;
-    box-shadow: 0px 0px 1.25vw 0.25vw #ccc;
-    padding: 1vw;
-  }
-
-  .one-personal-selected:hover {
-    border: 1vw double #000;
-
-  }
 
   .map-location {
     margin: 8vw auto;
@@ -348,11 +342,14 @@ footer {
   .single-product>img {
     width: 70%;
     display: block;
-    margin-bottom: 1vw;
+    margin-bottom: 2vw;
     border-radius: 0.5vw;
 
   }
-
+  .single-product li {
+  
+  
+  }
   .single-product:hover {
     background-color: #ddd;
   }
@@ -375,9 +372,9 @@ footer {
   .single-partner>img {
     width: 70%;
     display: block;
-    margin-bottom: 1vw;
+    margin: auto ;
     border-radius: 0.5vw;
-
+  
   }
 
 
@@ -468,6 +465,10 @@ footer {
     margin-top: 48px;
     padding: 6px;
   }
+  .one-personal {
+    padding: 6px;
+    margin-bottom: 12px;
+  }
 
   .one-personal p {
     font-size: 15px;
@@ -477,20 +478,7 @@ footer {
     font-size: 12px;
   }
 
-  .one-personal:hover {
-    border: 1px dotted #ccc;
-  }
 
-  .one-personal-selected {
-    border: 6px double #000;
-    box-shadow: 0px 0px 15px 3px #ccc;
-    padding: 6px;
-  }
-
-  .one-personal-selected:hover {
-    border: 6px double #000;
-
-  }
 
   .map-location {
     margin: 96px auto;
@@ -553,9 +541,19 @@ footer {
     border-radius: 6px;
     margin-bottom: 20px;
   }
+  .single-product ul {
+  margin-top: 30px;
+  margin-bottom: 0;
+  }
+  .single-product li {
+  font-size: 14px;
+  cursor:auto;
+  margin: 0;
+  padding: 3px;
+  }
 
   .single-product>img {
-    margin-bottom: 12px;
+    margin-bottom: 24px;
     border-radius: 6px;
 
   }
@@ -580,4 +578,8 @@ footer {
 
   }
 
+  .start-text{
+    margin: 48px auto;
+    font-size: 20px;
+  }
 }

@@ -6,11 +6,11 @@ import { RouterLink, RouterView } from 'vue-router'
   <header>
     <a href="/"><img src="/swemount_logo.png" alt="swemount"></a>
       <nav>
-        <RouterLink class="nav-children" to="/">Home</RouterLink><span style="color:#ABABAB;">|</span> 
-        <RouterLink class="nav-children" to="/products">Products</RouterLink><span style="color:#ABABAB;">|</span>
-        <RouterLink class="nav-children" to="/claculator">Calculator</RouterLink><span style="color:#ABABAB;">|</span>
-        <RouterLink class="nav-children" to="/partners">Distributors & Partners</RouterLink><span style="color:#ABABAB;">|</span>
-        <RouterLink class="nav-children" to="/about">About us</RouterLink><span style="color:#ABABAB;">|</span>
+        <RouterLink class="nav-children" to="/">Hem</RouterLink><span style="color:#ABABAB;">|</span> 
+        <RouterLink class="nav-children" to="/products">Produkter</RouterLink><span style="color:#ABABAB;">|</span>
+        <RouterLink class="nav-children" to="/claculator">Kalkylator</RouterLink><span style="color:#ABABAB;">|</span>
+        <RouterLink class="nav-children" to="/partners">Distributörer & Partners</RouterLink><span style="color:#ABABAB;">|</span>
+        <RouterLink class="nav-children" to="/about">Om oss</RouterLink><span style="color:#ABABAB;">|</span>
         <RouterLink class="nav-children" to="/contact">Support</RouterLink>
 
 

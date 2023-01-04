@@ -37,7 +37,7 @@ export default {
           title: "Försäljning",
           name: "Tobias Axelsson ",
           phone: "0700000000",
-          email: "Ulf@swemount.se",
+          email: "Tobias@swemount.se",
           pic: `${rootBrach}/per-placeholder.png`,
         },
       ],
@@ -54,7 +54,7 @@ export default {
 
 <template>
   <main>
-    <h1>About us</h1>
+    <h1>Om oss</h1>
 
     <div style="display: flex; align-items: center">
       <div style="width: 60%">
@@ -65,9 +65,9 @@ export default {
       <img style="width: 35%;" src="/img/swemount1.png" alt="" />
     </div>
     <div class="team">
-      <h2>Our Team</h2>
+      <h2>Vårt team</h2>
 
-      <div id="selected-person">
+     <!-- <div id="selected-person">
         <img style="width: 35%" :src="personal[selectedPersonal].pic" alt="" />
         <div style="text-align: left; margin-left: 0">
           <h3>{{ personal[selectedPersonal].title }}</h3>
@@ -76,20 +76,23 @@ export default {
           <p>{{ personal[selectedPersonal].email }}</p>
         </div>
       </div>
-
+-->
       <div class="all-personal">
         <div
           v-for="(i, index) in personal"
           :key="index"
           @click="selectPersonal(index)"
-          :class="[
-            'one-personal',
-            index == selectedPersonal ? '  one-personal-selected' : '',
-          ]"
+          class="one-personal"
         >
-          <img style="width: 100%" :src="i.pic" alt="" />
+          <img  :src="i.pic" alt="" />
+          <div >
+
           <h3>{{ i.title }}</h3>
           <p>{{ i.name }}</p>
+          <p>{{ i.phone }}</p>
+          <p>{{ i.email }}</p>
+        </div>
+
         </div>
       </div>
     </div>

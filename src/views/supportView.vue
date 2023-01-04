@@ -34,7 +34,11 @@ export default {
 <template>
   <main>
     <h1>Support</h1>
+<p class="start-text">Swemount är en företag som hjälper fastighetsägare att bli mer hållbara genom att installera solceller på deras tak. Vårt team av experter bedömer noggrant lämpligheten för solpanelinstallation på varje byggnad och samarbetar med fastighetsägare för att designa en skräddarsydd solpanelanläggning som möter deras energibehov och budget. <br><br>
 
+När solpanelanläggningen är installerad kan fastighetsägarna börja producera sin egen förnybar energi, vilket inte bara hjälper miljön utan också sparar dem pengar på deras energiräkningar. Dessutom kan fastighetsägare ta del av olika regeringsstöd och skattereduktioner för att gå över till solenergi. <br><br>
+
+På Swemount är vi stolta över att erbjuda högkvalitativa solpanelprodukter och utmärkt kundservice. Vi är angelägna om att hjälpa fastighetsägare att minska sina koldioxidutsläpp och uppnå energisjälvständighet.</p>
     <h2>F&Q</h2>
     <ul>
       <li v-for="(i, index) in QA" :key="index">
@@ -52,14 +56,14 @@ export default {
       </li>
     </ul>
 
-    <h2>Contact us</h2>
+    <h2>Kontakta oss</h2>
 
     <form >
       <label for=""><p>Eamil:</p><input type="email" placeholder="anders.andersson@gmail.com"></label>
-      <label for=""><p>Name:</p><input type="text" placeholder="Anders Anderson"></label>
-      <label for=""><p>Quastion:</p>  <textarea   ></textarea>
+      <label for=""><p>Namn:</p><input type="text" placeholder="Anders Anderson"></label>
+      <label for=""><p>Fråga:</p>  <textarea   ></textarea>
 </label>
-<button><b>Send</b></button>
+<button><b>Skicka</b></button>
 
     </form>
 

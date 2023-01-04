@@ -6,7 +6,7 @@
   <main>
 
     <h1>
-    Home  
+    Hem  
   </h1>
     
   </main>

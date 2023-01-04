@@ -9,7 +9,7 @@ export default {
 
 <template>
   <main>
-    <h1 >Calculator</h1>  
+    <h1 >Kalkylator</h1>  
     <div class="divElem">
     <canvasD
       :A="5 * 100"
