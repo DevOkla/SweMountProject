@@ -1,1 +1,0 @@
-import{_ as e,o as c,c as o,a as t}from"./index-9ebc566e.js";const a={},n=t("h1",null,"Calculator",-1),s=[n];function r(_,l){return c(),o("main",null,s)}const d=e(a,[["render",r]]);export{d as default};
