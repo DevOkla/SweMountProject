@@ -4,7 +4,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <header>
-    <img src="/swemount_logo.png" alt="swemount">
+    <a href="/"><img src="/swemount_logo.png" alt="swemount"></a>
       <nav>
         <RouterLink class="nav-children" to="/">Home</RouterLink><span style="color:#ABABAB;">|</span> 
         <RouterLink class="nav-children" to="/products">Products</RouterLink><span style="color:#ABABAB;">|</span>

@@ -12,7 +12,9 @@
     "@fortawesome/free-brands-svg-icons": "^6.2.1",
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "konva": "^8.3.14",
     "vue": "^3.2.45",
+    "vue-konva": "^3.0.2",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
