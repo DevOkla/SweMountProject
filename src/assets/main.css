@@ -346,10 +346,6 @@ footer {
     border-radius: 0.5vw;
 
   }
-  .single-product li {
-  
-  
-  }
   .single-product:hover {
     background-color: #ddd;
   }
@@ -541,13 +537,18 @@ footer {
     border-radius: 6px;
     margin-bottom: 20px;
   }
+  .single-product li {
+    font-size: 1.167vw;
+    margin: 0;
+    padding: 0.25vw;
+    }
+  
   .single-product ul {
   margin-top: 30px;
   margin-bottom: 0;
   }
   .single-product li {
   font-size: 14px;
-  cursor:auto;
   margin: 0;
   padding: 3px;
   }
