@@ -1,0 +1,1 @@
+.canvas{background-color:#ccc;margin:2vw auto;box-shadow:0 0 10px 5px #555}.fullCanvas{position:fixed;width:100vw;margin:0;z-index:5;top:0;left:0;overflow:hidden}.divElem{width:95vw;max-width:1216px;margin:auto}@media screen and (min-width: 1200px){.show-buttons{position:absolute;cursor:pointer;right:2%;top:25%}}
