@@ -2,8 +2,12 @@
 var rootBrach = "/swemounttest";
 
 export default {
+  props:{
+    langIsSe:Boolean,
+  },
   data() {
     return {
+      
       en: [
         "Swemount is a Swedish company that specializes in manufacturing high-quality mounting systems for solar panels. Our products are suitable for both large and small solar panel installations and have many different options to choose from, so customers can find the mounting system that best meets their needs.",
         "Swemount strives to always be at the cutting edge of technology and offer the most innovative and sustainable mounting systems on the market. The company is also very environmentally conscious and uses only sustainable materials in its production.",
@@ -54,18 +58,18 @@ export default {
 
 <template>
   <main>
-    <h1>Om oss</h1>
+    <h1>{{ langIsSe? "Om oss": "About us" }}</h1>
 
     <div style="display: flex; align-items: center">
       <div style="width: 60%">
-        <p class="p-text">{{ se[0] }}</p>
+        <p class="p-text">{{ langIsSe? se[0]: en[0] }}</p>
         <br />
-        <p class="p-text">{{ se[1] }}</p>
+        <p class="p-text">{{ langIsSe? se[1]: en[1] }}</p>
       </div>
       <img style="width: 35%;" src="/img/swemount1.png" alt="" />
     </div>
     <div class="team">
-      <h2>Vårt team</h2>
+      <h2>{{ langIsSe? "Vårt team": "Our team" }}</h2>
 
      <!-- <div id="selected-person">
         <img style="width: 35%" :src="personal[selectedPersonal].pic" alt="" />
@@ -82,15 +86,17 @@ export default {
           v-for="(i, index) in personal"
           :key="index"
           @click="selectPersonal(index)"
-          class="one-personal"
+          class="one-personal business-card"
         >
           <img  :src="i.pic" alt="" />
           <div >
+            <p class="business-card-name"> <strong >  {{ i.name }}</strong></p>
 
-          <h3>{{ i.title }}</h3>
-          <p>{{ i.name }}</p>
-          <p>{{ i.phone }}</p>
-          <p>{{ i.email }}</p>
+          <p class="business-card-title"> <strong > {{ i.title }}</strong></p>
+          <div class="business-card-contact">
+          <p class="business-card-phone"><i class="fa-solid fa-phone"></i> &nbsp;&nbsp; {{ i.phone }}</p>
+          <p class="business-card-email"><i class="fa-solid fa-envelope-open"></i> &nbsp;&nbsp; <a :href="'mailto:'+i.email" >{{ i.email }}</a></p>
+        </div>
         </div>
 
         </div>
@@ -104,8 +110,11 @@ export default {
 </template>
 <style scoped>
 @media screen and (min-width: 414px) {
+
 }
 
 @media screen and (min-width: 1200px) {
+
+
 }
 </style>>

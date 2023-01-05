@@ -2,6 +2,10 @@
 var rootBrach = "/swemounttest";
 
 export default {
+  props:{
+    langIsSe:Boolean,
+  },
+
   data() {
     return {
       partners: [
@@ -101,7 +105,7 @@ export default {
 <template>
   <main>
     <h1>
-      Distributörer  
+      {{ langIsSe? "Distributörer": "Distributors" }}  
 
   </h1>
   <div class="all-partners">

@@ -8,6 +8,13 @@
 
 }
 
+.lines-included {
+  white-space: pre-wrap;
+}
+.business-card-email a {
+text-decoration: none;
+}
+
 .copy-right {
   text-align: center;
 
@@ -32,10 +39,15 @@ nav {
   text-decoration: none;
 
 }
+.nav-children-selected {
+  color: #fcb324;
+
+}
 
 .nav-children:hover {
   color: #fcb324;
 }
+
 
 a>i {
   color: #22326C;
@@ -84,6 +96,10 @@ footer {
 @media screen and (min-width: 414px) {
   * {
     font-size: 1.33vw;
+  }
+  .p-text {
+    font-size: 1.67vw;
+
   }
 
   .copy-right {
@@ -141,7 +157,7 @@ footer {
 
     margin-top: 4vw;
 
-    box-shadow: 0px 0.0833vw 1.67vw 0.25vw #eee;
+    box-shadow: 0px -0.0833vw 1.67vw 0.25vw #eee;
 
   }
 
@@ -157,13 +173,14 @@ footer {
 
   }
 
-  .p-text {
-    font-size: 1.67vw;
-
-  }
 
   main {
     margin-top: 4vw;
+  }
+  h1 {
+    font-size: 3vw;
+    margin-left: 2vw;
+
   }
 
   h2 {
@@ -172,20 +189,17 @@ footer {
     font-size: 2vw;
 
   }
-
-  img {
-    border-radius: 6px;
-    width: 100%;
-  }
-
-  h1 {
-    font-size: 3vw;
-  }
-
-
   h3 {
     font-size: 1.1667vw;
   }
+
+  img {
+    border-radius: 0.5vw;
+    width: 100%;
+  }
+
+
+
 
   #selected-person {
     display: flex;
@@ -199,10 +213,16 @@ footer {
     margin-top: 8vw;
 
   }
+  .all-personal {
+    display: flex;
+    margin-top: 4vw;
+    flex-wrap: wrap;
+    padding: 0.5vw;
+  }
 
   .one-personal {
     width: 30%;
-    background-color: #eee;
+    background-color: rgba(238, 238, 238, 0.582);
     display: flex;
     justify-content: left;
     align-items: center;
@@ -212,12 +232,6 @@ footer {
   }
   .one-personal img {
     width: 50%;
-  }
-  .all-personal {
-    display: flex;
-    margin-top: 4vw;
-    flex-wrap: wrap;
-    padding: 0.5vw;
   }
 
   .one-personal p {
@@ -272,6 +286,14 @@ footer {
   form {
     width: 66.6667vw;
     background-color: #22326C;
+    padding: 2vw;
+    border-radius: 0.5vw;
+  }
+  .signup-msg {
+    margin-top: 4vw;
+
+    width: 66.6667vw;
+    background-color: #fcb324;
     padding: 2vw;
     border-radius: 0.5vw;
   }
@@ -332,23 +354,36 @@ footer {
   }
 
   .single-product {
+    text-decoration:none;
     background-color: #eee;
-    width: 30vw;
+    width: 20vw;
     padding: 1vw;
     border-radius: 0.5vw;
     margin-bottom: 1.67vw;
+    transition: 0.2s;
   }
 
   .single-product>img {
     width: 70%;
     display: block;
-    margin-bottom: 2vw;
+    margin: 2vw auto;
     border-radius: 0.5vw;
+  }
 
-  }
   .single-product:hover {
-    background-color: #ddd;
+    transform: scale(1.05);
+    box-shadow: 0px 0px 0.5vw 0.25vw #ddd;
   }
+  .single-product ul {
+    margin-top: 2.5vw;
+    margin-bottom: 0;
+    }
+  
+  .single-product li {
+    font-size: 1.167vw;
+    margin: 0;
+    padding: 0.25vw;
+    }
 
   .all-partners {
     display: flex;
@@ -358,6 +393,8 @@ footer {
   }
 
   .single-partner {
+    display: flex;
+    align-items: center;
     width: 18.33vw;
     box-shadow: 0px 0px 0.833vw 0.25vw #ddd;
     padding: 2vw;
@@ -368,12 +405,79 @@ footer {
   .single-partner>img {
     width: 70%;
     display: block;
-    margin: auto ;
+    margin-bottom: 1vw;
+
     border-radius: 0.5vw;
   
   }
+  .start-text{
+    margin: 4vw auto;
+    font-size: 1.667vw;
+    width:80vw;
+  }
+  .business-card{
+    border-radius: 1vw;
+  }
+  .home-article{
+    margin: 4vw auto;
 
+  }
+  .business-card-name strong{
+    font-size: 1.67vw;
+  }
 
+  .business-card-title{
+    text-align: right;
+  }
+  
+  .business-card-title strong{
+    color: #fcb424;
+  }
+  
+  .business-card-name{
+      text-align: right;
+  
+    }
+  
+  
+  .business-card-contact{
+    padding: 1vw;
+    border-top: 0.25vw solid #fcb424;
+    border-left: 2vw solid #fcb424;
+  
+  }
+  .business-card-contact a{
+    font-size: 1em;
+
+  }
+  .business-card-contact p {
+  margin-left: -2.67vw;
+  font-size: 0.8em;
+  margin-bottom: 0.25vw;
+  }
+  .product-img{
+    height : 23.33vw ;
+    width: auto;
+    }
+    .product-list li{
+      cursor:default;
+    }
+  
+    .product-head{
+  display: flex;
+  width: 70vw;
+    }
+    table{
+      margin: 3vw;
+    }
+    table, th, td {
+    border: 0.0833vw solid;
+    padding: 0.5vw;
+  }
+  
+  .Prestanda, .identifiering{
+    margin-left: 8vw;
+  }
 
 }
 
@@ -397,6 +501,10 @@ footer {
     margin: 12px 12px 12px auto;
     padding: 12px;
 
+
+  }
+  .biggar-font {
+    font-size: 36px;
 
   }
 
@@ -424,10 +532,6 @@ footer {
     margin: 6px;
   }
 
-  .biggar-font {
-    font-size: 36px;
-
-  }
 
   main {
     margin-top: 48px;
@@ -435,16 +539,22 @@ footer {
 
   h1 {
     font-size: 36px;
+        margin-left: 24px;
+
   }
 
   h2 {
+        margin-bottom: 48px;
+
     font-size: 24px;
-    margin-bottom: 48px;
 
   }
 
   h3 {
     font-size: 14px;
+  }
+  img {
+    border-radius: 6px;
   }
 
   #selected-person {
@@ -497,7 +607,13 @@ footer {
     padding: 24px;
     border-radius: 6px;
   }
+  .signup-msg {
+    margin-top: 48px;
+    width: 800px;
+    padding: 24px;
+    border-radius: 6px;
 
+  }
   label {
     margin: 24px auto;
   }
@@ -532,32 +648,30 @@ footer {
   }
 
   .single-product {
-    width: 360px;
+    width: 240px;
     padding: 12px;
     border-radius: 6px;
     margin-bottom: 20px;
   }
-  .single-product li {
-    font-size: 1.167vw;
-    margin: 0;
-    padding: 0.25vw;
-    }
-  
-  .single-product ul {
-  margin-top: 30px;
-  margin-bottom: 0;
-  }
-  .single-product li {
-  font-size: 14px;
-  margin: 0;
-  padding: 3px;
-  }
-
-  .single-product>img {
-    margin-bottom: 24px;
+    .single-product>img {
+    margin: 24px auto;
     border-radius: 6px;
 
   }
+  .single-product:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 6px 3px #ddd;
+  }
+
+  
+  .single-product ul {
+  margin-top: 30px;
+  }
+  .single-product li {
+  font-size: 14px;
+  padding: 3px;
+  }
+
 
 
   .all-partners {
@@ -582,5 +696,51 @@ footer {
   .start-text{
     margin: 48px auto;
     font-size: 20px;
+    width:960px;
+
   }
+  .business-card{
+    border-radius: 12px;
+  }
+
+  .home-article{
+    margin: 48px auto;
+
+  }
+
+  .business-card-name strong{
+    font-size: 20px;
+  }
+
+.business-card-contact{
+  padding: 12px;
+  border-top: 3px solid #fcb424;
+  border-left: 24px solid #fcb424;
+
+}
+.business-card-contact p{
+margin-left: -32px;
+font-size: 0.8em;
+margin-bottom: 3px;
+}
+
+.product-img{
+  height : 280px ;
+  }
+
+  .product-head{
+width: 840px;
+  }
+  table{
+    margin: 36px;
+  }
+  table, th, td {
+  border: 1px solid;
+  padding: 6px;
+}
+
+.Prestanda, .identifiering{
+  margin-left: 96px;
+}
+
 }
