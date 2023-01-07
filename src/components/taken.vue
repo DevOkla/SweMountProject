@@ -133,7 +133,7 @@ export default {
         Infästning = 0;
       "
     >
-      <img src="takskydd_betong.jpg" alt="" />
+      <img src="" alt="" />
       <input
         type="radio"
         :name="'Takt' + takNum"
@@ -165,7 +165,7 @@ export default {
         Infästning = 0;
       "
     >
-      <img src="takskydd_tegel.jpg" alt="" />
+      <img src="" alt="" />
 
       <input type="radio" :name="'Takt' + takNum" value="1" v-model="taktTyp" />
 
@@ -192,7 +192,7 @@ export default {
         Infästning = 0;
       "
     >
-      <img src="takskydd_falsat.jpg" alt="" />
+      <img src="" alt="" />
 
       <input type="radio" :name="'Takt' + takNum" value="2" v-model="taktTyp" />
       Falsat plåttak/Klicktak
@@ -214,7 +214,7 @@ export default {
         Infästning = 0;
       "
     >
-      <img src="takskydd_profilerad_plat.jpg" alt="" />
+      <img src="" alt="" />
 
       <input type="radio" :name="'Takt' + takNum" value="3" v-model="taktTyp" />
 
@@ -246,7 +246,7 @@ export default {
         Infästning = 0;
       "
     >
-      <img src="takskydd_tegelprofilerad_plat.jpg" alt="" />
+      <img src="" alt="" />
 
       <input type="radio" :name="'Takt' + takNum" value="4" v-model="taktTyp" />
       Tegelprofilerat plåttak
@@ -276,7 +276,7 @@ export default {
         Infästning = 0;
       "
     >
-      <img src="takskydd_slat.jpg" alt="" />
+      <img src="" alt="" />
       <input type="radio" :name="'Takt' + takNum" value="5" v-model="taktTyp" />
       Släta tak
     </div>
@@ -306,7 +306,7 @@ export default {
 
   <div class="Visual-select">
     <div class="selection selection-pre">
-      <img src="156_pim.jpg" alt="" />
+      <img src="" alt="" />
 
       <input type="radio" :name="'klammer' + takNum" value="" checked />
       Komplett
@@ -350,19 +350,19 @@ export default {
         @click="TypAvTak = 0"
         :class="['selection', TypAvTak == 0 ? '  selection-pre' : '']"
       >
-        <img src="pulpet.png" alt="" />Pulpet
+        <img src="" alt="" />Pulpet
       </div>
       <div
         @click="TypAvTak = 1"
         :class="['selection', TypAvTak == 1 ? '  selection-pre' : '']"
       >
-        <img src="sadel.png" alt="" />Sadel
+        <img src="" alt="" />Sadel
       </div>
       <div
         @click="TypAvTak = 2"
         :class="['selection', TypAvTak == 2 ? '  selection-pre' : '']"
       >
-        <img src="motfals.png" alt="" />Motfalls
+        <img src="" alt="" />Motfalls
       </div>
     </div>
 
@@ -389,43 +389,43 @@ export default {
         @click="Takform = 0"
         :class="['selection', Takform == 0 ? '  selection-pre' : '']"
       >
-        <img src="Rektangel.png" alt="" />Rektangel
+        <img src="" alt="" />Rektangel
       </div>
       <div
         @click="Takform = 1"
         :class="['selection', Takform == 1 ? '  selection-pre' : '']"
       >
-        <img src="Vinkel_1.png" alt="" />Vinkel 1
+        <img src="" alt="" />Vinkel 1
       </div>
       <div
         @click="Takform = 2"
         :class="['selection', Takform == 2 ? '  selection-pre' : '']"
       >
-        <img src="Vinkel_2.png" alt="" />Vinkel 2
+        <img src="" alt="" />Vinkel 2
       </div>
       <div
         @click="Takform = 3"
         :class="['selection', Takform == 3 ? '  selection-pre' : '']"
       >
-        <img src="Romb_1.png" alt="" />Romb 1
+        <img src="" alt="" />Romb 1
       </div>
       <div
         @click="Takform = 4"
         :class="['selection', Takform == 4 ? '  selection-pre' : '']"
       >
-        <img src="Romb_2.png" alt="" />Romb 2
+        <img src="" alt="" />Romb 2
       </div>
       <div
         @click="Takform = 5"
         :class="['selection', Takform == 5 ? '  selection-pre' : '']"
       >
-        <img src="Trapets_1.png" alt="" />Trapets 1
+        <img src="" alt="" />Trapets 1
       </div>
       <div
         @click="Takform = 6"
         :class="['selection', Takform == 6 ? '  selection-pre' : '']"
       >
-        <img src="Trapets_2.png" alt="" />Trapets 2
+        <img src="" alt="" />Trapets 2
       </div>
     </div>
 

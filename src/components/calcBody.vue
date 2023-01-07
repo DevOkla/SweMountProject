@@ -307,13 +307,13 @@ export default {
         :class="['selection', isLaglutand ? ' selection-pre' : '']"
         @click="goParallella"
       >
-        <img src="solpanelfaste_laglutande.jpg" alt="" /> Låglutande system
+        <img src="" alt="" /> Låglutande system
       </div>
       <div
         :class="['selection', !isLaglutand ? '  selection-pre' : '']"
         @click="goLaglutand"
       >
-        <img src="solpanelfaste_parallella.jpg" alt="" /> Parallella system
+        <img src="" alt="" /> Parallella system
       </div>
     </div>
 
@@ -537,7 +537,7 @@ export default {
         <label for=""><input type="text" /></label>
         <div>
           <img
-            src="karta2.png"
+            src=""
             alt=""
             style="cursor: crosshair"
             @click="mapPointer($event)"
@@ -578,21 +578,21 @@ export default {
             @click="Terrängtyp = 0"
             :class="['selection', Terrängtyp == 0 ? '  selection-pre' : '']"
           >
-            <img src="Terrangtyp/1.png" alt="" />Havs- eller kustområde
+            <img src="" alt="" />Havs- eller kustområde
             exponerat för öppet hav.
           </div>
           <div
             @click="Terrängtyp = 1"
             :class="['selection', Terrängtyp == 1 ? '  selection-pre' : '']"
           >
-            <img src="Terrangtyp/2.png" alt="" />Sjö eller plant och
+            <img src="" alt="" />Sjö eller plant och
             horisontellt område med försumbar vegetation och utan hinder.
           </div>
           <div
             @click="Terrängtyp = 2"
             :class="['selection', Terrängtyp == 2 ? '  selection-pre' : '']"
           >
-            <img src="Terrangtyp/3.png" alt="" />Område med låg vegetation som
+            <img src="" alt="" />Område med låg vegetation som
             gräs och enstaka hinder (träd, byggnader) med minsta inbördes
             avstånd lika med 20 gånger hindrets höjd.
           </div>
@@ -600,7 +600,7 @@ export default {
             @click="Terrängtyp = 3"
             :class="['selection', Terrängtyp == 3 ? '  selection-pre' : '']"
           >
-            <img src="Terrangtyp/4.png" alt="" />Område täckt med vegetation
+            <img src="" alt="" />Område täckt med vegetation
             eller byggnader eller med enstaka hinder med största inbördes
             avstånd lika med 20 gånger hindrets höjd (till exempel byar,
             förorter, skogsmark).
@@ -609,7 +609,7 @@ export default {
             @click="Terrängtyp = 4"
             :class="['selection', Terrängtyp == 4 ? '  selection-pre' : '']"
           >
-            <img src="Terrangtyp/5.png" alt="" />Område där minst 15 % av arean
+            <img src="" alt="" />Område där minst 15 % av arean
             är bebyggd och där byggnadernas medelhöjd är > 15 m.
           </div>
         </div>
