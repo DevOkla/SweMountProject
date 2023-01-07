@@ -23,7 +23,7 @@ export default {
   <main>
     <h1>{{ langIsSe? "Produkter": "Products" }}</h1>
 
-    <div class="all-products">
+    <div class="all-products" style="max-width: 1920px;">
       <RouterLink
         v-for="(i, index) in products" 
           :key="index"

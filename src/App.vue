@@ -13,7 +13,7 @@ export default {
 <template>
 
   <header>
-    <div class="header-content">
+    <div class="header-content" style="max-width: 1920px;">
     <a href="/"><img src="/swemount_logo.png" alt="swemount"></a>
       <nav>
         <RouterLink class="nav-children" to="/">{{ langIsSe? "Hem": "Home" }}</RouterLink><span style="color:#ABABAB;">|</span> 

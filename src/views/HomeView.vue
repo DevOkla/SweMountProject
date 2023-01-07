@@ -6,6 +6,7 @@ export default {
 
   data() {
     return {
+      screenwidthHere:window.innerWidth,
       en: [
         "Welcome to Swemount! We are a company specializing in the sale and installation of solar cell systems and parts. Our team of trained professionals is dedicated to providing top-quality products and services to help our customers save energy and reduce their carbon footprint. Whether you are a homeowner looking to switch to solar power or a business owner interested in incorporating renewable energy into your operations, we have the expertise and resources to help you reach your goals. Contact us today to learn more about how we can support your transition to solar energy!",
         `Solar cells are devices that convert light energy into electricity. They are an important part of many clean energy systems because they provide a reliable and renewable source of power.
@@ -47,18 +48,18 @@ Sammanfattningsvis är solceller en lovande teknik för att generera ren, förny
   <main>
 
     <div class="video-container">
-      <div class="head-text"><h1 class="">Swemount</h1>
+      <div class="head-text" style="max-width: 1920px;"><h1 class="" >Swemount</h1>
 <p class="white"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum odit ex recusandae consequatur eveniet qui modi commodi pariatur, alias, voluptatibus ut, voluptas expedita minima id deserunt. Impedit enim itaque libero?</p>
 <button>{{ langIsSe? "Kontakta oss": "Contact us" }}</button>
 </div>
-      <iframe   src="https://www.youtube.com/embed/a2PPSjazcs8?&loop=1&controls=0&autoplay=1&mute=1&playsinline=1&loop=1&showinfo=0&autohide=1&playlist=a2PPSjazcs8"  title="YouTube video player" frameborder="0"  allowfullscreen></iframe>
+      <iframe :style="{'transform':'scale(' + screenwidthHere*0.00078125 + ');'}"  src="https://www.youtube.com/embed/a2PPSjazcs8?&loop=1&controls=0&autoplay=1&mute=1&playsinline=1&loop=1&showinfo=0&autohide=1&playlist=a2PPSjazcs8"  title="YouTube video player" frameborder="0"  allowfullscreen></iframe>
    
   
   </div>
 
 
   <div class="home-article1">
-      <div style="display: flex; align-items: center">
+      <div style="display: flex; align-items: center;max-width: 1920px;" >
         <div class="p-text">
           <h2 class="yellow h2-home" >{{ langIsSe? "Swemount, vem är vi?": "Swemount, who are we?" }}</h2>
 
@@ -68,7 +69,7 @@ Sammanfattningsvis är solceller en lovande teknik för att generera ren, förny
       </div>
     </div>
 
-<div class="home-article2">
+<div class="home-article2" style="max-width: 1920px;">
   <h2 class="yellow h2-home" style="text-align:center;">{{ langIsSe? "Våra Funktioner": "Our Functions" }}</h2>
 <div style="display: flex; align-items: center; justify-content: space-between;">
   <div> <img src="/img/swemount10.png" alt=""><h3>Funktion 1</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, saepe voluptatem.</p></div>
@@ -78,7 +79,7 @@ Sammanfattningsvis är solceller en lovande teknik för att generera ren, förny
 </div>
 
     <div class="home-article3">
-      <div style="display: flex; align-items: center; ">
+      <div style="display: flex; align-items: center; max-width: 1920px;">
         <img class="img-home" src="/img/swemount3.png" alt="" />
 
         <div class="p-text">
@@ -92,24 +93,4 @@ Sammanfattningsvis är solceller en lovande teknik för att generera ren, förny
   </main>
 </template>
 <style>
-.video-container{
-  width: 100%;
-margin: 0 auto;
-position: relative;
-
-padding-bottom: 50%;
-
-}
-
-
-.video-container iframe{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-
-pointer-events: none;
-}
 </style>
