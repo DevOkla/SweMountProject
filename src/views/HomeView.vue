@@ -45,23 +45,46 @@ Sammanfattningsvis är solceller en lovande teknik för att generera ren, förny
 
 <template>
   <main>
-    <h1></h1>
-    <div class="home-article">
-      <h1>{{ langIsSe? "Swemount, vem är vi?": "Swemount, who are we?" }}</h1>
+
+    <div class="video-container">
+      <div class="head-text"><h1 class="">Swemount</h1>
+<p class="white"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum odit ex recusandae consequatur eveniet qui modi commodi pariatur, alias, voluptatibus ut, voluptas expedita minima id deserunt. Impedit enim itaque libero?</p>
+<button>{{ langIsSe? "Kontakta oss": "Contact us" }}</button>
+</div>
+      <iframe   src="https://www.youtube.com/embed/a2PPSjazcs8?&loop=1&controls=0&autoplay=1&mute=1&playsinline=1&loop=1&showinfo=0&autohide=1&playlist=a2PPSjazcs8"  title="YouTube video player" frameborder="0"  allowfullscreen></iframe>
+   
+  
+  </div>
+
+
+  <div class="home-article1">
       <div style="display: flex; align-items: center">
-        <div style="width: 60%">
-          <p  class="p-text lines-included" >{{ langIsSe? se[0]: en[0] }}</p>
+        <div class="p-text">
+          <h2 class="yellow h2-home" >{{ langIsSe? "Swemount, vem är vi?": "Swemount, who are we?" }}</h2>
+
+          <p  class=" lines-included white" >{{ langIsSe? se[0]: en[0] }}</p>
         </div>
-        <img style="width: 25%" src="/img/swemount9.jpeg" alt="" />
+        <img class="img-home" src="/img/swemount9.png" alt="" />
       </div>
     </div>
-    <div class="home-article">
-      <h2>{{ langIsSe? "Varföe Solceller?": "Why Solar cells?" }}</h2>
-      <div style="display: flex; align-items: center">
-        <img style="width: 30%" src="/img/swemount3.png" alt="" />
 
-        <div style="width: 60%">
-          <p  class="p-text lines-included" >{{ langIsSe? se[1]: en[1] }}</p>
+<div class="home-article2">
+  <h2 class="yellow h2-home" style="text-align:center;">{{ langIsSe? "Våra Funktioner": "Our Functions" }}</h2>
+<div style="display: flex; align-items: center; justify-content: space-between;">
+  <div> <img src="/img/swemount10.png" alt=""><h3>Funktion 1</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, saepe voluptatem.</p></div>
+  <div><img src="/img/swemount11.png" alt=""><h3>Funktion 2</h3><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, saepe voluptatem.</p></div>
+  <div><img src="/img/swemount12.png" alt=""><h3>Funktion 3</h3><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, saepe voluptatem.</p></div>
+</div>
+</div>
+
+    <div class="home-article3">
+      <div style="display: flex; align-items: center; ">
+        <img class="img-home" src="/img/swemount3.png" alt="" />
+
+        <div class="p-text">
+          <h2 class="white h2-home">{{ langIsSe? "Varför Solceller?": "Why Solar cells?" }}</h2>
+
+          <p  class=" lines-included" >{{ langIsSe? se[1]: en[1] }}</p>
         </div>
       </div>
     </div>
@@ -69,5 +92,24 @@ Sammanfattningsvis är solceller en lovande teknik för att generera ren, förny
   </main>
 </template>
 <style>
+.video-container{
+  width: 100%;
+margin: 0 auto;
+position: relative;
 
+padding-bottom: 50%;
+
+}
+
+
+.video-container iframe{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+
+pointer-events: none;
+}
 </style>

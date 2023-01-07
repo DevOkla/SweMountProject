@@ -30,11 +30,13 @@ export default {
           :to="`/products/${index}`"
           class="single-product"
         >
-        <p style="text-decoration:none;">{{ i.artNum }}</p>
+        <div class="artnmr"> <p   style="text-decoration:none; color: white;">{{ i.artNum }}</p></div>
 
         <img :src="rootBrach+i.pic" alt="" />
-        <h3 style="text-align: center;text-decoration:none;">{{ i.name }}</h3>
-
+        <div class="product-caption">
+        <h3 class="yellow" style="text-align: center;text-decoration:none;">{{ i.name }}</h3>
+        <p class="white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, saepe voluptatem.</p>
+        <i class="fa-regular fa-circle-right yellow"></i></div>
          </RouterLink> </div>  
 
   </main>

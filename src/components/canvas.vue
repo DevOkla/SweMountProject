@@ -18,7 +18,6 @@ export default {
 
   data() {
     return {
-
       laglutandeCountMatrialsVChecker: [
         "LL1505",
         "LL1530",
@@ -33,18 +32,7 @@ export default {
         "MA5105",
       ],
 
-
-
-
-
-
-
-
-
-
-
-
-      canvasSize: width < 1280 ? 95 : (1280 / width) * 95,
+      canvasSize: width < 1200 ? 95 : (1200 / width) * 95,
 
       scalePercentage: 1,
 
@@ -52,10 +40,10 @@ export default {
         [
           {
             x:
-              (width * (width < 1280 ? 95 : (1280 / width) * 95)) / 100 / 2 -
+              (width * (width < 1200 ? 95 : (1200 / width) * 95)) / 100 / 2 -
               this.bredd[0] / 20,
             y:
-              (height * (width < 1280 ? 95 : (1280 / width) * 95)) / 100 / 2 -
+              (height * (width < 1200 ? 95 : (1200 / width) * 95)) / 100 / 2 -
               this.hojd[0] / 20,
             redOut: "#000000cc",
             outSurf: false,
@@ -65,9 +53,9 @@ export default {
 
       panelGrouper: [
         {
-          x: (width * (width < 1280 ? 95 : (1280 / width) * 95)) / 100 / 2 - 50,
+          x: (width * (width < 1200 ? 95 : (1200 / width) * 95)) / 100 / 2 - 50,
           y:
-            (height * (width < 1280 ? 95 : (1280 / width) * 95)) / 100 / 2 - 70,
+            (height * (width < 1200 ? 95 : (1200 / width) * 95)) / 100 / 2 - 70,
         },
       ],
 
@@ -199,6 +187,10 @@ export default {
     },
   },
   methods: {
+stopScrolling(){ 
+
+},
+
     createShapesPoints() {
       this.shapesPoints = [];
       this.shapesPoints.push(
@@ -452,9 +444,10 @@ export default {
     fullCanvas() {
       this.canvasSize = 100;
       this.fullToSmall = !this.fullToSmall;
+      this.stopScrolling();
     },
     smallCanvas() {
-      this.canvasSize = width < 1280 ? 95 : (1280 / width) * 95;
+      this.canvasSize = width < 1200 ? 95 : (1200 / width) * 95;
 
       this.fullToSmall = !this.fullToSmall;
     },
@@ -512,11 +505,13 @@ export default {
       document.getElementById("mCanvas" + this.canvasNum).style.cursor = "move";
     },
     cursorPoint() {
-      document.getElementById("mCanvas" + this.canvasNum).style.cursor = "pointer";
+      document.getElementById("mCanvas" + this.canvasNum).style.cursor =
+        "pointer";
     },
 
     cursorNorm() {
-      document.getElementById("mCanvas" + this.canvasNum).style.cursor = "default";
+      document.getElementById("mCanvas" + this.canvasNum).style.cursor =
+        "default";
     },
     rotateFaster() {
       if (this.fixElement) {
@@ -1491,7 +1486,7 @@ shape.setAbsolutePosition({
                 moveToTop: true,
               }"
             />
-
+            
             <v-image
               :config="{
                 image: imageTrash,
@@ -2048,7 +2043,6 @@ shape.setAbsolutePosition({
   z-index: 5;
   top: 0;
   left: 0;
-
   overflow: hidden;
 }
 </style>

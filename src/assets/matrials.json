@@ -1,0 +1,98 @@
+[
+ {
+  "ArtNr": "LL1505",
+  "Benämning": "Fäste låg 15gr låglutande system zm",
+  "GS1": " -",
+  "Vikt": 1.01,
+  "Pris": 246,
+  "Antal": 0
+ },
+ {
+  "ArtNr": "LL1530",
+  "Benämning": "Fäste hög 15gr låglutande system zm",
+  "GS1": " - ",
+  "Vikt": 1.6,
+  "Pris": 360,
+  "Antal": 0
+ },
+ {
+  "ArtNr": "KL3050",
+  "Benämning": "Ändklämma solsystem zm",
+  "GS1": " -",
+  "Vikt": 0.06,
+  "Pris": 14,
+  "Antal": 0
+ },
+ {
+  "ArtNr": "TP3552",
+  "Benämning": "Tätplåt slät 350x520mm zm",
+  "GS1": 7340044703677,
+  "Vikt": 2.5,
+  "Pris": 284,
+  "Antal": 0
+ },
+ {
+  "ArtNr": "GB0010",
+  "Benämning": "Gummibricka M10",
+  "GS1": 7340044700348,
+  "Vikt": 0.0025,
+  "Pris": 6,
+  "Antal": 0
+ },
+ {
+  "ArtNr": "VB1305",
+  "Benämning": "Bultsats 50st vagnsbult M10x30 vfz",
+  "GS1": 7340044703905,
+  "Vikt": 1.25,
+  "Pris": 269,
+  "Antal": 0
+ },
+ {
+  "ArtNr": "VB1301",
+  "Benämning": "Bultsats 10st vagnsbult M10x30 vfz",
+  "GS1": 7340044703882,
+  "Vikt": 0.25,
+  "Pris": 66,
+  "Antal": 0
+ },
+ {
+  "ArtNr": "MU1010",
+  "Benämning": "Muttersats 100st M10 vfz",
+  "GS1": 7340044700874,
+  "Vikt": 1.3,
+  "Pris": 261,
+  "Antal": 0
+ },
+ {
+  "ArtNr": "MU1001",
+  "Benämning": "Muttersats 10st M10 vfz",
+  "GS1": 7340044700867,
+  "Vikt": 0.13,
+  "Pris": 30,
+  "Antal": 0
+ },
+ {
+  "ArtNr": "MA1008",
+  "Benämning": "Monteringsanvisning Tätplåt 2 sidor",
+  "GS1": " -",
+  "Vikt": 0,
+  "Pris": 0,
+  "Antal": 0
+ },
+ {
+  "ArtNr": "MA5105",
+  "Benämning": "Monteringsanvisning MA5105",
+  "GS1": " -",
+  "Vikt": 0,
+  "Pris": 0,
+  "Antal": 0
+ },
+ {
+  "ArtNr": "SKL3050",
+  "Benämning": "Ändklämma solsystem rf\/sv",
+  "GS1": "-",
+  "Vikt": 0.06,
+  "Pris": 31,
+  "Antal": 0
+ }
+]

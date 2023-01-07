@@ -1,12 +1,12 @@
 <script>
-import canvasD from "../components/canvas.vue";
+import calcBody from "../components/calcBody.vue";
 export default {
   props:{
     langIsSe:Boolean,
   },
 
   components: {
-    canvasD,
+    calcBody,
   },
 
   data(){
@@ -38,28 +38,18 @@ export default {
     <label for="email"><p>Eamil:</p><input type="email" name="email" placeholder="anders.andersson@gmail.com" required></label>
       <label for="password" style="position:relative;"><p>{{ langIsSe? "Lösenord": "Password" }}:</p><input :type="[showPassword?'text':'password']" name="password" placeholder="***********" required> <div class="show-buttons" @click="showPassword=!showPassword"><i class="fa-regular fa-eye" v-if="showPassword"></i><i class="fa-regular fa-eye-slash" v-if="!showPassword"></i></div></label>
 
-      <button><b>{{ langIsSe? "Logga in": "Log in" }}</b></button>
+      <button @click="loggedIn=true"><b>{{ langIsSe? "Logga in": "Log in" }}</b></button>
 
   </form>
 
   <div class="signup-msg">{{ langIsSe? se[0]: en[0] }}</div>
 </div>
 
-    <div class="divElem" v-if="loggedIn">
-    <canvasD
-      :A="5 * 100"
-      :B="3 * 100"
-      :C="7 * 100"
-      :shape="0"
-      :bredd="1000"
-      :hojd="1400"
-      :vikt="50"
-      :nockhojd="5"
-      :typTak="0"
-      :canvasNum="0"
-    />
-  </div>
+<div v-if="loggedIn">
 
+<calcBody />
+
+</div>
     </main>
 </template>
 <style>
@@ -74,14 +64,6 @@ export default {
 }
 
 @media screen and (min-width: 1200px) {
-  .show-buttons{
-    position: absolute;
-    cursor: pointer;
-    right:2%;
-    top: 25%;
-  }
-  .show-buttons i{
-  }
 
 
 }

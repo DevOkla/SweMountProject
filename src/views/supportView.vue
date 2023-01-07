@@ -62,10 +62,9 @@ På Swemount är vi stolta över att erbjuda högkvalitativa solpanelprodukter o
             'q',
             i.active ? '  q-active' : '',
           ]">{{ i.Q }}</p>
-           <br v-if="i.active" /> 
 
-          <Transition>
-            <p v-if="i.active">{{ i.A }}</p>
+          <Transition name="slide-fade">
+            <p class="ans"  v-if="i.active">{{ i.A }}</p>
           </Transition>
         </div>
       </li>

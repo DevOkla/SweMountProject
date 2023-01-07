@@ -9,6 +9,7 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },
+
     {
       path: '/products',
       name: 'products',
@@ -64,8 +65,11 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/SingleProduct.vue')
     },
+    
 
   ]
 })
+
+
 
 export default router
