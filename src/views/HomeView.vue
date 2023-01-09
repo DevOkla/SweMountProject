@@ -22,7 +22,7 @@ The efficiency of a solar cell refers to how much of the sunlight that it absorb
 Overall, solar cells are a promising technology for generating clean, renewable energy. While there are still some challenges to overcome, such as finding cost-effective ways to store excess energy and improving the efficiency of solar cells, they have the potential to play a significant role in the transition to a low-carbon future.`,
       ],
       se: [
-        "Välkommen till Swemount! Vi är ett företag som specialiserar oss på försäljning och installation av solcellssystem och delar. Vårt team av utbildade professionella är dedikerade att erbjuda högkvalitativa produkter och tjänster för att hjälpa våra kunder att spara energi och minska sin koldioxidutsläpp. Oavsett om du är en hushållsegare som vill byta till solenergi eller en företagare som är intresserad av att inkludera förnybar energi i dina verksamheter, har vi kompetensen och resurserna för att hjälpa dig att uppnå dina mål. Kontakta oss idag för att lära dig mer om hur vi kan stödja din övergång till solenergi!",
+        "Swemount erbjuder innovativa och enkla lösningar av hög kvalitet för montering av solcellspaneler. Vi erbjuder stålprodukter med den optimala ytbehandlingen för våra svenska klimat. Vi lämnar 30 års garanti på samtliga av våra standard produkter för underkonstruktioner.",
         `Solceller är enheter som omvandlar ljusenergi till el. De är en viktig del av många ren energi system eftersom de ger en pålitlig och förnybar källa till ström.
         
 En av de främsta fördelarna med solceller är att de genererar el från en riklig och gratis källa till energi: solljus. Solceller släpper inte ut någon luftföroreningar eller växthusgaser, och de kan användas i en mängd olika tillämpningar, från att driva små elektroniska enheter till att tillhandahålla el för hela samhällen.
@@ -50,7 +50,8 @@ Sammanfattningsvis är solceller en lovande teknik för att generera ren, förny
     <div class="video-container">
       <div style="max-width: 1920px; margin: auto;">
       <div class="head-text" ><h1 class="" >Swemount</h1>
-<p class="white"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum odit ex recusandae consequatur eveniet qui modi commodi pariatur, alias, voluptatibus ut, voluptas expedita minima id deserunt. Impedit enim itaque libero?</p>
+<p class="white"> Swemount erbjuder innovativa och enkla lösningar med hög kvalitet för montering av solcellspaneler. Alla våra system är utvecklade i Sverige, med fokus på varje detalj.
+Registrera dig och ta del av vår kalkylator för snö & vindlastberäkningar, eller kontakta oss för en skräddarsydd offert.</p>
 <button> <a class="bold-font" href="/swemounttest/contact" style="text-dec"> {{ langIsSe? "Kontakta oss": "Contact us" }}</a></button>
 </div></div>
 
@@ -78,9 +79,9 @@ Sammanfattningsvis är solceller en lovande teknik för att generera ren, förny
     </div>
 
 <div class="home-article2" style="max-width: 1920px;">
-  <h2 class="yellow h2-home" style="text-align:center;">{{ langIsSe? "Våra Funktioner": "Our Functions" }}</h2>
+  <h2 class="yellow h2-home" style="text-align:center;">{{ langIsSe? "Produktnyheter": "Produktnyheter" }}</h2>
 <div style="display: flex; align-items: center; justify-content: space-between;">
-  <div> <img src="/img/swemount10.png" alt=""><h3>Funktion 1</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, saepe voluptatem.</p></div>
+  <div> <img src="/img/swemount10.png" alt=""><h3>SM Roof hook RH2000</h3> <p></p></div>
   <div><img src="/img/swemount11.png" alt=""><h3>Funktion 2</h3><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, saepe voluptatem.</p></div>
   <div><img src="/img/swemount12.png" alt=""><h3>Funktion 3</h3><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, saepe voluptatem.</p></div>
 </div>

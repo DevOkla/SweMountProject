@@ -803,6 +803,10 @@ margin-top: 4vw;
 
 margin-bottom: 0;
 }
+.p-buttons{
+  width: 60vw;
+}
+
 }
 
 /***********************************************************************************************************************/
@@ -885,6 +889,9 @@ text-align: center;
 margin-top: 4vw;
 
 margin-bottom: 0;
+}
+.p-buttons{
+  width: 1152px;
 }
 
 }

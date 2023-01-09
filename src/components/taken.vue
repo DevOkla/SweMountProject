@@ -101,60 +101,48 @@ export default {
         [
           {
             name: "Fotplatta",
-            pic: "betong_fotplatta-be00003111-small.jpg",
+            pic: "/products/Fotplatta.jpg",
           },
 
           {
             name: "Läktfäste",
-            pic: "159_pim.jpg",
+            pic: "/products/Läktfäste.jpg",
           },
         ],
         [
           {
             name: "Fotplatta",
-            pic: "tegel_fotplatta-be00003118-small.jpg",
+            pic: "/products/Fotplatta.jpg",
           },
 
           {
             name: "Läktfäste",
-            pic: "tegel_laektfaeste-be00003119-small.jpg",
+            pic: "/products/Läktfäste.jpg",
           },
         ],
         [
           {
             name: "Falsfäste",
-            pic: "falsfaeste-be00003739-small.jpg",
+            pic: "/products/swemount15product.jpg",
           },
         ],
         [
           {
             name: "Lång skena",
-            pic: "laang_skena-be00003117-small.jpg",
+            pic: "/products/swemount11product.jpg",
           },
 
-          {
-            name: "Kort skena",
-            pic: "kort_skena-be00003116-small.jpg",
-          },
         ],
         [
           {
             name: "Lång skena",
-            pic: "laang_skena-be00003117-small.jpg",
+            pic: "/products/swemount11product.jpg",
           },
         ],
         [
           {
-            name: "Tätplåt förhöjd",
-            pic: "taetplaat_foerhoejd-be00003120-small.jpg",
-          },
-          {
             name: "Tätplåt slät",
-            pic: "taetplaat_foerhoejd-be00003120-small.jpg",
-          },
-          {
-            name: "Tätplåt perforerad",
-            pic: "tatplat_perforerad_TP3924-be00003198-small.jpg",
+            pic: "/products/swemount13product.jpg",
           },
         ],
       ],
@@ -178,6 +166,8 @@ export default {
       PanelHöjd: [1400],
       PanelVikt: [0],
       panelarCount: 0,
+      showResult:false,
+
     };
   },
 
@@ -200,7 +190,7 @@ export default {
       for (let i = 0; i < v[0].length; i++) {
         finTotal += v[0][i].length;
       }
-
+      this.showResult=true;
       this.panelarCount = finTotal;
     },
   },
@@ -242,6 +232,7 @@ export default {
         >
       </div>
     </div>
+    
     <div
       :class="['selection', taktTyp == 1 ? '  selection-pre' : '']"
       @click="
@@ -374,16 +365,16 @@ export default {
       :class="['selection', Infästning == index ? '  selection-pre' : '']"
       @click="Infästning = index"
     >
-      <img :src="`${i.pic}`" alt="" />
+      <img :src="`${i.pic}`" alt="" :class="['imgs-selects ', Infästning == index ? ' imgs-selects-active' : '']"/>
 
-      <input
+      <!--<input
         type="radio"
         :name="'Infästning' + takNum"
         :value="index"
         v-model="Infästning"
-      />
+      />-->
 
-      {{ i.name }}
+      <p>{{ i.name }}</p>
     </div>
   </div>
 
@@ -394,10 +385,10 @@ export default {
 
   <div class="Visual-select">
     <div class="selection selection-pre">
-      <img src="" alt="" />
+      <img src="/products/swemount9product.jpg" alt="" :class="['imgs-selects ', 1 ? ' imgs-selects-active' : '']"/>
 
-      <input type="radio" :name="'klammer' + takNum" value="" checked />
-      Komplett
+      <!--<input type="radio" :name="'klammer' + takNum" value="" checked />-->
+      <p>Komplett</p>
     </div>
   </div>
 
@@ -407,63 +398,62 @@ export default {
   </div>
 
   <div class="Visual-select">
-    Ytbehandling <br />
 
-    <label for="" class="color-selector" @click="colorName = 'gray'"
-      >Varmförzinkat
-      <div class="color-box varmforzinkat"></div>
-
-      <input
+    <div :class="['selection', colorName == 'gray' ? '  selection-pre' : '']" @click="colorName = 'gray'"
+      >
+      <div  :class="['imgs-selects color-box varmforzinkat', colorName == 'gray' ? ' imgs-selects-active' : '']"></div>
+      <p>Varmförzinkat</p>
+      <!--<input
         type="radio"
         :name="'color' + takNum"
         value="gray"
         v-model="colorName"
-      />
-    </label>
-    <label for="" class="color-selector" @click="colorName = 'black'"
-      >Svartlackerat
-      <div class="color-box svartlackerat"></div>
-
-      <input
+      />-->
+      </div>
+    <div :class="['selection', colorName == 'black' ? '  selection-pre' : '']"  @click="colorName = 'black'"
+      >
+      <div  :class="['imgs-selects color-box svartlackerat', colorName == 'black' ? ' imgs-selects-active' : '']"></div>
+     <p> Svartlackerat</p>
+     <!-- <input
         type="radio"
         :name="'color' + takNum"
         value="black"
         v-model="colorName"
         checked
-      />
-    </label>
+      />-->
+     </div>
   </div>
 
-  <div>
+  <div style="max-width:1920px;">
     <div class="second-head"> 
         <h1>{{ langIsSe? "Egenskaper för tak ": "Egenskaper för tak " }} {{ takNum + 1 }}</h1>
    <hr>
   </div>
 
-    Typ av tak
+   <h2>Typ av tak</h2>
 
-    <div class="Terrangtyp smaller-pic">
+    <div class="Visual-select" style="justify-content:center;">
       <div
         @click="TypAvTak = 0"
         :class="['selection', TypAvTak == 0 ? '  selection-pre' : '']"
       >
-        <img src="" alt="" />Pulpet
+        <img src="/calc/Pulpet.jpg" alt="" :class="['imgs-selects ', TypAvTak == 0 ? ' imgs-selects-active' : '']"/> <p>Pulpet</p>
       </div>
       <div
         @click="TypAvTak = 1"
         :class="['selection', TypAvTak == 1 ? '  selection-pre' : '']"
       >
-        <img src="" alt="" />Sadel
+        <img src="/calc/Sadel.jpg" alt="" :class="['imgs-selects ', TypAvTak == 1 ? ' imgs-selects-active' : '']"/> <p>Sadel</p>
       </div>
       <div
         @click="TypAvTak = 2"
         :class="['selection', TypAvTak == 2 ? '  selection-pre' : '']"
       >
-        <img src="" alt="" />Motfalls
+        <img src="/calc/Motfalls.jpg" alt="" :class="['imgs-selects ', TypAvTak == 2 ? ' imgs-selects-active' : '']"/> <p>Motfalls</p>
       </div>
     </div>
 
-    <div :class="['p3', taktTyp != 5? 'discreption' : '' ]">
+    <div class="p3 middle-inputs " >
       <label for=""
         >Byggnadens nockhöjd <br />
         <div class="measurement">
@@ -479,93 +469,105 @@ export default {
         </div></label
       >
     </div>
-    Takform på tilltänkt taksida
+    <div class="second-head"> 
+        <h1>{{ langIsSe? "Takform på tilltänkt taksida ": "Takform på tilltänkt taksida " }} {{ takNum + 1 }}</h1>
+   <hr>
+  </div>
 
-    <div class="Terrangtyp">
+
+
+    <div class="Visual-select shapes-style" >
       <div
         @click="Takform = 0"
         :class="['selection', Takform == 0 ? '  selection-pre' : '']"
       >
-        <img src="" alt="" />Rektangel
+        <img src="/shapes/Rektangel.png" alt="" :class="['imgs-selects ', Takform == 0 ? ' imgs-selects-active' : '']" /><p>Rektangel</p>
       </div>
       <div
         @click="Takform = 1"
         :class="['selection', Takform == 1 ? '  selection-pre' : '']"
       >
-        <img src="" alt="" />Vinkel 1
-      </div>
+        <img src="/shapes/Vinkel_1.png" alt="" :class="['imgs-selects ', Takform == 1 ? ' imgs-selects-active' : '']" /><p>Vinkel 1
+</p>      </div>
       <div
         @click="Takform = 2"
         :class="['selection', Takform == 2 ? '  selection-pre' : '']"
       >
-        <img src="" alt="" />Vinkel 2
-      </div>
+        <img src="/shapes/Vinkel_2.png" alt="" :class="['imgs-selects ', Takform == 2 ? ' imgs-selects-active' : '']" /><p>Vinkel 2
+</p>      </div>
       <div
         @click="Takform = 3"
         :class="['selection', Takform == 3 ? '  selection-pre' : '']"
       >
-        <img src="" alt="" />Romb 1
-      </div>
+        <img src="/shapes/Romb_1.png" alt="" :class="['imgs-selects ', Takform == 3 ? ' imgs-selects-active' : '']" /><p>Romb 1
+  </p>    </div>
       <div
         @click="Takform = 4"
         :class="['selection', Takform == 4 ? '  selection-pre' : '']"
       >
-        <img src="" alt="" />Romb 2
-      </div>
+        <img src="/shapes/Romb_2.png" alt="" :class="['imgs-selects ', Takform == 4 ? ' imgs-selects-active' : '']" /><p>Romb 2
+  </p>    </div>
       <div
         @click="Takform = 5"
         :class="['selection', Takform == 5 ? '  selection-pre' : '']"
       >
-        <img src="" alt="" />Trapets 1
+        <img src="/shapes/Trapets_1.png" alt="" :class="['imgs-selects ', Takform == 5 ? ' imgs-selects-active' : '']" /><p>Trapets 1</p>
       </div>
       <div
         @click="Takform = 6"
         :class="['selection', Takform == 6 ? '  selection-pre' : '']"
       >
-        <img src="" alt="" />Trapets 2
+        <img src="/shapes/Trapets_2.png" alt="" :class="['imgs-selects ', Takform == 6 ? ' imgs-selects-active' : '']" /> <p>Trapets 2</p>
       </div>
     </div>
 
     <div>
       <div>
+        <div class="second-head"> 
+        <h1>{{ langIsSe? "Ange mått för taksida ": "Ange mått för taksida " }} {{ takNum + 1 }}</h1>
+   <hr>
+  </div>
+
         <img
-          v-bind:src="'mått/' + (Takform + 1) + '.png'"
+          v-bind:src="'/shapes/' + (Takform + 1) + '.png'"
           alt=""
-          style="margin: 0 auto; display: block"
+          class="shape-big-photo "
         />
-        <div class="p3">
+        <div class="p3 middle-inputs-wider" style="display:flex;">
           <label for=""
             >A <br />
             <div class="measurement">
-              <input type="number" v-model="Amatt" /><span class="unit">m</span>
+              <input class="input-short" type="number" v-model="Amatt" /><span class="unit">m</span>
             </div></label
           >
           <label for=""
             >B<br />
             <div class="measurement">
-              <input type="number" v-model="Bmatt" /><span class="unit">m</span>
+              <input class="input-short" type="number" v-model="Bmatt" /><span class="unit">m</span>
             </div></label
           >
           <label for="" v-if="!Takform == 0"
             >C <br />
             <div class="measurement">
-              <input type="number" v-model="Cmatt" /><span class="unit">m</span>
+              <input class="input-short" type="number" v-model="Cmatt" /><span class="unit">m</span>
             </div></label
           >
         </div>
       </div>
-      <div v-for="(i, index) in PanelBredd" v-bind:key="index">
-        <br />
-        <br />
+      <div class="panel-storlek"  v-for="(i, index) in PanelBredd" v-bind:key="index">
+        <div class="second-head " style="margin: 0; "> 
+        <h2 style="text-align: left; ">Panelstorlek {{ index + 1 }}</h2>
+   <hr style="margin:0; width:10%;">
+  </div>
 
         <p>
-          <b>Panelstorlek {{ index + 1 }}</b>
+          
         </p>
-        <div class="p3">
+        <div class="p3 middle-inputs-wider" style="display:flex;">
           <label for=""
             >Bredd <br />
             <div class="measurement">
-              <input type="number" v-model="PanelBredd[index]" /><span
+              <input class="input-short" type="number" v-model="PanelBredd[index]" /><span
                 class="unit"
                 >mm</span
               >
@@ -574,7 +576,7 @@ export default {
           <label for=""
             >Höjd<br />
             <div class="measurement">
-              <input type="number" v-model="PanelHöjd[index]" /><span
+              <input class="input-short" type="number" v-model="PanelHöjd[index]" /><span
                 class="unit"
                 >mm</span
               >
@@ -583,7 +585,7 @@ export default {
           <label for=""
             >Vikt per panel <br />
             <div class="measurement">
-              <input type="number" v-model="PanelVikt[index]" /><span
+              <input class="input-short" type="number" v-model="PanelVikt[index]" /><span
                 class="unit"
                 >kg</span
               >
@@ -612,8 +614,9 @@ export default {
     />
   </div>
 
-  <div>{{ panelarCount }}</div>
-  <table>
+  <div v-if="showResult">{{ panelarCount }}</div>
+  
+  <table v-if="showResult">
             <tr>
               <th>Antal</th>
               <th>ArtNr</th>
@@ -670,6 +673,8 @@ export default {
     flex-direction: column;
     cursor: pointer;
     position: relative;
+margin: 0;
+margin-right: 2vw;
 
   }
 
@@ -721,15 +726,20 @@ color: #fcb324;
 padding: 0.5vw 1vw;
 border-radius: 1vw;
 }
+
+
 .p3{
+  width:105%;
   margin-top: 2vw;
   border-right: #707070 solid 1px;
-  padding: 0.5vw;
+  border-left: #707070 solid 1px;
+  padding: 0 0.5vw;
 }
 .p3 label{
   font-family: "Montserrat-bold";
 display: flex;
 flex-direction:column ;
+
 }
 
 .p3 label>div{
@@ -741,9 +751,22 @@ flex-direction:column ;
 }
 .Visual-select{
 display: flex;
+justify-content: flex-start;
 margin-top: 5vw;
 width: 85.15625vw;
 }
+.shapes-style{
+flex-wrap:wrap ;
+justify-content: center;
+row-gap: 2vw;
+
+}
+.shapes-style img{
+width:14.0625vw;
+
+height: 7.083333333vw;
+}
+
 .imgs-selects{
   width:11.97916667vw;
   height:11.97916667vw;
@@ -793,11 +816,47 @@ border: 1px solid #707070;
  margin-left: 0;
 
 }
+.svartlackerat{
+background-color: #010204;
+}
 
+
+.varmforzinkat{
+background-color: #979ba4;
+}
+.color-box{
+  width:11.97916667vw;
+  height:11.97916667vw;
+}
+
+h2{
+  margin-top: 4vw;
+}
+.middle-inputs{
+  width:35vw; 
+  border:0;
+}
+
+.middle-inputs-wider{
+  width:62.5vw; 
+  border:0;
+
+}
+.shape-big-photo{
+  width: 27.39583333vw;
+  height: 17.08333333vw;
+  margin: 0 auto; 
+  display: block
+}
+.panel-storlek {
+  width: 25vw;
+  margin: 0 0 0 20vw ;
+}
 }
 
 /***********************************************************************************************************************/
-@media screen and (min-width: 1920px) {
+@media screen and (min-width: 1921px) {
+
   .multi_elements {
     margin-top: 155px;
   }
@@ -805,7 +864,10 @@ border: 1px solid #707070;
   .multi_elements > div > img {
     width: 410px;
   }
+  .selection {
+margin-right: 38.4px;
 
+  }
 
   .selection p {
     margin-top: 38.4px;
@@ -838,7 +900,9 @@ padding: 9.6px 19.2px;
 border-radius: 19.2px;
 }
 .p3{
+  width: 105%;
   margin-top: 38.4px;
+  padding: 0 9.6px;
 }
 
 
@@ -857,7 +921,7 @@ width: 1635px;
   box-shadow: 9.6px -9.6px 0px 0vw #fcb324;
 border: 1px solid #707070;
 }
-/***************************************************************************** */
+
 .imgs-selects-active{
   box-shadow: 9.6px -9.6px 0px 0vw #22326c;
 
@@ -873,7 +937,37 @@ border: 1px solid #707070;
   margin-top: 9.6px;
 
 }
+.color-box{
+  width:230px;
+  height:230px;
+}
+h2{
+  margin-top: 76.8px;
+}
+.middle-inputs{
+  width:700px; 
+}
 
+.middle-inputs-wider{
+  width:1200px; 
+
+}
+.shapes-style{
+row-gap: 38.6px;
+
+}
+.shapes-style img{
+  width:270px;
+height: 136px;
+}
+.shape-big-photo{
+  width: 526px;
+  height: 328px;
+}
+.panel-storlek {
+  width: 480px;
+  margin: 0 0 0 384px ;
+}
 
 }
 </style>
