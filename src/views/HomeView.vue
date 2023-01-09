@@ -52,7 +52,7 @@ Sammanfattningsvis är solceller en lovande teknik för att generera ren, förny
       <div class="head-text" ><h1 class="" >Swemount</h1>
 <p class="white"> Swemount erbjuder innovativa och enkla lösningar med hög kvalitet för montering av solcellspaneler. Alla våra system är utvecklade i Sverige, med fokus på varje detalj.
 Registrera dig och ta del av vår kalkylator för snö & vindlastberäkningar, eller kontakta oss för en skräddarsydd offert.</p>
-<button> <a class="bold-font" href="/swemounttest/contact" style="text-dec"> {{ langIsSe? "Kontakta oss": "Contact us" }}</a></button>
+<button> <a class="bold-font" href="/contact" style="text-dec"> {{ langIsSe? "Kontakta oss": "Contact us" }}</a></button>
 </div></div>
 
 

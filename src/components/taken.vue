@@ -1,5 +1,6 @@
 <script >
 import canvasD from "../components/canvas.vue";
+var rootBrach = "/swemounttest";
 
 export default {
   components: {
@@ -101,48 +102,48 @@ export default {
         [
           {
             name: "Fotplatta",
-            pic: "/products/Fotplatta.jpg",
+            pic: `${rootBrach}/products/Fotplatta.jpg`,
           },
 
           {
             name: "Läktfäste",
-            pic: "/products/Läktfäste.jpg",
+            pic: `${rootBrach}/products/Läktfäste.jpg` ,
           },
         ],
         [
           {
             name: "Fotplatta",
-            pic: "/products/Fotplatta.jpg",
+            pic: `${rootBrach}/products/Fotplatta.jpg` ,
           },
 
           {
             name: "Läktfäste",
-            pic: "/products/Läktfäste.jpg",
+            pic: `${rootBrach}/products/Läktfäste.jpg` ,
           },
         ],
         [
           {
             name: "Falsfäste",
-            pic: "/products/swemount15product.jpg",
+            pic: `${rootBrach}/products/swemount15product.jpg` ,
           },
         ],
         [
           {
             name: "Lång skena",
-            pic: "/products/swemount11product.jpg",
+            pic: `${rootBrach}/products/swemount11product.jpg` ,
           },
 
         ],
         [
           {
             name: "Lång skena",
-            pic: "/products/swemount11product.jpg",
+            pic: `${rootBrach}/products/swemount11product.jpg` ,
           },
         ],
         [
           {
             name: "Tätplåt slät",
-            pic: "/products/swemount13product.jpg",
+            pic: `${rootBrach}/products/swemount13product.jpg` ,
           },
         ],
       ],
