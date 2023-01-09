@@ -11,7 +11,7 @@ export default {
 
   data(){
     return{
-    loggedIn:false,
+    loggedIn:true,
     showPassword:false,
     en:[
       "Thank you for your interest in our company. To sign up and create an account, please contact us. Once you have completed the sign up process and received your login credentials, you can log in to access our services. We look forward to working with you",
@@ -29,6 +29,8 @@ export default {
 
 <template>
   <main>
+    <img class="head-imgs " src="/img/swemount15.jpg" alt="">
+
     <h1 >{{ langIsSe? "Kalkylator": "Calculator" }}</h1>  
 
 

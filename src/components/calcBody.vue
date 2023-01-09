@@ -70,7 +70,6 @@ export default {
   },
   mounted() {
     //////////////////////////////////////////////////////////////////// import data
-
   },
   methods: {
     //////////////////////////////////////////////////////////////////// Functions
@@ -298,8 +297,8 @@ export default {
     },
   },
 };
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 </script>
-
 <template>
   <main>
     <div class="multi_elements">
@@ -307,16 +306,18 @@ export default {
         :class="['selection', isLaglutand ? ' selection-pre' : '']"
         @click="goParallella"
       >
-        <img src="" alt="" /> Låglutande system
+        <img src="/img/swemount14.jpg" alt=""  :class="['img-back-box', isLaglutand ? ' img-back-box-active' : '']"/>
+        <p>Låglutande system</p>
       </div>
       <div
         :class="['selection', !isLaglutand ? '  selection-pre' : '']"
         @click="goLaglutand"
       >
-        <img src="" alt="" /> Parallella system
+        <img src="/img/swemount13.jpg" alt="" :class="['img-back-box', !isLaglutand ? ' img-back-box-active' : '']" />
+        <p>Parallella system</p>
       </div>
     </div>
-
+   <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
     <div v-if="isLaglutand" id="Laglutande">
       <h2>Inställningar</h2>
 
@@ -528,16 +529,44 @@ export default {
         Ladda ner PDF
       </button>
     </div>
+   <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
     <div v-if="!isLaglutand" id="Parallella">
       <div>
-        <h2>Position</h2>
 
-        Ange adress för att starta konfiguratorn
+      <div class="second-head"> 
+        <h1>{{ langIsSe? "Position": "Position" }}</h1>
+   <hr>
+  </div>
+
+<div class="position-body">
+  <div>
+       <p class="bold-font" style="text-align:center;">Ange adress för att starta konfiguratorn</p> 
         <label for=""><input type="text" /></label>
+
+        <div class="p3">
+          <label for=""
+            >Snö 
+            <div class="measurement">
+              <input type="number" v-model="sno" class="input-short" /><span class="unit"
+                >kN/m²</span
+              >
+            </div></label
+          >
+          <label for=""
+            >Vind <br />
+            <div class="measurement">
+              <input type="number" v-model="vind" class="input-short"/><span class="unit"
+                >m/s</span
+              >
+            </div></label
+          >
+        </div>
+      </div>
         <div>
           <img
-            src=""
+          class="google-map"
+            src="/img/map.png"
             alt=""
             style="cursor: crosshair"
             @click="mapPointer($event)"
@@ -547,76 +576,77 @@ export default {
             :style="{ top: offsetY + 'px', left: offsetX + 'px' }"
           ></div>
         </div>
-
-        <div class="p3">
-          <label for=""
-            >Snö <br />
-            <div class="measurement">
-              <input type="number" v-model="sno" /><span class="unit"
-                >kN/m²</span
-              >
-            </div></label
-          >
-          <label for=""
-            >Vind <br />
-            <div class="measurement">
-              <input type="number" v-model="vind" /><span class="unit"
-                >m/s</span
-              >
-            </div></label
-          >
-        </div>
-        <br />
-        <br />
       </div>
+
+
+
+      </div>
+
+
       <div>
-        <h2>Terräng och förutsättningar</h2>
-        Terrängtyp Håll muspekaren över alternativen för att läsa mer om varje
-        terrängtyp.
+      
+        <div class="second-head"> 
+        <h1>{{ langIsSe? "Terräng och förutsättningar": "Terräng och förutsättningar" }}</h1>
+   <hr>
+  </div>
+
+      
+        <p class="paragraphs">Terrängtyp Håll muspekaren över alternativen för att läsa mer om varje
+        terrängtyp.</p>
+
         <div class="Terrangtyp">
           <div
             @click="Terrängtyp = 0"
             :class="['selection', Terrängtyp == 0 ? '  selection-pre' : '']"
           >
-            <img src="/calc/1.jpg" alt="" />Havs- eller kustområde
-            exponerat för öppet hav.
+            <img src="/calc/1.jpg" alt="" :class="['imgs-selects ', Terrängtyp == 0 ? ' imgs-selects-active' : '']" />
+            <p>A</p>
+            <div class="discreption">Havs- eller kustområde exponerat för
+            öppet hav.</div>
           </div>
           <div
             @click="Terrängtyp = 1"
             :class="['selection', Terrängtyp == 1 ? '  selection-pre' : '']"
           >
-            <img src="/calc/2.jpg" alt="" />Sjö eller plant och
-            horisontellt område med försumbar vegetation och utan hinder.
-          </div>
+            <img src="/calc/2.jpg" alt="" :class="['imgs-selects ', Terrängtyp == 1 ? ' imgs-selects-active' : '']" />
+            <p>B</p>
+            <div class="discreption">Sjö eller plant och horisontellt
+            område med försumbar vegetation och utan hinder.
+          </div></div>
           <div
             @click="Terrängtyp = 2"
             :class="['selection', Terrängtyp == 2 ? '  selection-pre' : '']"
           >
-            <img src="/calc/3.jpg" alt="" />Område med låg vegetation som
-            gräs och enstaka hinder (träd, byggnader) med minsta inbördes
-            avstånd lika med 20 gånger hindrets höjd.
+            <img src="/calc/3.jpg" alt="" :class="['imgs-selects ', Terrängtyp == 2 ? ' imgs-selects-active' : '']" />
+            <p>C</p>
+            <div class="discreption">Område med låg vegetation som gräs
+            och enstaka hinder (träd, byggnader) med minsta inbördes avstånd
+            lika med 20 gånger hindrets höjd.</div>
           </div>
           <div
             @click="Terrängtyp = 3"
             :class="['selection', Terrängtyp == 3 ? '  selection-pre' : '']"
           >
-            <img src="/calc/4.jpg" alt="" />Område täckt med vegetation
-            eller byggnader eller med enstaka hinder med största inbördes
-            avstånd lika med 20 gånger hindrets höjd (till exempel byar,
-            förorter, skogsmark).
+            <img src="/calc/4.jpg" alt="" :class="['imgs-selects ', Terrängtyp == 3 ? ' imgs-selects-active' : '']" />
+            <p>D</p>
+            <div class="discreption">Område täckt med vegetation eller
+            byggnader eller med enstaka hinder med största inbördes avstånd lika
+            med 20 gånger hindrets höjd (till exempel byar, förorter,
+            skogsmark).</div>
           </div>
           <div
             @click="Terrängtyp = 4"
             :class="['selection', Terrängtyp == 4 ? '  selection-pre' : '']"
           >
-            <img src="/calc/5.jpg" alt="" />Område där minst 15 % av arean
-            är bebyggd och där byggnadernas medelhöjd är > 15 m.
+            <img src="/calc/5.jpg" alt="" :class="['imgs-selects ', Terrängtyp == 4 ? ' imgs-selects-active' : '']" />
+            <p>E</p>
+            <div class="discreption">Område där minst 15 % av arean är
+            bebyggd och där byggnadernas medelhöjd är > 15 m.</div>
           </div>
         </div>
-        Förutsättningar Säkerhetsklass: 2 <br />
-
-        Dimensionerande livslängd: 30 år
       </div>
+
+
       <div v-for="(i, index) in allTaken" v-bind:key="index">
         <taket :takNum="index" />
       </div>
@@ -630,5 +660,232 @@ export default {
   </main>
 </template>
 
-<style>
+<style scoped>
+@media screen and (min-width: 414px) {
+  main {
+    margin: 0;
+  }
+  .multi_elements {
+    display: flex;
+    max-width: 1920px;
+    margin-top: 8.072916667vw;
+  }
+  .multi_elements > div {
+    display: flex;
+  }
+
+  .multi_elements > div > img {
+    width: 21.35416667vw;
+  }
+
+  .selection {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    position: relative;
+
+  }
+
+  .selection p {
+    font-family: "Montserrat-bold";
+    text-align: center;
+    width: 90%;
+    margin-top: 2vw;
+    padding: 1vw;
+    background-color: #fcb324;
+    color: #22326c;
+  }
+  .selection:hover p {
+    background-color: #22326c;
+    color: #fff;
+  }
+
+  .selection-pre p {
+    background-color: #22326c;
+    color: #fff;
+  }
+
+  .position-body{
+display: flex;
+margin-top: 5vw;
+width: 65.625vw;
+  }
+
+
+  .google-map{
+    width: 33.75vw;
+    height: 33.75vw;
+
+  }
+input{
+  width: 24.21875vw;
+  padding: 0.5vw;
+border-radius: 0.9vw;
+margin-left: auto;
+margin-right: auto;
+}
+.input-short{
+  width: 4.583333333vw;
+
+}
+.unit{
+background-color: #22326c;
+color: #fcb324;
+padding: 0.5vw 1vw;
+border-radius: 1vw;
+}
+.p3{
+  margin-top: 5vw;
+}
+.p3 label{
+  font-family: "Montserrat-bold";
+display: flex;
+flex-direction:column ;
+}
+
+.p3 label>div{
+  justify-content:flex-start;
+  margin: 0;
+}
+.p3 label>div input{
+  margin: 0.5vw 3vw 0.5vw 0;
+}
+.Terrangtyp{
+display: flex;
+margin-top: 5vw;
+width: 70.3125vw;
+}
+.imgs-selects{
+  width:11.97916667vw;
+  height:11.97916667vw;
+
+  box-shadow: 0.5vw -0.5vw 0px 0vw #fcb324;
+border: 1px solid #707070;
+}
+
+.imgs-selects-active{
+  box-shadow: 0.5vw -0.5vw 0px 0vw #22326c;
+
+}
+
+.discreption{
+  display: none;
+  background-color: #22326c;
+  color: #fff;
+  position: absolute;
+  padding: 1vw;
+  width:90%; 
+  top: 110%;
+
+}
+
+.discreption:before {
+    content:"";
+    position: absolute;
+    right: 85px; 
+    top: -15px; 
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 15px 15px 15px;
+    border-color: transparent transparent #22326c transparent;
+}
+
+
+
+.selection:hover   .discreption{
+
+  display: block;
+}
+.paragraphs{
+text-align: center;
+margin-top: 4vw;
+
+margin-bottom: 0;
+}
+}
+
+/***********************************************************************************************************************/
+@media screen and (min-width: 1920px) {
+  .multi_elements {
+    margin-top: 155px;
+  }
+
+  .multi_elements > div > img {
+    width: 410px;
+  }
+
+
+  .selection p {
+    margin-top: 38.4px;
+    padding: 19.2px;
+  }
+
+
+  .position-body{
+margin-top: 96px;
+width: 1260px;
+  }
+
+
+  .google-map{
+    width: 648px;
+    height: 648px;
+
+  }
+input{
+  width: 465px;
+  padding: 9.6px;
+border-radius: 17.28px;
+}
+.input-short{
+  width: 88px;
+
+}
+.unit{
+padding: 9.6px 19.2px;
+border-radius: 19.2px;
+}
+.p3{
+  margin-top: 96px;
+}
+
+
+
+.p3 label>div input{
+  margin: 9.6px 57.6px 9.6px 0;
+}
+.Terrangtyp{
+margin-top: 96px;
+width: 1350px;
+}
+.imgs-selects{
+  width:230px;
+  height:230px;
+
+  box-shadow: 9.6px -9.6px 0px 0vw #fcb324;
+border: 1px solid #707070;
+}
+/***************************************************************************** */
+.imgs-selects-active{
+  box-shadow: 9.6px -9.6px 0px 0vw #22326c;
+
+}
+
+.discreption{
+  padding: 19.2px;
+
+}
+
+
+
+
+.paragraphs{
+text-align: center;
+margin-top: 4vw;
+
+margin-bottom: 0;
+}
+
+}
 </style>
