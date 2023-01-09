@@ -529,7 +529,7 @@ export default {
   </div>
 
         <img
-          v-bind:src="'/shapes/' + (Takform + 1) + '.png'"
+          v-bind:src="'/swemounttest/shapes/' + (Takform + 1) + '.png'"
           alt=""
           class="shape-big-photo "
         />

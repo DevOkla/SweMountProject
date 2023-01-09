@@ -11,7 +11,7 @@ export default {
 
   data(){
     return{
-    loggedIn:true,
+    loggedIn:false,
     showPassword:false,
     en:[
       "Thank you for your interest in our company. To sign up and create an account, please contact us. Once you have completed the sign up process and received your login credentials, you can log in to access our services. We look forward to working with you",
@@ -35,7 +35,11 @@ export default {
 
 
 <div v-if="!loggedIn">
-  <h2>{{langIsSe? "Logga in": "Log in"}}</h2>
+  <div class="second-head"> 
+        <h1>{{langIsSe? "Logga in": "Log in"}}</h1>
+   <hr>
+  </div>
+
   <form action="">
     <label for="email"><p>Eamil:</p><input type="email" name="email" placeholder="anders.andersson@gmail.com" required></label>
       <label for="password" style="position:relative;"><p>{{ langIsSe? "Lösenord": "Password" }}:</p><input :type="[showPassword?'text':'password']" name="password" placeholder="***********" required> <div class="show-buttons" @click="showPassword=!showPassword"><i class="fa-regular fa-eye" v-if="showPassword"></i><i class="fa-regular fa-eye-slash" v-if="!showPassword"></i></div></label>
