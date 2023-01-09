@@ -13,8 +13,10 @@
   src: url("/Montserrat-Bold.ttf")
 }
 
+.bold-font{
+  font-family: "Montserrat-bold";
 
-body {}
+}
 
 * {
   font-size: 5vw;
@@ -45,7 +47,7 @@ body {}
   white-space: pre-wrap;
 }
 
-.business-card-email a {
+ a {
   text-decoration: none;
 }
 
@@ -92,6 +94,9 @@ a>i {
 
 a:hover {
   color: #fcb324;
+}
+button a:hover {
+  color: #22326C;
 }
 
 a>i:hover {
@@ -162,7 +167,6 @@ footer {
 
   nav {
     width: 52%;
-    height: 4vw;
     color: #22326C;
     display: flex;
     align-items: center;
@@ -179,18 +183,23 @@ footer {
   }
 
   header {
+    display: flex;
+    align-items: center;
     position: sticky;
     z-index: 4;
     top: 0;
+    height: 8.125vw;
     background-color: rgba(255, 255, 255, 0.686);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
   }
 
+  
   header>div {
+    width:100% ;
     display: flex;
     align-items: center;
-
+    justify-content: space-between;
   }
 
   header>div>a>img {
@@ -203,7 +212,6 @@ footer {
     padding-top: 7.5vw;
 
 
-    /* box-shadow: 0px -0.0833vw 1.67vw 0.25vw #eee;*/
 
   }
 
@@ -237,14 +245,15 @@ footer {
     font-family: Montserrat-bold;
     text-align: center;
     font-size: 3.125vw;
-    margin-top: 11.66666667vw;
     color: #fcb324;
+    margin-top: 11.66666667vw;
 
   }
 
   h2 {
     text-align: center;
     font-size: 2.083333333vw;
+    font-family: Montserrat-bold;
 
   }
 
@@ -253,9 +262,9 @@ footer {
   }
 
   .img-home {
-    border: 0.46875vw solid #FFFFFF;
     width: 25.20833333vw;
     height: 25.20833333vw;
+    box-shadow: 1.40625vw -1.40625vw 0px 0vw #fff;
 
   }
 
@@ -280,35 +289,6 @@ footer {
 
   }
 
-  .all-personal {
-    display: flex;
-    margin-top: 4vw;
-    flex-wrap: wrap;
-    padding: 0.5vw;
-  }
-
-  .one-personal {
-    width: 30%;
-    background-color: rgba(238, 238, 238, 0.582);
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    margin-left: 0;
-    padding: 0.5vw;
-    margin-bottom: 1vw;
-  }
-
-  .one-personal img {
-    width: 50%;
-  }
-
-  .one-personal p {
-    font-size: 1.25vw;
-  }
-
-  .one-personal h3 {
-    font-size: 1vw;
-  }
 
 
 
@@ -317,32 +297,43 @@ footer {
   }
 
   ul {
+    width: 61.51041667vw;
+    padding: 0;
     list-style: none;
-    margin-bottom: 8vw;
+    margin: 8vw auto;
   }
 
   li {
-    padding: 1vw;
-    background-color: #eee;
     cursor: pointer;
-    margin: 1vw auto;
     border-radius: 0.5vw;
+    padding: 0.3vw;
 
   }
-
+.q{
+  background-color: #22326C;
+  color: #fff;
+  padding: 1vw;
+  border-radius: 1vw;
+}
   .ans {
-    margin-top: 1vw;
+    position:sticky;
+    margin-top: -2vw;
+    padding: 5vw;
+    border: 0.3vw solid #22326C;
+    border-radius: 1vw;
+    z-index: -1;
+
   }
 
   .q:hover {
     transition: 0.2s;
+    background-color: #fcb324;
 
-    color: #fcb324;
   }
 
   .q-active {
-    color: #fcb324;
-
+    position:sticky;
+    background-color: #fcb324;
   }
 
   .slide-fade-enter-active {
@@ -355,17 +346,32 @@ footer {
 
   .slide-fade-enter-from,
   .slide-fade-leave-to {
-    transform: translateX(20px);
+    transform: translateY(-20px);
     opacity: 0;
   }
 
 
   form {
-    width: 66.6667vw;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 36.45833333vw;    
     background-color: #22326C;
-    padding: 2vw;
+    padding: 5.46875vw;
+    padding-left: 0;
     border-radius: 0.5vw;
+padding-right: 15vw;
   }
+
+  .swe-form{
+    width:100%; 
+    background-color: #22326C;
+padding-top: 4.114583333vw;
+  }
+  .swe-form h1 ,.swe-form .second-head{
+    margin: 0;
+      }
+
 
   .signup-msg {
     margin-top: 4vw;
@@ -379,13 +385,14 @@ footer {
   label {
     display: flex;
     justify-content: left;
-    margin: 2vw auto;
-    width: 50%;
+    margin: 0.7vw 0;
+    width: 100%;
+
   }
 
   label>p {
     color: #fff;
-
+    font-family: "Montserrat-bold";
   }
 
   textarea {
@@ -393,8 +400,8 @@ footer {
     margin-left: 0;
     margin-right: 0;
 
-    padding: 0.25vw;
-    border-radius: 0.5vw;
+    padding: 1vw;
+    border-radius: 1vw;
     width: 20vw;
     height: 16.67vw;
   }
@@ -403,27 +410,26 @@ footer {
     margin-left: 0;
     margin-right: 0;
 
-    padding: 0.25vw;
-    border-radius: 0.5vw;
+    padding: 1vw;
+    border-radius: 1vw;
     width: 20vw;
 
   }
 
-  button>b {
-    font-size: 2vw;
-  }
 
   button {
     display: block;
     margin: auto;
     background-color: #fcb324;
-    border-radius: 5vw;
+    border-radius: 1vw;
     padding: 0.5vw 1vw;
     border: 0;
     font-weight: bold;
-    font-size: 0.78125vw;
+    font-size: 1.1em;
     margin: 2vw 0;
     transition: 0.2s;
+    font-family: "Montserrat-bold";
+
   }
 
   button:hover {
@@ -465,31 +471,18 @@ footer {
 
   }
 
-  .single-product:hover .product-caption,
-  .single-product:hover .artnmr {
+  .single-product:hover .product-caption
+   {
     background-color: #fcb324;
     transition: 0.2s;
 
 
   }
 
-  @keyframes bounce {
-    0% {
-      transform: translateX(0);
-    }
-
-    50% {
-      transform: translateX(1vw);
-    }
-
-    100% {
-      transform: translateX(0);
-    }
-  }
 
   .single-product:hover .product-caption i {
-    animation-name: bounce;
-    animation-timing-function: ease;
+    transform: translateX(1vw);
+    transition: 0.75s;
 
   }
 
@@ -503,7 +496,6 @@ footer {
     text-align: left;
     margin: 0;
     animation-duration: 1s;
-    animation-iteration-count: infinite;
     transform-origin: left;
 
   }
@@ -517,12 +509,7 @@ footer {
     object-fit: contain;
   }
 
-  .single-product:hover img {
-    border: 0.729166667vw solid #22326C;
-    transition: 0.2s;
 
-
-  }
 
   .single-product:hover .product-caption i,
   .single-product:hover .product-caption h3 {
@@ -533,52 +520,63 @@ footer {
   .all-partners {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 4vw;
+    width: 60.3125vw;
+    margin-top: 7.135416667vw;
+    column-gap: 2vw;
 
   }
 
   .single-partner {
     display: flex;
     align-items: center;
-    width: 18.33vw;
-    box-shadow: 0px 0px 0.833vw 0.25vw #ddd;
-    padding: 2vw;
-    margin-bottom: 2.5vw;
+    width: 15vw;
   }
 
 
-  .single-partner>img {
-    width: 70%;
-    display: block;
-    margin-bottom: 1vw;
-
-    border-radius: 0.5vw;
-
-  }
 
   .start-text {
-    margin: 4vw auto;
-    font-size: 1.667vw;
-    width: 80vw;
-  }
+    font-size: 1.041666667vw;
+    width: 79.63541667vw;  
+margin-top: 16.71875vw;
+}
+.all-personal {
+  max-width: 1920px;
+  display: flex;
+  row-gap: 13.4375vw;
+  margin-top: 4vw;
+  flex-wrap: wrap;
+  padding: 0.5vw;
+}
 
   .business-card {
-    border-radius: 1vw;
+    display: flex;
+    width: 45%;
+    align-items: center;
+  }
+  .business-card img{
+    
+    width: 50%;
+  }
+  .business-card>div>p {
+    margin-top: 0.4vw;
+  }
+  .business-card-icons{
+    margin-left:-2vw;
   }
 
   .head-text {
+    position:sticky;
     width: 39.79166667vw;
-    position: absolute;
-    bottom: 25%;
-    left: 10.20833333%;
     z-index: 3;
+margin-left: 3vw;
   }
 
   .head-text h1 {
     margin: 0;
     margin-bottom: 2.135416667vw;
     text-align: left;
-
+margin-top: 20vw;
+margin-left: 0;
   }
 
   .home-article1 {
@@ -591,6 +589,12 @@ footer {
 
   .home-article2 {
     margin: 8.229166667vw auto;
+  }
+  .home-article4{
+    display: flex; 
+    align-items: center; 
+    max-width: 1920px;
+margin-top:19.11458333vw;
   }
 
   .home-article2>div {
@@ -655,58 +659,40 @@ footer {
   }
 
 
-  .business-card-name strong {
-    font-size: 1.67vw;
-  }
-
-  .business-card-title {
-    text-align: right;
-  }
-
-  .business-card-title strong {
-    color: #fcb424;
-  }
-
-  .business-card-name {
-    text-align: right;
-
-  }
-
-
-  .business-card-contact {
-    padding: 1vw;
-    border-top: 0.25vw solid #fcb424;
-    border-left: 2vw solid #fcb424;
-
-  }
-
-  .business-card-contact a {
-    font-size: 1em;
-
-  }
-
-  .business-card-contact p {
-    margin-left: -2.67vw;
-    font-size: 0.8em;
-    margin-bottom: 0.25vw;
-  }
 
   .product-img {
+    border: 1px solid #707070;
     height: 23.33vw;
     width: auto;
   }
-
+  .product-list{
+    margin: 3vw 0;
+  }
   .product-list li {
+    text-align: center;
+    margin: 0;
+    width: 20%;
+    font-family: "Montserrat-bold";
+    margin-top: 1vw;
+    background-color: #22326C;
+    color: #fcb324;
     cursor: default;
+    padding: 1vw;
   }
 
   .product-head {
     display: flex;
+    align-items: center;
     width: 70vw;
+    margin-top: 10.83333333vw;
+    column-gap: 7vw;
   }
 
+
+
+
   table {
-    margin: 3vw;
+    margin: 5vw auto;
   }
 
   table,
@@ -716,10 +702,7 @@ footer {
     padding: 0.5vw;
   }
 
-  .Prestanda,
-  .identifiering {
-    margin-left: 8vw;
-  }
+ 
 
   .video-container {
     width: 100%;
@@ -730,7 +713,8 @@ footer {
   }
 
 
-  .video-container iframe {
+  .bg-video {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -739,7 +723,54 @@ footer {
     transform: scale(1.7);
     object-fit: cover;
     pointer-events: none;
+    filter: brightness(50%);
+
   }
+
+  .head-imgs{
+    position: absolute;
+    object-fit: cover;
+    width: 100%;
+    top: 0;
+    filter: brightness(50%);
+    height: 18.17708333vw;
+    z-index: -1000;
+
+  }
+  .second-head {
+    margin-top: 13.90625vw;
+    
+  }
+  .second-head h1 {
+    color: #22326C;
+
+  }
+  
+  
+  
+  .second-head hr {
+    width: 5.729166667vw;
+    
+    border: #fcb324 solid 0.364583333vw;
+    background-color: #fcb324;
+    border-radius: 5vw;
+  }
+
+  .img-back-box{
+    box-shadow: 1.40625vw -1.40625vw 0px 0vw #fcb324;
+  }
+
+  .img-loc{
+    width:62.60416667vw; 
+    display:block;
+    margin-top:  9.166666667vw;
+
+  }
+
+      
+
+
+
 
 }
 
@@ -761,14 +792,18 @@ footer {
   }
 
   nav {
-    width: 52%;
-    height: 76.8px§;
+    height: 76.8px;
     margin: 19.2px 19.2px 19.2px auto;
     padding: 19.2px;
 
   }
+  header {
+    height: 156px;
+  }
 
-
+  header>div {
+  width:1920px; 
+  }
 
   header>div>a>img {
     height: 45px;
@@ -780,7 +815,6 @@ footer {
     padding-top: 144px;
 
 
-    /* box-shadow: 0px -0.0833vw 1.67vw 0.25vw #eee;*/
 
   }
 
@@ -826,6 +860,7 @@ footer {
     border: 9px solid #FFFFFF;
     width: 484px;
     height: 484px;
+    box-shadow: 27px -27px 0px 0vw #fff;
 
   }
 
@@ -849,127 +884,91 @@ footer {
   .all-personal {
     margin-top: 76.8px;
     padding: 9.6px;
+    row-gap: 258px;
+
   }
 
-  .one-personal {
-    padding: 9.6px;
-    margin-bottom: 19.2px;
+  .business-card>div>p {
+    margin-top: 7.68px;
   }
-
-  .one-personal p {
-    font-size: 24px;
+  .business-card-icons{
+    margin-left:-38.4px;
   }
-
-  .one-personal h3 {
-    font-size: 19.2px;
-  }
-
 
 
   .map-location {
     margin: 153.6px auto;
   }
 
+
   ul {
-    margin-bottom: 153.6px;
+    width: 1181px;
+    margin: 153.6px auto;
   }
 
   li {
-    padding: 1vw;
-    background-color: #eee;
-    cursor: pointer;
-    margin: 1vw auto;
-    border-radius: 0.5vw;
+    border-radius: 9.6px;
+    padding: 5.76px;
 
   }
-
+.q{
+  padding: 19.2px;
+  border-radius: 19.2px;
+}
   .ans {
-    margin-top: 1vw;
+    margin-top: -38.4px;
+    padding: 96px;
+    border: 5.76px solid #22326C;
+    border-radius: 19.2px;
   }
 
-  .q:hover {
-    transition: 0.2s;
-
-    color: #fcb324;
-  }
-
-  .q-active {
-    color: #fcb324;
-
-  }
-
-  .slide-fade-enter-active {
-    transition: all 0.3s ease-out;
-  }
-
-  .slide-fade-leave-active {
-    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
-  }
-
-  .slide-fade-enter-from,
-  .slide-fade-leave-to {
-    transform: translateX(20px);
-    opacity: 0;
-  }
-
-
+  
   form {
-    width: 66.6667vw;
-    background-color: #22326C;
-    padding: 2vw;
-    border-radius: 0.5vw;
+    width: 700px;    
+    padding: 105px;
+    padding-left: 0;
+    border-radius: 9.6px;
+padding-right: 288px;
+  }
+
+  .swe-form{
+padding-top: 79px;
   }
 
   .signup-msg {
-    margin-top: 4vw;
+    margin-top: 76.8px;
 
-    width: 66.6667vw;
-    background-color: #fcb324;
-    padding: 2vw;
-    border-radius: 0.5vw;
+    width: 1280px;
+    padding: 38.2px;
+    border-radius: 9.6px;
   }
 
   label {
-    display: flex;
-    justify-content: left;
-    margin: 2vw auto;
-    width: 50%;
-  }
-
-  label>p {
-    color: #fff;
+    margin: 13.44px 0;
 
   }
+
 
   textarea {
-    resize: none;
-    margin-left: 0;
-    margin-right: 0;
 
-    padding: 0.25vw;
-    border-radius: 0.5vw;
-    width: 20vw;
-    height: 16.67vw;
+    padding: 19.2px;
+    border-radius: 19.2px;
+    width: 384px;
+    height: 320px;
   }
 
   input {
-    margin-left: 0;
-    margin-right: 0;
 
-    padding: 0.25vw;
-    border-radius: 0.5vw;
-    width: 20vw;
+    padding: 19.2px;
+    border-radius: 19.2px;
+    width: 384px;
 
   }
 
-  button>b {
-    font-size: 2vw;
-  }
 
   button {
-    border-radius: 96px;
+    border-radius: 19.2px;
     padding: 9.6px 19.2px;
-    font-size: 15px;
     margin: 38.4px 0;
   }
 
@@ -1012,54 +1011,39 @@ footer {
     border: 14px solid #fcb324;
   }
 
-  .single-product:hover img {
-    border: 14px solid #22326C;
-  }
 
-
+  
+  
+  
   .all-partners {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 4vw;
+    width: 1158px;
+    margin-top: 137px;
+    column-gap: 38.4px;
 
   }
 
   .single-partner {
-    display: flex;
-    align-items: center;
-    width: 18.33vw;
-    box-shadow: 0px 0px 0.833vw 0.25vw #ddd;
-    padding: 2vw;
-    margin-bottom: 2.5vw;
+    width: 288px;
   }
 
-
-  .single-partner>img {
-    width: 70%;
-    display: block;
-    margin-bottom: 1vw;
-
-    border-radius: 0.5vw;
-
-  }
 
   .start-text {
-    margin: 4vw auto;
-    font-size: 1.667vw;
-    width: 80vw;
+    width: 1529px;
+    font-size: 20px;
+    margin: auto;
+
+    margin-top: 321px;
+
   }
 
-  .business-card {
-    border-radius: 1vw;
-  }
 
   .head-text {
-    width: 764px;
-    left: 30%;
-
+width: 764px;
+margin-left: 57.6px;
   }
 
   .head-text h1 {
+    margin-top: 384px;
     margin-bottom: 41px;
 
   }
@@ -1116,53 +1100,29 @@ footer {
   }
 
 
-  .business-card-name strong {
-    font-size: 1.67vw;
-  }
 
-  .business-card-title {
-    text-align: right;
-  }
-
-  .business-card-title strong {
-    color: #fcb424;
-  }
-
-  .business-card-name {
-    text-align: right;
-
-  }
-
-
-  .business-card-contact {
-    padding: 1vw;
-    border-top: 0.25vw solid #fcb424;
-    border-left: 2vw solid #fcb424;
-
-  }
-
-  .business-card-contact a {
-    font-size: 1em;
-
-  }
-
-  .business-card-contact p {
-    margin-left: -2.67vw;
-    font-size: 0.8em;
-    margin-bottom: 0.25vw;
-  }
 
   .product-img {
     height: 448px;
-    width: auto;
+  }
+  .product-list{
+    margin: 57.6px 0;
+  }
+  .product-list li {
+    margin-top: 19.2px;
+    padding: 19.2px;
   }
 
   .product-head {
     width: 1344px;
+    margin-top: 208px    ;
+    column-gap: 134.4px;
   }
 
+
+
   table {
-    margin: 57.6px;
+    margin: 96px auto;
   }
 
   table,
@@ -1172,327 +1132,46 @@ footer {
     padding: 9.6px;
   }
 
-  .Prestanda,
-  .identifiering {
-    margin-left: 153.6px;
-  }
+ 
 
   .video-container {
     height: 861px;
   }
 
 
+  .head-imgs{
+    height: 349px;
+
+  }
 
 
+  .second-head {
+    margin-top: 267px;
+    
+  }
 
 
+  .second-head hr {
+    width: 110px;
+    
+    border: #fcb324 solid 7px;
+    border-radius: 96px;
+  }
 
+  .img-back-box{
+    box-shadow: 27px -27px 0px 0vw #fcb324;
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  /* 
+  .home-article4{
+margin-top:367px;
+  }
   
-  * {
-    font-size: 16px;
-  }
 
-  .p-text {
-    font-size: 20px;
+  .img-loc{
+   width: 1202px;
+    margin-top:  176px;
 
   }
+    
 
-  .copy-right {
-    font-size: 20px;
-
-  }
-
-  nav {
-    height: 48px;
-    margin: 12px 12px 12px auto;
-    padding: 12px;
-
-
-  }
-  .biggar-font {
-    font-size: 36px;
-
-  }
-  .header-content {
-    width: 1920px;
-  }
-  header>div>a>img {
-    height: 48px;
-    margin: 12px auto 12px 12px;
-
-  }
-
-  footer {
-    padding: 48px 0;
-    font-size: 16px;
-    margin-top: 48px;
-    box-shadow: 0px -1px 20px 3px #eee;
-
-  }
-
-  footer p {
-    font-size: 16px;
-
-  }
-
-  a>i {
-    font-size: 24px;
-    margin: 6px;
-  }
-
-
-  main {
-    width: 1920px;
-    margin-top: 48px;
-  }
-
-  h1 {
-    font-size: 36px;
-        margin-left: 24px;
-
-  }
-
-  h2 {
-        margin-bottom: 48px;
-
-    font-size: 24px;
-
-  }
-
-  h3 {
-    font-size: 14px;
-  }
-  img {
-    border-radius: 6px;
-  }
-
-  #selected-person {
-    width: 840px;
-  }
-
-  .team {
-    margin-top: 96px;
-
-  }
-
-
-  .all-personal {
-    margin-top: 48px;
-    padding: 6px;
-  }
-  .one-personal {
-    padding: 6px;
-    margin-bottom: 12px;
-  }
-
-  .one-personal p {
-    font-size: 15px;
-  }
-
-  .one-personal h3 {
-    font-size: 12px;
-  }
-
-
-
-  .map-location {
-    margin: 96px auto;
-  }
-
-  ul {
-    margin-bottom: 96px;
-  }
-
-  li {
-    padding: 12px;
-    margin: 12px auto;
-    border-radius: 6px;
-
-  }
-
-  .ans{
-    margin-top:12px ;
-  }
-  form {
-    width: 800px;
-    padding: 24px;
-    border-radius: 6px;
-  }
-  .signup-msg {
-    margin-top: 48px;
-    width: 800px;
-    padding: 24px;
-    border-radius: 6px;
-
-  }
-  label {
-    margin: 24px auto;
-  }
-
-  textarea {
-
-    padding: 3px;
-    border-radius: 6px;
-    width: 240px;
-    height: 200px;
-  }
-
-  input {
-    padding: 3px;
-    border-radius: 6px;
-    width: 240px;
-
-  }
-
-  button>b {
-    font-size: 24px;
-  }
-
-  button {
-    border-radius: 6px;
-    padding: 6px 12px;
-  }
-
-
-  .all-products {
-    margin-top: 48px;
-  }
-
-  .single-product {
-    width: 240px;
-    padding: 12px;
-    border-radius: 6px;
-    margin-bottom: 20px;
-  }
-    .single-product>img {
-    margin: 24px auto;
-    border-radius: 6px;
-
-  }
-  .single-product:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 0px 6px 3px #ddd;
-  }
-
-  
-  .single-product ul {
-  margin-top: 30px;
-  }
-  .single-product li {
-  font-size: 14px;
-  padding: 3px;
-  }
-
-
-
-  .all-partners {
-    margin-top: 48px;
-
-  }
-
-  .single-partner {
-    width: 220px;
-    box-shadow: 0px 0px 10px 3px #ddd;
-    padding: 24px;
-    margin-bottom: 30px;
-  }
-
-
-  .single-partner>img {
-    margin-bottom: 12px;
-    border-radius: 6px;
-
-  }
-
-  .start-text{
-    margin: 48px auto;
-    font-size: 20px;
-    width:960px;
-
-  }
-  .business-card{
-    border-radius: 12px;
-  }
-
-  .home-article{
-    margin: 48px auto;
-
-  }
-
-  .business-card-name strong{
-    font-size: 20px;
-  }
-
-.business-card-contact{
-  padding: 12px;
-  border-top: 3px solid #fcb424;
-  border-left: 24px solid #fcb424;
-
-}
-.business-card-contact p{
-margin-left: -32px;
-font-size: 0.8em;
-margin-bottom: 3px;
-}
-
-.product-img{
-  height : 280px ;
-  }
-
-  .product-head{
-width: 840px;
-  }
-  table{
-    margin: 36px;
-  }
-  table, th, td {
-  border: 1px solid;
-  padding: 6px;
-}
-
-.Prestanda, .identifiering{
-  margin-left: 96px;
-}
-*/
 }

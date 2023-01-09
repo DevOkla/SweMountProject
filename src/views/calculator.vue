@@ -38,7 +38,7 @@ export default {
     <label for="email"><p>Eamil:</p><input type="email" name="email" placeholder="anders.andersson@gmail.com" required></label>
       <label for="password" style="position:relative;"><p>{{ langIsSe? "Lösenord": "Password" }}:</p><input :type="[showPassword?'text':'password']" name="password" placeholder="***********" required> <div class="show-buttons" @click="showPassword=!showPassword"><i class="fa-regular fa-eye" v-if="showPassword"></i><i class="fa-regular fa-eye-slash" v-if="!showPassword"></i></div></label>
 
-      <button @click="loggedIn=true"><b>{{ langIsSe? "Logga in": "Log in" }}</b></button>
+      <button @click="loggedIn=true">{{ langIsSe? "Logga in": "Log in" }}</button>
 
   </form>
 
@@ -53,12 +53,6 @@ export default {
     </main>
 </template>
 <style>
-.divElem {
-  width: 95vw;
-  max-width: 1216px;
-  margin: auto;
-}
-
 @media screen and (min-width: 414px) {
 
 }

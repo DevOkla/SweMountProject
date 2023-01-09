@@ -1,4 +1,4 @@
-<script >
+<script>
 
 import picsrc from "../assets/productsinfo.json";
 
@@ -21,8 +21,9 @@ export default {
 
 <template>
   <main>
-    <h1>{{ langIsSe? "Produkter": "Products" }}</h1>
+    <img class="head-imgs" src="/img/swemount14.jpg" alt="">
 
+<h1>{{ langIsSe? "Produkter": "Products" }}</h1>
     <div class="all-products" style="max-width: 1920px;">
       <RouterLink
         v-for="(i, index) in products" 

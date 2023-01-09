@@ -48,12 +48,20 @@ Sammanfattningsvis är solceller en lovande teknik för att generera ren, förny
   <main>
 
     <div class="video-container">
-      <div class="head-text" style="max-width: 1920px;"><h1 class="" >Swemount</h1>
+      <div style="max-width: 1920px; margin: auto;">
+      <div class="head-text" ><h1 class="" >Swemount</h1>
 <p class="white"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum odit ex recusandae consequatur eveniet qui modi commodi pariatur, alias, voluptatibus ut, voluptas expedita minima id deserunt. Impedit enim itaque libero?</p>
-<button>{{ langIsSe? "Kontakta oss": "Contact us" }}</button>
-</div>
-      <iframe :style="{'transform':'scale(' + screenwidthHere*0.00078125 + ');'}"  src="https://www.youtube.com/embed/a2PPSjazcs8?&loop=1&controls=0&autoplay=1&mute=1&playsinline=1&loop=1&showinfo=0&autohide=1&playlist=a2PPSjazcs8"  title="YouTube video player" frameborder="0"  allowfullscreen></iframe>
-   
+<button> <a class="bold-font" href="/swemounttest/contact" style="text-dec"> {{ langIsSe? "Kontakta oss": "Contact us" }}</a></button>
+</div></div>
+
+
+<video class="bg-video" src="../assets/swemountvideo.mp4" muted autoplay loop></video>
+
+
+
+
+<!--      <iframe :style="{'transform':'scale(' + screenwidthHere*0.00078125 + ');'}"  src="https://www.youtube.com/embed/a2PPSjazcs8?&loop=1&controls=0&autoplay=1&mute=1&playsinline=1&loop=1&showinfo=0&autohide=1&playlist=a2PPSjazcs8"  title="YouTube video player" frameborder="0"  allowfullscreen></iframe>
+   -->
   
   </div>
 

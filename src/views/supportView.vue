@@ -52,10 +52,18 @@ På Swemount är vi stolta över att erbjuda högkvalitativa solpanelprodukter o
 
 <template>
   <main>
+    <img class="head-imgs " src="/img/swemount16.jpg" alt="">
+
     <h1>Support</h1>
 <p class="start-text lines-included">{{ langIsSe? se[0]: en[0] }} </p>
-    <h2>F&Q</h2>
-    <ul>
+
+<div class="second-head"> 
+        <h1>F&Q</h1>
+   <hr>
+  </div>
+
+
+    <ul >
       <li v-for="(i, index) in QA" :key="index">
         <div @click="i.active = !i.active">
           <p :class="[
@@ -69,20 +77,26 @@ På Swemount är vi stolta över att erbjuda högkvalitativa solpanelprodukter o
         </div>
       </li>
     </ul>
+<div class="swe-form" style="" >
+  <div class="second-head"> 
+        <h1 style="color:#fff;">{{ langIsSe? "Kontakta oss": "Contact us" }}</h1>
+   <hr>
+  </div>
 
-    <h2>{{ langIsSe? "Kontakta oss": "Contact us" }} </h2>
 
     <form action="mailto:info@swemount.se" method="POST" enctype="text/plain" >
+
       <label for="email"><p>Eamil:</p><input type="email" name="email" placeholder="anders.andersson@gmail.com" required></label>
       <label for="name"><p>{{ langIsSe? "Namn": "Name" }}:</p><input type="text" name="name" placeholder="Anders Andersson" required></label>
       <label for="subject"><p>Subject:</p><input type="text" name="subject" placeholder="subject" required></label>
 
       <label for="message"><p>{{ langIsSe? "Fråga": "Question" }}:</p>  <textarea name="message"  required ></textarea>
+
 </label>
 
-<button><b>{{ langIsSe? "Skicka": "Send" }}</b></button>
+<button>{{ langIsSe? "Skicka": "Send" }}</button>
 
     </form>
-
+  </div>
   </main>
 </template>

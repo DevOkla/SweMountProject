@@ -1,4 +1,4 @@
-<script>
+<script >
 import picsrc from "../assets/productsinfo.json";
 
 
@@ -22,11 +22,16 @@ export default {
 <template>
     <main>
       
-      <h2 style="text-align: center">{{ isingleProduct.name }}</h2>
 
       <div class="product-head">
-      <img :src="rootBrach+isingleProduct.pic" alt="" class="product-img" />
+      <img :src="rootBrach+isingleProduct.pic" alt="" class="product-img img-back-box" />
       <div>
+        <div class="second-head" style="margin: 0; "> 
+        <h2 style="text-align: left; margin-top: 0;">{{ isingleProduct.name }}</h2>
+   <hr style="margin:0; width:20%;">
+  </div>
+
+
         <ul class="product-list">
           <li>Artikelnr: {{ isingleProduct.artNum }}</li>
           <li>Längd: {{ isingleProduct.Längd }}</li>
@@ -38,8 +43,12 @@ export default {
       </div></div>
 
 
-      <div class="identifiering"><h4>Ingående artiklar och identifiering</h4>
-      
+      <div class="identifiering">
+        <div class="second-head"> 
+        <h1>Ingående artiklar och identifiering</h1>
+   <hr>
+  </div>
+
       <table>
 
       <tr>
@@ -63,8 +72,15 @@ export default {
     </table>
 
       </div>
-      <div class="Prestanda"><h4>Ingående artiklar och identifiering</h4>
-      
+
+
+      <div class="Prestanda"><h4></h4>
+
+        <div class="second-head"> 
+        <h1>Prestanda</h1>
+   <hr>
+  </div>
+
       <table>
 
       <tr>

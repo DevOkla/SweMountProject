@@ -1,4 +1,4 @@
-<script>
+<script >
 var rootBrach = "/swemounttest";
 
 export default {
@@ -11,6 +11,7 @@ export default {
       partners: [
         {
           name:"BRANDT Fordon",
+          type:"partners",
           pic: `${rootBrach}/partners/brandt.jpg`,
           adress1:"",
           adress2:"",
@@ -20,6 +21,7 @@ export default {
           website:"https://www.brandtbil.se/",
         },{
           name:"K-bygg Urbans",
+          type:"partners",
           pic: `${rootBrach}/partners/kbygg.png`,
           adress1:"Mogölsvägen Hedenstorp",
           adress2:"554 75 Jönköping",
@@ -29,6 +31,7 @@ export default {
           website:"https://jonkoping.k-bygg.se/",
         },{
           name:"Areco",
+          type:"partners",
           pic: `${rootBrach}/partners/areco.png`,
           adress1:"",
           adress2:"",
@@ -38,6 +41,7 @@ export default {
           website:"https://www.areco.se/sv/",
         },{
           name:"PEAB",
+          type:"partners",
           pic: `${rootBrach}/partners/peab-logo.jpg`,
           adress1:"",
           adress2:"",
@@ -47,6 +51,7 @@ export default {
           website:"https://peab.se/",
         },{
           name:"Edstroms",
+          type:"partners",
           pic: `${rootBrach}/partners/Edstroms_logo.png`,
           adress1:"Edströms",
           adress2:"Solåsvägen 14",
@@ -56,6 +61,7 @@ export default {
           website:"https://www.edstroms.com/",
         },{
           name:"tyrens",
+          type:"partners",
           pic: `${rootBrach}/partners/tyrens_ny.png`,
           adress1:"Tyréns Sverige AB",
           adress2:"Folkungagatan 44",
@@ -65,6 +71,7 @@ export default {
           website:"https://www.tyrens.se/sv/",
         },{
           name:"Hellbergs",
+          type:"partners",
           pic: `${rootBrach}/partners/hellbergs.png`,
           adress1:"Långgatan 63",
           adress2:"464 33 Mellerud",
@@ -74,6 +81,7 @@ export default {
           website:"https://www.hellbergs.se/sv",
         },{
           name:"skanska",
+          type:"distributor",
           pic: `${rootBrach}/partners/skanska.png`,
           adress1:"Skanska Sverige",
           adress2:"Warfvinges väg 25",
@@ -83,6 +91,7 @@ export default {
           website:"https://www.skanska.se/",
         },{
           name:"treform",
+          type:"partners",
           pic: `${rootBrach}/partners/treform.png`,
           adress1:"Axeltoftavägen 170",
           adress2:"261 35 Landskrona",
@@ -96,6 +105,15 @@ export default {
       ],
     };
   },
+  computed: {
+    onlyPartners() {
+      return this.partners.filter(i => i.type == "partners" )
+    },
+    onlyDistributor() {
+      return this.partners.filter(i => i.type == "distributor" )
+    },
+
+  },  
   methods: {
   },
 };
@@ -104,37 +122,35 @@ export default {
 
 <template>
   <main>
+    <img class="head-imgs" src="/img/swemount15.jpg" alt="">
+
     <h1>
-      {{ langIsSe? "Distributörer": "Distributors" }}  
+      {{ langIsSe? "Distributörer & Partners": "Distributors & Partners" }}  
 
   </h1>
+
+  <div class="second-head"> 
+   <h1> {{ langIsSe? "Distributörer": "Distributors" }}</h1>
+   <hr>
+  </div>
   <div class="all-partners">
-  <div class="single-partner" v-for="(i,index) in partners" :key="index"> 
-    <img :src="i.pic" alt="">
-   <!-- <h3>{{i.name}}</h3><br>
-    <p>{{i.adress1}}</p>
-    <p>{{ i.adress2 }}</p>
-    <p>{{ i.adress3 }}</p> <br>
-<p>{{ i.phone }}</p>
-<p>{{ i.email }}</p>
-<p>{{ i.website }}</p>
--->
+  <div class="single-partner" v-for="(i,index) in onlyDistributor" :key="index" > 
+    <img  :src="i.pic" alt="">
   </div>
 </div>
-  <h1>
-    Partners
-  </h1>
+
+
+
+<div class="second-head"> 
+  <h1> Partners</h1>
+<hr>
+</div>
+
+
+
   <div class="all-partners">
-  <div class="single-partner" v-for="(i,index) in partners" :key="index"> 
-    <img :src="i.pic" alt="">
-    <!-- <h3>{{i.name}}</h3><br>
-    <p>{{i.adress1}}</p>
-    <p>{{ i.adress2 }}</p>
-    <p>{{ i.adress3 }}</p> <br>
-<p>{{ i.phone }}</p>
-<p>{{ i.email }}</p>
-<p>{{ i.website }}</p>
--->
+  <div class="single-partner" v-for="(i,index) in onlyPartners" :key="index"> 
+    <img  :src="i.pic" alt="">
   </div>
 </div>
   </main>
