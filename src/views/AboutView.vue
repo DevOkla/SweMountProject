@@ -37,7 +37,8 @@ export default {
           phone: "0700000000",
           email: "Ulf@swemount.se",
           pic: `${rootBrach}/personal/Ulf1.jpg`,
-        },{
+        },
+        {
           title: "Försäljning",
           name: "Tobias Axelsson ",
           phone: "0700000000",
@@ -48,6 +49,7 @@ export default {
       selectedPersonal: 0,
     };
   },
+
   methods: {
     selectPersonal(i) {
       this.selectedPersonal = i;
@@ -63,7 +65,7 @@ export default {
     <h1>{{ langIsSe? "Om oss": "About us" }}</h1>
 
     <div class="home-article4">
-      <div class="p-text" style="width: 60%">
+      <div class="p-text" >
         <h2 class="yellow h2-home" >Swemount</h2>
 
         <p class="">{{ langIsSe? se[0]: en[0] }}</p>

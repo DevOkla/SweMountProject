@@ -5,6 +5,9 @@ import VueKonva from 'vue-konva';
 
 import './assets/main.css'
 
+router.afterEach((to, from) => {
+    window.scrollTo(0, 0)
+  })
 const app = createApp(App)
 
 app.use(router)

@@ -853,6 +853,19 @@ h2{
   width: 25vw;
   margin: 0 0 0 20vw ;
 }
+
+
+.second-head {
+    margin-top: 0vw;
+
+  }
+
+  .second-head h1 {
+    color: #22326C;
+    margin-top: 4.5vw;
+
+  }
+
 }
 
 /***********************************************************************************************************************/
@@ -969,6 +982,12 @@ height: 136px;
   width: 480px;
   margin: 0 0 0 384px ;
 }
+
+  .second-head h1 {
+    color: #22326C;
+    margin-top: 86.4px;
+
+  }
 
 }
 </style>

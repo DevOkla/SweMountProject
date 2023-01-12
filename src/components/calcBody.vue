@@ -667,7 +667,7 @@ export default {
   }
   .multi_elements {
     display: flex;
-    max-width: 1920px;
+    max-width: 1200px;
     margin-top: 8.072916667vw;
   }
   .multi_elements > div {
@@ -810,7 +810,7 @@ margin-bottom: 0;
 }
 
 /***********************************************************************************************************************/
-@media screen and (min-width: 1920px) {
+@media screen and (min-width: 1200px) {
   .multi_elements {
     margin-top: 155px;
   }

@@ -24,7 +24,7 @@ export default {
     <img class="head-imgs" src="/img/swemount14.jpg" alt="">
 
 <h1>{{ langIsSe? "Produkter": "Products" }}</h1>
-    <div class="all-products" style="max-width: 1920px;">
+    <div class="all-products" style="max-width: 1200px;">
       <RouterLink
         v-for="(i, index) in products" 
           :key="index"

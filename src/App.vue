@@ -1,10 +1,16 @@
 <script>
+
+
 import { RouterLink, RouterView } from 'vue-router'
 //git subtree push --prefix dist origin gh-pages
+
+
 export default {
   data(){
     return {
       langIsSe:true,
+      menuMobile:false,
+
     }
   },
 }
@@ -13,9 +19,26 @@ export default {
 <template>
 
   <header>
-    <div class="header-content" style="max-width: 1920px;">
+    <div class="header-content" style="max-width: 1300px;">
+
     <a href="/"><img src="/swemount_logo.png" alt="swemount"></a>
-      <nav>
+   <div style="display:flex;gap:7vw;">
+    <div class="lang-mobile" style="cursor:pointer;" @click="langIsSe=!langIsSe,menuMobile = false"><i class="fa-solid fa-earth-americas "></i> {{langIsSe?"SV":"EN"}}</div>
+
+    <div   @click="menuMobile = true"> <i class="fa-solid fa-bars menu-bar yellow" ></i></div>
+  </div>
+    <div :class="['mobile-full-menu', menuMobile? '' :' hidden-div' ] ">
+      <a href="/"><img src="/swemount_logo.png" alt="swemount"></a>
+      <RouterLink class="nav-children" to="/" @click="menuMobile = false">{{ langIsSe? "Hem": "Home" }}</RouterLink>
+        <RouterLink class="nav-children" to="/products" @click="menuMobile = false">{{ langIsSe? "Produkter": "Products" }}</RouterLink>
+        <RouterLink class="nav-children" to="/claculator" @click="menuMobile = false">{{ langIsSe? "Kalkylator": "Calculator" }}</RouterLink>
+        <RouterLink class="nav-children" to="/partners" @click="menuMobile = false">{{ langIsSe? "Distributörer & Partners": "Distributors & Partners" }}</RouterLink>
+        <RouterLink class="nav-children" to="/about" @click="menuMobile = false">{{ langIsSe? "Om oss": "About us" }}</RouterLink>
+        <RouterLink class="nav-children" to="/contact" @click="menuMobile = false">Support</RouterLink>
+       <div @click="menuMobile = false"> <i class="fa-solid fa-circle-xmark menu-bar yellow exit-icon" ></i></div>
+    </div>
+
+    <nav>
         <RouterLink class="nav-children" to="/">{{ langIsSe? "Hem": "Home" }}</RouterLink><span style="color:#ABABAB;">|</span> 
         <RouterLink class="nav-children" to="/products">{{ langIsSe? "Produkter": "Products" }}</RouterLink><span style="color:#ABABAB;">|</span>
         <RouterLink class="nav-children" to="/claculator">{{ langIsSe? "Kalkylator": "Calculator" }}</RouterLink><span style="color:#ABABAB;">|</span>
@@ -44,7 +67,7 @@ export default {
 
                             
 
-<div style="margin-bottom:1vw;"> <p style="display: flex; justify-content: space-between;"> <a href="https://www.facebook.com/swemount"><i class="fa-brands fa-facebook"></i></a><a href="https://www.linkedin.com/company/swemount"><i class="fa-brands fa-linkedin"></i></a><a href="https://www.Instagram.com/swemount"><i class="fa-brands fa-instagram"></i></a></p></div>
+<div class="sm-icon"> <p style="display: flex; justify-content: space-between;"> <a href="https://www.facebook.com/swemount"><i class="fa-brands fa-facebook"></i></a><a href="https://www.linkedin.com/company/swemount"><i class="fa-brands fa-linkedin"></i></a><a href="https://www.Instagram.com/swemount"><i class="fa-brands fa-instagram"></i></a></p></div>
 
 </div>
 

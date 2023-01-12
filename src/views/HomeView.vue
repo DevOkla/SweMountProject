@@ -48,11 +48,11 @@ Sammanfattningsvis är solceller en lovande teknik för att generera ren, förny
   <main>
 
     <div class="video-container">
-      <div style="max-width: 1920px; margin: auto;">
+      <div style="max-width: 1200px; margin: auto;">
       <div class="head-text" ><h1 class="" >Swemount</h1>
 <p class="white"> Swemount erbjuder innovativa och enkla lösningar med hög kvalitet för montering av solcellspaneler. Alla våra system är utvecklade i Sverige, med fokus på varje detalj.
 Registrera dig och ta del av vår kalkylator för snö & vindlastberäkningar, eller kontakta oss för en skräddarsydd offert.</p>
-<button> <a class="bold-font" href="/contact" style="text-dec"> {{ langIsSe? "Kontakta oss": "Contact us" }}</a></button>
+<button> <a class=" " href="/contact" style=""> {{ langIsSe? "Kontakta oss": "Contact us" }}</a></button>
 </div></div>
 
 
@@ -68,7 +68,7 @@ Registrera dig och ta del av vår kalkylator för snö & vindlastberäkningar, e
 
 
   <div class="home-article1">
-      <div style="display: flex; align-items: center;max-width: 1920px;" >
+      <div style="display: flex; align-items: center;max-width: 1200px;" >
         <div class="p-text">
           <h2 class="yellow h2-home" >{{ langIsSe? "Swemount, vem är vi?": "Swemount, who are we?" }}</h2>
 
@@ -78,7 +78,7 @@ Registrera dig och ta del av vår kalkylator för snö & vindlastberäkningar, e
       </div>
     </div>
 
-<div class="home-article2" style="max-width: 1920px;">
+<div class="home-article2" style="max-width: 1200px;">
   <h2 class="yellow h2-home" style="text-align:center;">{{ langIsSe? "Produktnyheter": "Produktnyheter" }}</h2>
 <div style="display: flex; align-items: center; justify-content: space-between;">
   <div> <img src="/img/swemount10.png" alt=""><h3>SM Roof hook RH2000</h3> <p></p></div>
@@ -88,7 +88,7 @@ Registrera dig och ta del av vår kalkylator för snö & vindlastberäkningar, e
 </div>
 
     <div class="home-article3">
-      <div style="display: flex; align-items: center; max-width: 1920px;">
+      <div style="display: flex; align-items: center; max-width: 1200px;">
         <img class="img-home" src="/img/swemount3.png" alt="" />
 
         <div class="p-text">
