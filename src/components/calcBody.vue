@@ -12,6 +12,16 @@ export default {
   data() {
     return {
       //////////////////////////////////////////////////////////////// variables
+      center: {lat: 57.69867104470487, lng: 14.46878589846311},
+      markers: [
+        {
+          position: {
+            lat: 57.69867104470487, lng: 14.46878589846311
+          },
+        }
+        , // Along list of clusters
+      ],
+
       matrials: matrials,
 
       laglutandeCountMatrial: [
@@ -73,6 +83,8 @@ export default {
   },
   methods: {
     //////////////////////////////////////////////////////////////////// Functions
+    setPlace() {
+    },
 
     getSnoAndVind() {
       let klimatlastX =
@@ -307,14 +319,14 @@ export default {
         @click="goParallella"
       >
         <img src="/img/swemount14.jpg" alt=""  :class="['img-back-box', isLaglutand ? ' img-back-box-active' : '']"/>
-        <p>Låglutande system</p>
+        <p>Låglutande system <span v-if="isLaglutand">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-regular fa-square-check white"></i> </span></p>
       </div>
       <div
         :class="['selection', !isLaglutand ? '  selection-pre' : '']"
         @click="goLaglutand"
       >
         <img src="/img/swemount13.jpg" alt="" :class="['img-back-box', !isLaglutand ? ' img-back-box-active' : '']" />
-        <p>Parallella system</p>
+        <p>Parallella system <span v-if="!isLaglutand">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
       </div>
     </div>
    <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
@@ -542,7 +554,12 @@ export default {
 <div class="position-body">
   <div>
        <p class="bold-font" style="text-align:center;">Ange adress för att starta konfiguratorn</p> 
-        <label for=""><input type="text" /></label>
+        <label for="">  <GMapAutocomplete
+       placeholder="Select address"
+       @place_changed="setPlace"
+    >
+  </GMapAutocomplete>
+<!--<input type="text" />--></label>
 
         <div class="p3">
           <label for=""
@@ -564,13 +581,26 @@ export default {
         </div>
       </div>
         <div>
-          <img
-          class="google-map"
-            src="/img/map.png"
-            alt=""
-            style="cursor: crosshair"
-            @click="mapPointer($event)"
-          />
+          <GMapMap
+      :center="center"
+      :zoom="4"
+      map-type-id="terrain"
+      class="google-map"
+  >
+    <GMapCluster>
+      <GMapMarker
+          :key="index"
+          v-for="(m, index) in markers"
+          :position="m.position"
+          :clickable="true"
+          :draggable="false"
+          :icon="'logo.png'"
+
+          @click="center=m.position"
+      />
+    </GMapCluster>
+  </GMapMap>
+
           <div
             class="childpointer"
             :style="{ top: offsetY + 'px', left: offsetX + 'px' }"
@@ -599,8 +629,8 @@ export default {
             @click="Terrängtyp = 0"
             :class="['selection', Terrängtyp == 0 ? '  selection-pre' : '']"
           >
-            <img src="/calc/1.jpg" alt="" :class="['imgs-selects ', Terrängtyp == 0 ? ' imgs-selects-active' : '']" />
-            <p>A</p>
+            <img src="/calc/1.jpg" alt="" :class="['imgs-selects', Terrängtyp == 0 ? ' imgs-selects-active' : '']" />
+            <p>A <span v-if="Terrängtyp == 0">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
             <div class="discreption">Havs- eller kustområde exponerat för
             öppet hav.</div>
           </div>
@@ -609,7 +639,7 @@ export default {
             :class="['selection', Terrängtyp == 1 ? '  selection-pre' : '']"
           >
             <img src="/calc/2.jpg" alt="" :class="['imgs-selects ', Terrängtyp == 1 ? ' imgs-selects-active' : '']" />
-            <p>B</p>
+            <p>B <span v-if="Terrängtyp == 1">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
             <div class="discreption">Sjö eller plant och horisontellt
             område med försumbar vegetation och utan hinder.
           </div></div>
@@ -618,7 +648,7 @@ export default {
             :class="['selection', Terrängtyp == 2 ? '  selection-pre' : '']"
           >
             <img src="/calc/3.jpg" alt="" :class="['imgs-selects ', Terrängtyp == 2 ? ' imgs-selects-active' : '']" />
-            <p>C</p>
+            <p>C <span v-if="Terrängtyp == 2">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
             <div class="discreption">Område med låg vegetation som gräs
             och enstaka hinder (träd, byggnader) med minsta inbördes avstånd
             lika med 20 gånger hindrets höjd.</div>
@@ -628,7 +658,7 @@ export default {
             :class="['selection', Terrängtyp == 3 ? '  selection-pre' : '']"
           >
             <img src="/calc/4.jpg" alt="" :class="['imgs-selects ', Terrängtyp == 3 ? ' imgs-selects-active' : '']" />
-            <p>D</p>
+            <p>D <span v-if="Terrängtyp == 3">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
             <div class="discreption">Område täckt med vegetation eller
             byggnader eller med enstaka hinder med största inbördes avstånd lika
             med 20 gånger hindrets höjd (till exempel byar, förorter,
@@ -639,7 +669,7 @@ export default {
             :class="['selection', Terrängtyp == 4 ? '  selection-pre' : '']"
           >
             <img src="/calc/5.jpg" alt="" :class="['imgs-selects ', Terrängtyp == 4 ? ' imgs-selects-active' : '']" />
-            <p>E</p>
+            <p>E <span v-if="Terrängtyp == 4">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
             <div class="discreption">Område där minst 15 % av arean är
             bebyggd och där byggnadernas medelhöjd är > 15 m.</div>
           </div>
@@ -661,14 +691,20 @@ export default {
 </template>
 
 <style scoped>
+
+:root {
+  --mw: 12px;
+}
+
+
 @media screen and (min-width: 414px) {
   main {
     margin: 0;
   }
   .multi_elements {
     display: flex;
-    max-width: 1200px;
-    margin-top: 8.072916667vw;
+    width: 58.33333333vw;
+    margin-top: 16.66666667vw;
   }
   .multi_elements > div {
     display: flex;
@@ -696,7 +732,7 @@ export default {
     color: #22326c;
   }
   .selection:hover p {
-    background-color: #22326c;
+    background-color: #8F7348;
     color: #fff;
   }
 
@@ -810,89 +846,151 @@ margin-bottom: 0;
 }
 
 /***********************************************************************************************************************/
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1201px) {
+
   .multi_elements {
-    margin-top: 155px;
+    width: 700px;
+    margin-top: 200px;
   }
-
+  .multi_elements > div {
+    display: flex;
+  }
+  .second-head{
+    margin-top: 80px;
+  }
   .multi_elements > div > img {
-    width: 410px;
+    width: 256.25px;
   }
 
+  .selection {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    position: relative;
+
+  }
 
   .selection p {
-    margin-top: 38.4px;
-    padding: 19.2px;
+    font-family: "Montserrat-bold";
+    text-align: center;
+    width: 90%;
+    margin-top: 24px;
+    padding: 12px;
+    background-color: #fcb324;
+    color: #22326c;
+  }
+  .selection:hover p {
+    background-color: #8F7348;
+    color: #fff;
   }
 
+  .selection-pre p {
+    background-color: #22326c;
+    color: #fff;
+  }
 
   .position-body{
-margin-top: 96px;
-width: 1260px;
+display: flex;
+margin-top: 60px;
+width: 787.5px;
   }
 
 
   .google-map{
-    width: 648px;
-    height: 648px;
+    width: 405px;
+    height: 405px;
 
   }
 input{
-  width: 465px;
-  padding: 9.6px;
-border-radius: 17.28px;
+  width: 290.625px;
+  padding: 6px;
+border-radius: 10.8px;
+margin-left: auto;
+margin-right: auto;
 }
 .input-short{
-  width: 88px;
+  width: 55px;
 
 }
 .unit{
-padding: 9.6px 19.2px;
-border-radius: 19.2px;
+background-color: #22326c;
+color: #fcb324;
+padding: 6px 12px;
+border-radius: 12px;
 }
 .p3{
-  margin-top: 96px;
+  margin-top: 60px;
+}
+.p3 label{
+  font-family: "Montserrat-bold";
+display: flex;
+flex-direction:column ;
 }
 
-
-
+.p3 label>div{
+  justify-content:flex-start;
+  margin: 0;
+}
 .p3 label>div input{
-  margin: 9.6px 57.6px 9.6px 0;
+  margin: 6px 4px 6px 0;
 }
 .Terrangtyp{
-margin-top: 96px;
-width: 1350px;
+display: flex;
+margin-top: 60px;
+width: 843.75px;
 }
 .imgs-selects{
-  width:230px;
-  height:230px;
+  width:143.75px;
+  height:143.75px;
 
-  box-shadow: 9.6px -9.6px 0px 0vw #fcb324;
+  box-shadow: 6px -6px 0px 0px #fcb324;
 border: 1px solid #707070;
 }
-/***************************************************************************** */
+
 .imgs-selects-active{
-  box-shadow: 9.6px -9.6px 0px 0vw #22326c;
+  box-shadow: 6px -6px 0px 0px #22326c;
 
 }
 
 .discreption{
-  padding: 19.2px;
+  display: none;
+  background-color: #22326c;
+  color: #fff;
+  position: absolute;
+  padding: 12px;
+  width:90%; 
+  top: 110%;
 
+}
+
+.discreption:before {
+    content:"";
+    position: absolute;
+    right: 85px; 
+    top: -15px; 
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 15px 15px 15px;
+    border-color: transparent transparent #22326c transparent;
 }
 
 
 
+.selection:hover   .discreption{
 
+  display: block;
+}
 .paragraphs{
 text-align: center;
-margin-top: 4vw;
+margin-top: 48px;
 
 margin-bottom: 0;
 }
 .p-buttons{
-  width: 1152px;
+  width: 720px;
 }
+
 
 }
 </style>

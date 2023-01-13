@@ -767,6 +767,7 @@ tr:nth-child(odd) {
 
 .img-loc {
   width: 62.60416667vw;
+  height: 30vw;
   display: block;
   margin-top: 9.166666667vw;
 }
@@ -1327,6 +1328,7 @@ tr:nth-child(odd) {
   }
   .img-loc {
     width: 62.60416667vw;
+    height: 30vw;
     display: block;
     margin-top: 5vw;
   }
@@ -1882,6 +1884,7 @@ tr:nth-child(odd) {
   }
   .img-loc {
     width: 751.25000004px;
+    height: 360px;
     display: block;
     margin-top: 60px;
   }

@@ -7,7 +7,15 @@ export default {
   },
   data() {
     return {
-      
+      center: {lat: 57.69867104470487, lng: 14.46878589846311},
+      markers: [
+        {
+          position: {
+            lat: 57.69867104470487, lng: 14.46878589846311
+          },
+        }
+        , // Along list of clusters
+      ],
       en: [
         "Swemount is a Swedish company that specializes in manufacturing high-quality mounting systems for solar panels. Our products are suitable for both large and small solar panel installations and have many different options to choose from, so customers can find the mounting system that best meets their needs.",
         "Swemount strives to always be at the cutting edge of technology and offer the most innovative and sustainable mounting systems on the market. The company is also very environmentally conscious and uses only sustainable materials in its production.",
@@ -49,8 +57,15 @@ export default {
       selectedPersonal: 0,
     };
   },
+  mounted() {
+  },
 
   methods: {
+
+
+
+
+
     selectPersonal(i) {
       this.selectedPersonal = i;
     },
@@ -107,8 +122,27 @@ export default {
         <h1>Location</h1>
    <hr>
   </div>
+  <div >
+  <GMapMap
+      :center="center"
+      :zoom="15"
+      map-type-id="terrain"
+      class="img-loc"
+  >
+    <GMapCluster>
+      <GMapMarker
+          :key="index"
+          v-for="(m, index) in markers"
+          :position="m.position"
+          :clickable="true"
+          :draggable="false"
+          :icon="'logo.png'"
 
-      <img class="img-loc" src="/img/map.png" alt="" />
+          @click="center=m.position"
+      />
+    </GMapCluster>
+  </GMapMap>
+</div>
     </div>
   </main>
 </template>
