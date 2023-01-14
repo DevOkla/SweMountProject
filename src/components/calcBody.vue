@@ -3,6 +3,7 @@ import html2pdf from "html2pdf.js";
 import axios from "axios";
 import taket from "./taken.vue";
 import matrials from "../assets/matrials.json";
+import proj4 from 'proj4';
 
 export default {
   components: {
@@ -12,7 +13,7 @@ export default {
   data() {
     return {
       //////////////////////////////////////////////////////////////// variables
-      center: {lat: 57.69867104470487, lng: 14.46878589846311},
+      center: {lat: 62.218112, lng: 14.977494},
       markers: [
         {
           position: {
@@ -21,6 +22,10 @@ export default {
         }
         , // Along list of clusters
       ],
+
+
+
+
 
       matrials: matrials,
 
@@ -76,34 +81,73 @@ export default {
       offsetY: 0,
       Terrängtyp: 0,
       allTaken: 1,
+      
     };
   },
+  computed:{
+    convertCoordinates() {
+      proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs");
+
+      const wgs84 = [this.markers[0].position.lng, this.markers[0].position.lat];
+      const sweref99tm = proj4('EPSG:4326', 'EPSG:3006', wgs84);
+
+      return sweref99tm;
+    }
+
+  },
+  watch:{
+    convertCoordinates: function() {
+console.log("done");
+      this.getSnoAndVind();
+    }
+  },
   mounted() {
+    this.getSnoAndVind();
     //////////////////////////////////////////////////////////////////// import data
   },
   methods: {
     //////////////////////////////////////////////////////////////////// Functions
-    setPlace() {
+
+ 
+    //sets the position of marker when dragged
+    getLatLng(event) {
+      const lat = event.latLng.lat();
+      const lng = event.latLng.lng();
+      this.markers[0].position={lat: lat , lng:lng}
+
     },
 
+    setPlace(e) {
+      const lat = e.geometry.location.lat();
+      const lng = e.geometry.location.lng();
+this.markers[0].position={lat: lat , lng:lng}
+      console.log(e);
+
+    },
+
+
     getSnoAndVind() {
-      let klimatlastX =
+      /*let klimatlastX =
         Math.floor((118181.8182 + (200000 / 66) * this.offsetX) * 1000) / 1000;
       let klimatlastY =
         Math.floor((8021212.1212 - (200000 / 66) * this.offsetY) * 1000) / 1000;
+*/
+
+
+      let klimatlastX =
+      this.convertCoordinates[0];
+      let klimatlastY =
+      this.convertCoordinates[1];
       this.sno = 0;
       this.vind = 0;
-
       axios
         .get(
           `https://api.boverket.se/klimatlast/v1/snolast?x-koord=${klimatlastY}&y-koord=${klimatlastX}`
         )
         .then((response1) => {
           console.log(response1);
-
           this.sno = response1.data.värde.replace(",", ".");
         });
-
       axios
         .get(
           `https://api.boverket.se/klimatlast/v1/vindlast?x-koord=${klimatlastY}&y-koord=${klimatlastX}`
@@ -112,6 +156,9 @@ export default {
           this.vind = response2.data.värde.replace(",", ".");
         });
     },
+
+
+
 
     goLaglutand() {
       this.isLaglutand = false;
@@ -319,7 +366,7 @@ export default {
         @click="goParallella"
       >
         <img src="/img/swemount14.jpg" alt=""  :class="['img-back-box', isLaglutand ? ' img-back-box-active' : '']"/>
-        <p>Låglutande system <span v-if="isLaglutand">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-regular fa-square-check white"></i> </span></p>
+        <p>Låglutande system <span v-if="isLaglutand">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
       </div>
       <div
         :class="['selection', !isLaglutand ? '  selection-pre' : '']"
@@ -554,8 +601,11 @@ export default {
 <div class="position-body">
   <div>
        <p class="bold-font" style="text-align:center;">Ange adress för att starta konfiguratorn</p> 
-        <label for="">  <GMapAutocomplete
+        <label for="">  
+          <GMapAutocomplete
        placeholder="Select address"
+       :component-restrictions="{
+        country: 'se'}"
        @place_changed="setPlace"
     >
   </GMapAutocomplete>
@@ -584,23 +634,40 @@ export default {
           <GMapMap
       :center="center"
       :zoom="4"
+      @click="getLatLng"
+      :options="{
+   zoomControl: true,
+   mapTypeControl: false,
+   scaleControl: false,
+   streetViewControl: false,
+   rotateControl: false,
+   fullscreenControl: false,
+   disableDefaultUi: true
+ }"
+
       map-type-id="terrain"
       class="google-map"
   >
-    <GMapCluster>
       <GMapMarker
           :key="index"
           v-for="(m, index) in markers"
           :position="m.position"
           :clickable="true"
-          :draggable="false"
-          :icon="'logo.png'"
+          :draggable="true"
+          @dragend="getLatLng"
 
-          @click="center=m.position"
+          :icon= '{
+          url: "/logomarker.png",
+          scaledSize: {width: 40, height: 40},
+          labelOrigin: {x: 16, y: -10}
+      }'
+          @drag="handleMarkerDrag"
+      @click="panToMarker"
+
       />
-    </GMapCluster>
   </GMapMap>
-
+<p>{{ markers }}</p>
+<p>{{ convertCoordinates }}</p>
           <div
             class="childpointer"
             :style="{ top: offsetY + 'px', left: offsetX + 'px' }"

@@ -31,7 +31,7 @@ export default {
       <a href="/"><img src="/swemount_logo.png" alt="swemount"></a>
       <RouterLink class="nav-children" to="/" @click="menuMobile = false">{{ langIsSe? "Hem": "Home" }}</RouterLink>
         <RouterLink class="nav-children" to="/products" @click="menuMobile = false">{{ langIsSe? "Produkter": "Products" }}</RouterLink>
-        <RouterLink class="nav-children" to="/claculator" @click="menuMobile = false">{{ langIsSe? "Kalkylator": "Calculator" }}</RouterLink>
+        <RouterLink class="nav-children" to="/calculator" @click="menuMobile = false">{{ langIsSe? "Kalkylator": "Calculator" }}</RouterLink>
         <RouterLink class="nav-children" to="/partners" @click="menuMobile = false">{{ langIsSe? "Distributörer & Partners": "Distributors & Partners" }}</RouterLink>
         <RouterLink class="nav-children" to="/about" @click="menuMobile = false">{{ langIsSe? "Om oss": "About us" }}</RouterLink>
         <RouterLink class="nav-children" to="/contact" @click="menuMobile = false">Support</RouterLink>
@@ -41,7 +41,7 @@ export default {
     <nav>
         <RouterLink class="nav-children" to="/">{{ langIsSe? "Hem": "Home" }}</RouterLink><span style="color:#ABABAB;">|</span> 
         <RouterLink class="nav-children" to="/products">{{ langIsSe? "Produkter": "Products" }}</RouterLink><span style="color:#ABABAB;">|</span>
-        <RouterLink class="nav-children" to="/claculator">{{ langIsSe? "Kalkylator": "Calculator" }}</RouterLink><span style="color:#ABABAB;">|</span>
+        <RouterLink class="nav-children" to="/calculator">{{ langIsSe? "Kalkylator": "Calculator" }}</RouterLink><span style="color:#ABABAB;">|</span>
         <RouterLink class="nav-children" to="/partners">{{ langIsSe? "Distributörer & Partners": "Distributors & Partners" }}</RouterLink><span style="color:#ABABAB;">|</span>
         <RouterLink class="nav-children" to="/about">{{ langIsSe? "Om oss": "About us" }}</RouterLink><span style="color:#ABABAB;">|</span>
         <RouterLink class="nav-children" to="/contact">Support</RouterLink><span style="color:#ABABAB;">|</span>

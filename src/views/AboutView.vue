@@ -7,12 +7,13 @@ export default {
   },
   data() {
     return {
-      center: {lat: 57.69867104470487, lng: 14.46878589846311},
+      center: {lat: 57.69862519804575, lng: 14.468818086508398},
       markers: [
         {
           position: {
-            lat: 57.69867104470487, lng: 14.46878589846311
-          },
+            lat: 57.69862519804575,
+            lng: 14.468818086508398,
+          }
         }
         , // Along list of clusters
       ],
@@ -61,9 +62,6 @@ export default {
   },
 
   methods: {
-
-
-
 
 
     selectPersonal(i) {
@@ -126,21 +124,33 @@ export default {
   <GMapMap
       :center="center"
       :zoom="15"
+
       map-type-id="terrain"
       class="img-loc"
+      :options="{
+   zoomControl: false,
+   mapTypeControl: false,
+   scaleControl: false,
+   streetViewControl: false,
+   rotateControl: false,
+   fullscreenControl: false,
+   disableDefaultUi: true
+ }"
+
   >
-    <GMapCluster>
-      <GMapMarker
+  <GMapMarker
           :key="index"
           v-for="(m, index) in markers"
           :position="m.position"
           :clickable="true"
           :draggable="false"
-          :icon="'logo.png'"
+          :icon= '{
+          url: "/logomarker.png",
+          scaledSize: {width: 60, height: 60},
+          labelOrigin: {x: 16, y: -10}
+      }'
+         />
 
-          @click="center=m.position"
-      />
-    </GMapCluster>
   </GMapMap>
 </div>
     </div>
