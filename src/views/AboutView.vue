@@ -145,7 +145,7 @@ export default {
           :clickable="true"
           :draggable="false"
           :icon= '{
-          url: "/logomarker.png",
+          url: "/swemounttest/logomarker.png",
           scaledSize: {width: 60, height: 60},
           labelOrigin: {x: 16, y: -10}
       }'

@@ -23,7 +23,7 @@ export default {
       rootBrach:"/swemounttest",
 
       isingleProduct:picsrc.productsinfo.find(i=> i.artNum==this.$route.params.id),
-      identifiering:picsrc[(this.$route.params.id+'a')],
+      identifiering: picsrc[(this.$route.params.id+'a')] ? picsrc[(this.$route.params.id+'a')] :'',
       Prestanda: picsrc[(this.$route.params.id+'b')] ? picsrc[(this.$route.params.id+'b')] :'',
 
 
@@ -40,7 +40,13 @@ console.log(this.Prestanda);
   return ''
   
   },
-
+  identifieringHeadings() {
+      if (this.identifiering[0]){
+     return Object.keys(this.identifiering[0]);
+    }    
+  return ''
+  
+  },
   },
   methods: {
   },
@@ -85,25 +91,13 @@ console.log(this.Prestanda);
   </div>
 
       <table>
-
-      <tr>
-        <th>Benämning</th>
-        <th>Vikt</th>
-        <th>Ytbehandling</th>
-        <th>Färg</th>
-        <th>Antal</th>
-        <th>Artikelnr.</th>
+        <tr>
+        <th  v-for="heading in identifieringHeadings" :key="heading">{{heading}}</th>
       </tr>
       <tr v-for="(i,index) in identifiering" :key="index">
-        <td>{{i.Benämning}}</td>
-        <td>{{i.Vikt}}</td>
-        <td>{{i.Ytbehandling}}</td>
-        <td>{{i.Färg}}</td>
-        <td>{{i.Antal}}</td>
-        <td>{{i.Artikelnr}}</td>
+        <td v-for="ii in identifieringHeadings" :key="ii">{{ i[ii] }}</td>
 
       </tr>
-
     </table>
 
       </div>

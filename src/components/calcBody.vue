@@ -657,7 +657,7 @@ this.markers[0].position={lat: lat , lng:lng}
           @dragend="getLatLng"
 
           :icon= '{
-          url: "/logomarker.png",
+          url: "/swemounttest/logomarker.png",
           scaledSize: {width: 40, height: 40},
           labelOrigin: {x: 16, y: -10}
       }'
