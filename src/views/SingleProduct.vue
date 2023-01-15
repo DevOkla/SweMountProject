@@ -22,8 +22,25 @@ export default {
 
       rootBrach:"/swemounttest",
 
-      isingleProduct:picsrc[this.$route.params.id],
+      isingleProduct:picsrc.productsinfo.find(i=> i.artNum==this.$route.params.id),
+      identifiering:picsrc[(this.$route.params.id+'a')],
+      Prestanda: picsrc[(this.$route.params.id+'b')] ? picsrc[(this.$route.params.id+'b')] :'',
+
+
     };
+  },
+  mounted(){
+console.log(this.Prestanda);
+  },
+  computed:{
+    PrestandaHeadings() {
+      if (this.Prestanda[0]){
+     return Object.keys(this.Prestanda[0]);
+    }    
+  return ''
+  
+  },
+
   },
   methods: {
   },
@@ -35,7 +52,7 @@ export default {
       
 
       <div class="product-head">
-      <img :src="rootBrach+isingleProduct.pic" alt="" class="product-img img-back-box" />
+      <img :src="rootBrach+'/products/'+isingleProduct.artNum+'.'+isingleProduct.pic" alt="" class="product-img img-back-box" />
       <div>
         <div class="second-head" style="margin: 0; "> 
         <h2 style="text-align: left; margin-top: 0;">{{ isingleProduct.name }}</h2>
@@ -77,13 +94,13 @@ export default {
         <th>Antal</th>
         <th>Artikelnr.</th>
       </tr>
-      <tr v-for="(i,index) in isingleProduct.Benämning" :key="index">
-        <td>{{i}}</td>
-        <td>{{isingleProduct.Vikt[index]}}</td>
-        <td>{{isingleProduct.Ytbehandling[index]}}</td>
-        <td>{{isingleProduct.Färg[index]}}</td>
-        <td>{{isingleProduct.Antal[index]}}</td>
-        <td>{{isingleProduct.Artikelnr[index]}}</td>
+      <tr v-for="(i,index) in identifiering" :key="index">
+        <td>{{i.Benämning}}</td>
+        <td>{{i.Vikt}}</td>
+        <td>{{i.Ytbehandling}}</td>
+        <td>{{i.Färg}}</td>
+        <td>{{i.Antal}}</td>
+        <td>{{i.Artikelnr}}</td>
 
       </tr>
 
@@ -102,20 +119,10 @@ export default {
       <table>
 
       <tr>
-        <th>Typ av infästningsmaterial</th>
-        <th>Plåttjocklek</th>
-        <th>Kvalité (N/mm²)</th>
-        <th>Fx+</th>
-        <th>Fx-</th>
-        <th>Fy+</th>
+        <th  v-for="heading in PrestandaHeadings" :key="heading">{{heading}}</th>
       </tr>
-      <tr v-for="(i,index) in isingleProduct.Typavinfästningsmaterial" :key="index">
-        <td>{{i}}</td>
-        <td>{{isingleProduct.Plåttjocklek[index]}}</td>
-        <td>{{isingleProduct.Kvalité[index]}}</td>
-        <td>{{isingleProduct.Fxp[index]}}</td>
-        <td>{{isingleProduct.Fxm[index]}}</td>
-        <td>{{isingleProduct.Fyp[index]}}</td>
+      <tr v-for="(i,index) in Prestanda" :key="index">
+        <td v-for="ii in PrestandaHeadings" :key="ii">{{ i[ii] }}</td>
 
       </tr>
 

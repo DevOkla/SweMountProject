@@ -10,7 +10,7 @@ export default {
   data() {
     return {
       rootBrach:"/swemounttest",
-      products:picsrc,
+      products:picsrc.productsinfo,
     };
   },
   mount(){
@@ -28,12 +28,12 @@ export default {
       <RouterLink
         v-for="(i, index) in products" 
           :key="index"
-          :to="`/products/${index}`"
+          :to="`/products/${i.artNum}`"
           class="single-product"
         >
         <div class="artnmr"> <p   style="text-decoration:none; color: white;">{{ i.artNum }}</p></div>
 
-        <img :src="rootBrach+i.pic" alt="" />
+        <img :src="rootBrach+'/products/'+i.artNum+'.'+i.pic" alt="" />
         <div class="product-caption">
         <h3 class="yellow" style="text-align: center;text-decoration:none;">{{ i.name }}</h3>
         <p class="white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, saepe voluptatem.</p>

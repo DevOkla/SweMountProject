@@ -11,8 +11,11 @@ export default {
 
   data(){
     return{
-    loggedIn:true,
+    loggedIn:false,
     showPassword:false,
+    emailCheck:'',
+    passwordCheck:'',
+
     en:[
       "Thank you for your interest in our company. To sign up and create an account, please contact us. Once you have completed the sign up process and received your login credentials, you can log in to access our services. We look forward to working with you",
       "We apologize, but this page is not optimized for small screens with a width less than 768 pixels. For the best experience, please visit this page on a device with a larger screen or adjust your screen resolution to at least 768 pixels wide",
@@ -26,14 +29,22 @@ export default {
 
   }
   },
+  methods:{
+    checkLoggare(){
+if (this.emailCheck=="info@swemount.se"&&this.passwordCheck=="swemountinfo") {
+  this.loggedIn=true;
+} else {alert("Wrong email or password")}
+    },
+  },
 }
+
 </script>
 
 <template>
   <main>
     <img class="head-imgs " src="/img/swemount15.jpg" alt="">
 
-    <h1 >{{ langIsSe? "Kalkylator": "Calculator" }}</h1>  
+    <h1 >{{ langIsSe? "Kalkylator": "Calculator" }}</h1>
 
     <div class="less768">
       <div class="signup-msg">{{ langIsSe? se[1]: en[1] }}</div>
@@ -50,10 +61,10 @@ export default {
   </div>
 
   <form action="">
-    <label for="email"><p>Eamil:</p><input type="email" name="email" placeholder="anders.andersson@gmail.com" required></label>
-      <label for="password" style="position:relative;"><p>{{ langIsSe? "Lösenord": "Password" }}:</p><input :type="[showPassword?'text':'password']" name="password" placeholder="***********" required> <div class="show-buttons" @click="showPassword=!showPassword"><i class="fa-regular fa-eye" v-if="showPassword"></i><i class="fa-regular fa-eye-slash" v-if="!showPassword"></i></div></label>
+    <label for="email"><p>Eamil:</p><input type="email" name="email" placeholder="anders.andersson@gmail.com" v-model="emailCheck" required></label>
+      <label for="password" style="position:relative;"><p>{{ langIsSe? "Lösenord": "Password" }}:</p><input :type="[showPassword?'text':'password']" name="password" placeholder="***********" v-model="passwordCheck" required> <div class="show-buttons" @click="showPassword=!showPassword"><i class="fa-regular fa-eye" v-if="showPassword"></i><i class="fa-regular fa-eye-slash" v-if="!showPassword"></i></div></label>
 
-      <button @click="loggedIn=true">{{ langIsSe? "Logga in": "Log in" }}</button>
+      <button @click="checkLoggare">{{ langIsSe? "Logga in": "Log in" }}</button>
 
   </form>
   <div class="signup-msg">{{ langIsSe? se[0]: en[0] }}</div>
@@ -78,7 +89,7 @@ export default {
 
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1201px) {
   .margin-bottoms{
   margin-bottom: 48px;
 }

@@ -133,47 +133,47 @@ export default {
         [
           {
             name: "Fotplatta",
-            pic: `${rootBrach}/products/Fotplatta.jpg`,
+            pic: `${rootBrach}/products/TF1400.jpg`,
           },
 
           {
             name: "Läktfäste",
-            pic: `${rootBrach}/products/Läktfäste.jpg`,
+            pic: `${rootBrach}/products/LF1400.jpg`,
           },
         ],
         [
           {
             name: "Fotplatta",
-            pic: `${rootBrach}/products/Fotplatta.jpg`,
+            pic: `${rootBrach}/products/TF1400.jpg`,
           },
 
           {
             name: "Läktfäste",
-            pic: `${rootBrach}/products/Läktfäste.jpg`,
+            pic: `${rootBrach}/products/LF1400.jpg`,
           },
         ],
         [
           {
             name: "Falsfäste",
-            pic: `${rootBrach}/products/swemount15product.jpg`,
+            pic: `${rootBrach}/products/FF1300.jpg`,
           },
         ],
         [
           {
             name: "Lång skena",
-            pic: `${rootBrach}/products/swemount11product.jpg`,
+            pic: `${rootBrach}/products/IS2450.jpg`,
           },
         ],
         [
           {
             name: "Lång skena",
-            pic: `${rootBrach}/products/swemount11product.jpg`,
+            pic: `${rootBrach}/products/IS2450.jpg`,
           },
         ],
         [
           {
             name: "Tätplåt slät",
-            pic: `${rootBrach}/products/swemount13product.jpg`,
+            pic: `${rootBrach}/products/TP3552.jpg`,
           },
         ],
       ],

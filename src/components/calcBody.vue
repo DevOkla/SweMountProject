@@ -377,7 +377,7 @@ this.markers[0].position={lat: lat , lng:lng}
       </div>
     </div>
    <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-    <div v-if="isLaglutand" id="Laglutande">
+    <div v-if="isLaglutand" style="display:none;" id="Laglutande">
       <h2>Inställningar</h2>
 
       <div class="p1">
@@ -666,8 +666,6 @@ this.markers[0].position={lat: lat , lng:lng}
 
       />
   </GMapMap>
-<p>{{ markers }}</p>
-<p>{{ convertCoordinates }}</p>
           <div
             class="childpointer"
             :style="{ top: offsetY + 'px', left: offsetX + 'px' }"

@@ -82,8 +82,8 @@ Registrera dig och ta del av vår kalkylator för snö & vindlastberäkningar, e
   <h2 class="yellow h2-home" style="text-align:center;">{{ langIsSe? "Produktnyheter": "Produktnyheter" }}</h2>
 <div style="display: flex; align-items: center; justify-content: space-between;">
   <div> <img src="/img/swemount10.png" alt=""><h3>SM Roof hook RH2000</h3> <p></p></div>
-  <div><img src="/img/swemount11.png" alt=""><h3>Funktion 2</h3><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, saepe voluptatem.</p></div>
-  <div><img src="/img/swemount12.png" alt=""><h3>Funktion 3</h3><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, saepe voluptatem.</p></div>
+  <div><img src="/img/swemount11.png" alt=""><h3>Guardian Fall Protection Roof Anchor</h3></div>
+  <div><img src="/img/swemount12.png" alt=""><h3>DBI-SALA Roof Anchor</h3></div>
 </div>
 </div>
 
