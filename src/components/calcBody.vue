@@ -1,31 +1,31 @@
 <script >
-import html2pdf from "html2pdf.js";
 import axios from "axios";
 import taket from "./taken.vue";
 import matrials from "../assets/matrials.json";
-import proj4 from 'proj4';
+import proj4 from "proj4";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 export default {
   components: {
     taket,
   },
+  props: {
+    langIsSe: Boolean,
+  },
 
   data() {
     return {
       //////////////////////////////////////////////////////////////// variables
-      center: {lat: 62.218112, lng: 14.977494},
+      center: { lat: 62.218112, lng: 14.977494 },
       markers: [
         {
           position: {
-            lat: 57.69867104470487, lng: 14.46878589846311
+            lat: 57.69867104470487,
+            lng: 14.46878589846311,
           },
-        }
-        , // Along list of clusters
+        }, // Along list of clusters
       ],
-
-
-
-
 
       matrials: matrials,
 
@@ -81,25 +81,31 @@ export default {
       offsetY: 0,
       Terrängtyp: 0,
       allTaken: 1,
-      
+      showKon: [false],
+      whenPdf:'none',
     };
   },
-  computed:{
+  computed: {
     convertCoordinates() {
-      proj4.defs("EPSG:3006","+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs");
+      proj4.defs(
+        "EPSG:3006",
+        "+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs"
+      );
 
-      const wgs84 = [this.markers[0].position.lng, this.markers[0].position.lat];
-      const sweref99tm = proj4('EPSG:4326', 'EPSG:3006', wgs84);
+      const wgs84 = [
+        this.markers[0].position.lng,
+        this.markers[0].position.lat,
+      ];
+      const sweref99tm = proj4("EPSG:4326", "EPSG:3006", wgs84);
 
       return sweref99tm;
-    }
-
+    },
   },
-  watch:{
-    convertCoordinates: function() {
-console.log("done");
+  watch: {
+    convertCoordinates: function () {
+      console.log("done");
       this.getSnoAndVind();
-    }
+    },
   },
   mounted() {
     this.getSnoAndVind();
@@ -108,23 +114,19 @@ console.log("done");
   methods: {
     //////////////////////////////////////////////////////////////////// Functions
 
- 
     //sets the position of marker when dragged
     getLatLng(event) {
       const lat = event.latLng.lat();
       const lng = event.latLng.lng();
-      this.markers[0].position={lat: lat , lng:lng}
-
+      this.markers[0].position = { lat: lat, lng: lng };
     },
 
     setPlace(e) {
       const lat = e.geometry.location.lat();
       const lng = e.geometry.location.lng();
-this.markers[0].position={lat: lat , lng:lng}
+      this.markers[0].position = { lat: lat, lng: lng };
       console.log(e);
-
     },
-
 
     getSnoAndVind() {
       /*let klimatlastX =
@@ -133,11 +135,8 @@ this.markers[0].position={lat: lat , lng:lng}
         Math.floor((8021212.1212 - (200000 / 66) * this.offsetY) * 1000) / 1000;
 */
 
-
-      let klimatlastX =
-      this.convertCoordinates[0];
-      let klimatlastY =
-      this.convertCoordinates[1];
+      let klimatlastX = this.convertCoordinates[0];
+      let klimatlastY = this.convertCoordinates[1];
       this.sno = 0;
       this.vind = 0;
       axios
@@ -156,9 +155,6 @@ this.markers[0].position={lat: lat , lng:lng}
           this.vind = response2.data.värde.replace(",", ".");
         });
     },
-
-
-
 
     goLaglutand() {
       this.isLaglutand = false;
@@ -344,11 +340,36 @@ this.markers[0].position={lat: lat , lng:lng}
     },
 
     exportToPDF() {
-      html2pdf(document.getElementById("element-to-pdf"), {
-        margin: 1,
-        filename: "i-was-html.pdf",
-      });
+
+      this.whenPdf='block';
+
+
+      var doc = new jsPDF("p", 'pt','a4',true,true);
+
+      let source = document.getElementById("element-to-pdf");
+      doc.addFileToVFS("/Montserrat-Regular.ttf");
+    doc.addFont("Montserrat-Regular.ttf", "Montserrat", "normal");
+    doc.setFont("Montserrat");
+    doc.addFileToVFS("/Montserrat-Bold.ttf");
+    doc.addFont("Montserrat-Bold.ttf", "Montserrat-Bold", "normal");
+    doc.setFont("Montserrat-Bold");
+    doc.addFont('FontAwesome', 'FontAwesome', 'normal');
+    doc.setFont('FontAwesome');
+
+
+      doc.html(source, {
+        callback: function (doc) {
+          doc.save('swemount')
+        },
+        x: 10,
+        y: 10,
+      })
+
+      setTimeout(() => {
+        this.whenPdf='none';
+}, 300)
     },
+
     mapPointer(event) {
       this.offsetX = event.offsetX - 2;
       this.offsetY = event.offsetY - 2;
@@ -365,186 +386,286 @@ this.markers[0].position={lat: lat , lng:lng}
         :class="['selection', isLaglutand ? ' selection-pre' : '']"
         @click="goParallella"
       >
-        <img src="/img/swemount14.jpg" alt=""  :class="['img-back-box', isLaglutand ? ' img-back-box-active' : '']"/>
-        <p>Låglutande system <span v-if="isLaglutand">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+        <img
+          src="/img/swemount14.jpg"
+          alt=""
+          :class="['img-back-box', isLaglutand ? ' img-back-box-active' : '']"
+        />
+        <p>
+          Låglutande system
+          <span v-if="isLaglutand"
+            >&nbsp;&nbsp;&nbsp;&nbsp;<i
+              class="fa-solid fa-square-check white"
+            ></i>
+          </span>
+        </p>
       </div>
       <div
         :class="['selection', !isLaglutand ? '  selection-pre' : '']"
         @click="goLaglutand"
       >
-        <img src="/img/swemount13.jpg" alt="" :class="['img-back-box', !isLaglutand ? ' img-back-box-active' : '']" />
-        <p>Parallella system <span v-if="!isLaglutand">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+        <img
+          src="/img/swemount13.jpg"
+          alt=""
+          :class="['img-back-box', !isLaglutand ? ' img-back-box-active' : '']"
+        />
+        <p>
+          Parallella system
+          <span v-if="!isLaglutand"
+            >&nbsp;&nbsp;&nbsp;&nbsp;<i
+              class="fa-solid fa-square-check white"
+            ></i>
+          </span>
+        </p>
       </div>
     </div>
-   <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-    <div v-if="isLaglutand" style="display:none;" id="Laglutande">
-      <h2>Inställningar</h2>
-
-      <div class="p1">
-        <div class="p2">
-          labelAvstånd mellan fästen <br />
-
-          <div class="measurement">
-            <input type="number" v-model="AvstandMellanFasten" /><span
-              class="unit"
-              >mm</span
-            >
-          </div>
-        </div>
-        <div class="p2">
-          Ytbehandling <br />
-
-          <label for="" class="color-selector" @click="colorName = 'gray'"
-            >Varmförzinkat
-            <div class="color-box varmforzinkat"></div>
-
-            <input type="radio" name="color" value="gray" v-model="colorName" />
-          </label>
-          <label for="" class="color-selector" @click="colorName = 'black'"
-            >Svartlackerat
-            <div class="color-box svartlackerat"></div>
-
-            <input
-              type="radio"
-              name="color"
-              value="black"
-              v-model="colorName"
-              checked
-            />
-          </label>
-        </div>
-      </div>
-      <hr />
-      <br />
-
-      <div v-for="(item, index) in laglutandeCountMatrial" v-bind:key="index">
-        <h3>Konfiguration {{ index + 1 }}</h3>
-
-        <div class="p1">
-          <div class="p2">
-            Antal paneler/rad <br />
-
-            <div class="measurement">
-              <input type="number" min="1" v-model="item.AntalPneler" /><span
-                class="unit"
-                >st</span
-              >
-            </div>
-          </div>
-          <div class="p2">
-            Antal rader med paneler <br />
-
-            <div class="measurement">
-              <input
-                type="number"
-                min="1"
-                v-model="item.AntalRaderMedPaneler"
-              /><span class="unit"> st</span>
-            </div>
-          </div>
-          <div class="p2">
-            Antal av denna konfigurationen <br />
-
-            <div class="measurement">
-              <input
-                type="number"
-                min="1"
-                v-model="item.AntalAvDennaKonfigurationen"
-              /><span class="unit"> st</span>
-            </div>
-          </div>
-          <div class="p-buttons">
-            <button
-              v-if="index + 1 == laglutandeCountMatrial.length"
-              @click="
-                laglutandeCountMatrial.push({
-                  AntalPneler: 1,
-                  AntalRaderMedPaneler: 1,
-                  AntalAvDennaKonfigurationen: 1,
-                })
-              "
-            >
-              Lägg till ny konfiguration <span>+</span>
-            </button>
-            <button
-              v-if="
-                laglutandeCountMatrial.length == index + 1 &&
-                laglutandeCountMatrial.length > 1
-              "
-              @click="
-                laglutandeCountMatrial.pop();
-                finalResult.pop();
-                finalCalc.pop();
-              "
-            >
-              Ta bort konfiguration <span>-</span>
-            </button>
-          </div>
-        </div>
-        <br />
+    <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <div v-if="isLaglutand" id="Laglutande">
+      <div class="second-head">
+        <h1>{{ langIsSe ? "Inställningar" : "Inställningar" }}</h1>
         <hr />
       </div>
 
-      <div class="calculate-button" @click="calculateIt">
-        Visa konfiguration
+      <div class="p1 correct-top">
+        <div class="Visual-select">
+          <div class="p3">
+            <label for=""
+              >Avstånd mellan fästen <br />
+              <div class="measurement">
+                <input type="number" v-model="AvstandMellanFasten" /><span
+                  class="unit"
+                  >mm</span
+                >
+              </div></label
+            >
+          </div>
+
+          <div
+            :class="['selection', colorName == 'gray' ? '  selection-pre' : '']"
+            @click="colorName = 'gray'"
+          >
+            <div
+              :class="[
+                'imgs-selects color-box varmforzinkat',
+                colorName == 'gray' ? ' imgs-selects-active' : '',
+              ]"
+            ></div>
+            <p>
+              Varmförzinkat
+              <span v-if="colorName == 'gray'"
+                >&nbsp;&nbsp;&nbsp;&nbsp;<i
+                  class="fa-solid fa-square-check white"
+                ></i>
+              </span>
+            </p>
+            <!--<input
+        type="radio"
+        :name="'color' + takNum"
+        value="gray"
+        v-model="colorName"
+      />-->
+          </div>
+          <div
+            :class="[
+              'selection',
+              colorName == 'black' ? '  selection-pre' : '',
+            ]"
+            @click="colorName = 'black'"
+          >
+            <div
+              :class="[
+                'imgs-selects color-box svartlackerat',
+                colorName == 'black' ? ' imgs-selects-active' : '',
+              ]"
+            ></div>
+            <p>
+              Svartlackerat
+              <span v-if="colorName == 'black'"
+                >&nbsp;&nbsp;&nbsp;&nbsp;<i
+                  class="fa-solid fa-square-check white"
+                ></i>
+              </span>
+            </p>
+            <!-- <input
+        type="radio"
+        :name="'color' + takNum"
+        value="black"
+        v-model="colorName"
+        checked
+      />-->
+          </div>
+        </div>
       </div>
+      <br />
+
+      <div
+        v-for="(item, index) in laglutandeCountMatrial"
+        v-bind:key="index"
+        style=""
+      >
+        <div class="second-head" style="margin: 0">
+          <h2 style="text-align: left; margin-top: 0">
+            Konfiguration {{ index + 1 }}
+          </h2>
+          <hr style="margin: 0" />
+        </div>
+
+        <div class="Visual-select">
+          <div class="p1">
+            <div class="p3">
+              <label for="">
+                Antal paneler/rad <br />
+
+                <div class="measurement">
+                  <input
+                    type="number"
+                    min="1"
+                    v-model="item.AntalPneler"
+                    class="input-short"
+                  /><span class="unit">st</span>
+                </div></label
+              >
+            </div>
+
+            <div class="p3">
+              <label for="">
+                Antal rader med paneler <br />
+
+                <div class="measurement">
+                  <input
+                    type="number"
+                    min="1"
+                    v-model="item.AntalRaderMedPaneler"
+                    class="input-short"
+                  /><span class="unit"> st</span>
+                </div></label
+              >
+            </div>
+            <div class="p3">
+              <label for="">
+                Antal av denna konfigurationen <br />
+
+                <div class="measurement">
+                  <input
+                    type="number"
+                    min="1"
+                    v-model="item.AntalAvDennaKonfigurationen"
+                    class="input-short"
+                  /><span class="unit"> st</span>
+                </div></label
+              >
+            </div>
+            <div class="">
+              <button
+                v-if="index + 1 == laglutandeCountMatrial.length"
+                @click="
+                  laglutandeCountMatrial.push({
+                    AntalPneler: 1,
+                    AntalRaderMedPaneler: 1,
+                    AntalAvDennaKonfigurationen: 1,
+                  });
+                  showKon.push(false);
+                "
+              >
+                Lägg till ny konfiguration <span>+</span>
+              </button>
+              <button
+                v-if="
+                  laglutandeCountMatrial.length == index + 1 &&
+                  laglutandeCountMatrial.length > 1
+                "
+                @click="
+                  laglutandeCountMatrial.pop();
+                  finalResult.pop();
+                  finalCalc.pop();
+                  showKon.pop();
+                "
+              >
+                Ta bort konfiguration <span>-</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="calculate-button" @click="calculateIt">
+        Visa konfiguration
+      </button>
 
       <div v-if="finalResult.length > 0" class="results">
         <div v-for="(kon, indexKon) in finalResult" v-bind:key="indexKon">
+          <br /><br />
           <div
-            style="text-align: left; font-size: 2vw; margin: 3vw auto 0 auto"
+            class="second-head"
+            style="margin: 0; cursor: pointer"
+            @click="showKon[indexKon] = !showKon[indexKon]"
           >
-            <b> Konfiguration </b>{{ indexKon + 1 }}
+            <h2 style="text-align: left; margin-top: 0">
+              Konfiguration {{ indexKon + 1 }}
+              <span
+                ><i
+                  v-if="!showKon[indexKon]"
+                  class="fa-solid fa-circle-chevron-down"
+                ></i
+                ><i
+                  v-if="showKon[indexKon]"
+                  class="fa-solid fa-circle-chevron-up"
+                ></i
+              ></span>
+            </h2>
+            <hr style="margin: 0" />
           </div>
-          <br />
+          <div :style="{ display: showKon[indexKon] ? 'block' : 'none' }">
+            <br />
+            <b>Antal:</b>
+            {{ laglutandeCountMatrial[indexKon].AntalAvDennaKonfigurationen }}
+            <br />
 
-          <b>Antal:</b>
-          {{ laglutandeCountMatrial[indexKon].AntalAvDennaKonfigurationen }}
-          <br />
+            <b> Antal paneler:</b>
+            {{
+              laglutandeCountMatrial[indexKon].AntalPneler *
+              laglutandeCountMatrial[indexKon].AntalRaderMedPaneler
+            }}
+            <br />
 
-          <b> Antal paneler:</b>
-          {{
-            laglutandeCountMatrial[indexKon].AntalPneler *
-            laglutandeCountMatrial[indexKon].AntalRaderMedPaneler
-          }}
-          <br />
+            <b>Vikt:</b> {{ finalCalc[indexKon].tVikt }} kg <br />
+            <b>Pris:</b> {{ finalCalc[indexKon].tPris }} SEK <br />
 
-          <b>Vikt:</b> {{ finalCalc[indexKon].tVikt }} kg <br />
-          <b>Pris:</b> {{ finalCalc[indexKon].tPris }} SEK <br />
-
-          <table>
-            <tr>
-              <th>Antal</th>
-              <th>ArtNr</th>
-              <th>Benämning</th>
-              <th>GS1</th>
-              <th>Vikt/st</th>
-              <th>Tot.vikt</th>
-              <th>Pris/st</th>
-              <th>Rabatt</th>
-              <th>Totalt (exkl. moms)</th>
-            </tr>
-            <template v-for="(ii, indexii) in kon" v-bind:key="indexii">
-              <tr v-if="ii.Antal > 0">
-                <td>{{ ii.Antal }}</td>
-                <td>{{ ii.ArtNr }}</td>
-                <td>{{ ii.Benämning }}</td>
-                <td>{{ ii.GS1 }}</td>
-                <td>{{ ii.Vikt }} kg</td>
-                <td>{{ Math.round(ii.Vikt * ii.Antal * 100) / 100 }} kg</td>
-                <td>{{ ii.Pris }} SEK</td>
-                <td>0</td>
-                <td>{{ ii.Pris * ii.Antal }} SEK</td>
+            <table>
+              <tr>
+                <th>Antal</th>
+                <th>ArtNr</th>
+                <th>Benämning</th>
+                <th>GS1</th>
+                <th>Vikt/st</th>
+                <th>Tot.vikt</th>
+                <th>Pris/st</th>
+                <th>Rabatt</th>
+                <th>Totalt (exkl. moms)</th>
               </tr>
-            </template>
-          </table>
-          <hr />
+              <template v-for="(ii, indexii) in kon" v-bind:key="indexii">
+                <tr v-if="ii.Antal > 0">
+                  <td>{{ ii.Antal }}</td>
+                  <td>{{ ii.ArtNr }}</td>
+                  <td>{{ ii.Benämning }}</td>
+                  <td>{{ ii.GS1 }}</td>
+                  <td>{{ ii.Vikt }} kg</td>
+                  <td>{{ Math.round(ii.Vikt * ii.Antal * 100) / 100 }} kg</td>
+                  <td>{{ ii.Pris }} SEK</td>
+                  <td>0</td>
+                  <td>{{ ii.Pris * ii.Antal }} SEK</td>
+                </tr>
+              </template>
+            </table>
+          </div>
+          <hr style="box-shadow: 0px 0px 10px 0px #000" class="correct-top" />
         </div>
         <hr />
 
-        <div class="total-calc" id="element-to-pdf">
-          <div style="text-align: center; font-size: 2vw; margin: 2vw auto">
-            <b>Total</b>
+        <div class="total-calc" >
+          <div class="second-head">
+            <h1>{{ langIsSe ? "Totalt" : "Total" }}</h1>
+            <hr />
           </div>
 
           <b>Antal paneler:</b> {{ totalFinalCalc.tAntal }} <br />
@@ -553,7 +674,7 @@ this.markers[0].position={lat: lat , lng:lng}
           <br />
           <b>Pris:</b> {{ totalFinalCalc.tPris }} SEK <br />
 
-          <table>
+          <table >
             <tr>
               <th>Antal</th>
               <th>ArtNr</th>
@@ -584,185 +705,356 @@ this.markers[0].position={lat: lat , lng:lng}
           </table>
         </div>
       </div>
+
+      <div id="element-to-pdf" :style="{display:  whenPdf, width:'565px',}">
+
+<div style="display:flex; align-items:center; gap: 180px;">
+<img src="/swemount_logo.png" alt="" style="display:block; width:30%; margin:0 0 0 30px;">
+
+<div class="footer-child">
+ <div style="display:flex; align-items: center;"> <i class="fa-solid fa-phone yellow" style="font-size:20px;   "></i> <div ><p style="font-size:12px; font-family: 'Montserrat-Bold';"> 07xxxxxxxx </p><p > <a href="mailto:info@swemount.se" style="font-size:12px;font-family: 'Montserrat-Bold';">info@swemount.se</a></p></div> </div>
+  
+  </div>
+
+</div>
+<hr style="box-shadow: 0px 0px 5px 1px #22326c; margin-top: 1px;" >
+
+
+<div class="total-calc" :style="{display:  'block', width:'565px',}">
+          <div class="second-head" style="margin-top: 10px;">
+            <h1 style="font-size:28px; font-family: 'Montserrat-Bold';">{{ langIsSe ? "Totalt" : "Total" }}</h1>
+            <hr />
+          </div>
+<div style="display:block; width:30%; margin:0 0 0 30px;">
+          <b style=" font-family: 'Montserrat-Bold';">Antal paneler:</b> {{ totalFinalCalc.tAntal }} <br />
+
+          <b style=" font-family: 'Montserrat-Bold';">Vikt:</b> {{ Math.floor(totalFinalCalc.tVikt * 100) / 100 }} kg
+          <br />
+          <b style=" font-family: 'Montserrat-Bold';">Pris:</b> {{ totalFinalCalc.tPris }} SEK <br />
+        </div>
+          <table class="table-pdf" style="width: 80%; font-size: 6px;">
+            <tr>
+              <th>Antal</th>
+              <th>ArtNr</th>
+              <th>Benämning</th>
+              <th>GS1</th>
+              <th>Vikt/st</th>
+              <th>Tot.vikt</th>
+              <th>Pris/st</th>
+              <th>Rabatt</th>
+              <th>Totalt (exkl. moms)</th>
+            </tr>
+            <template
+              v-for="(iii, indexiii) in TotalFinalResult"
+              v-bind:key="indexiii"
+            >
+              <tr v-if="iii.Antal > 0">
+                <td>{{ iii.Antal }}</td>
+                <td>{{ iii.ArtNr }}</td>
+                <td>{{ iii.Benämning }}</td>
+                <td>{{ iii.GS1 }}</td>
+                <td>{{ iii.Vikt }} kg</td>
+                <td>{{ Math.round(iii.Vikt * iii.Antal * 100) / 100 }} kg</td>
+                <td>{{ iii.Pris }} SEK</td>
+                <td>0</td>
+                <td>{{ iii.Pris * iii.Antal }} SEK</td>
+              </tr>
+            </template>
+          </table>
+        </div>
+
+
+
+
+      </div>
+      
+
+
+
       <button v-if="finalResult.length > 0" @click="exportToPDF">
         Ladda ner PDF
       </button>
     </div>
-   <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
     <div v-if="!isLaglutand" id="Parallella">
       <div>
+        <div class="second-head">
+          <h1>{{ langIsSe ? "Position" : "Position" }}</h1>
+          <hr />
+        </div>
 
-      <div class="second-head"> 
-        <h1>{{ langIsSe? "Position": "Position" }}</h1>
-   <hr>
-  </div>
-
-<div class="position-body">
-  <div>
-       <p class="bold-font" style="text-align:center;">Ange adress för att starta konfiguratorn</p> 
-        <label for="">  
-          <GMapAutocomplete
-       placeholder="Select address"
-       :component-restrictions="{
-        country: 'se'}"
-       @place_changed="setPlace"
-    >
-  </GMapAutocomplete>
-<!--<input type="text" />--></label>
-
-        <div class="p3">
-          <label for=""
-            >Snö 
-            <div class="measurement">
-              <input type="number" v-model="sno" class="input-short" /><span class="unit"
-                >kN/m²</span
+        <div class="position-body">
+          <div>
+            <p class="bold-font" style="text-align: center">
+              Ange adress för att starta konfiguratorn
+            </p>
+            <label for="">
+              <GMapAutocomplete
+                placeholder="Select address"
+                :component-restrictions="{
+                  country: 'se',
+                }"
+                @place_changed="setPlace"
               >
-            </div></label
-          >
-          <label for=""
-            >Vind <br />
-            <div class="measurement">
-              <input type="number" v-model="vind" class="input-short"/><span class="unit"
-                >m/s</span
+              </GMapAutocomplete>
+              <!--<input type="text" />--></label
+            >
+
+            <div class="p3">
+              <label for=""
+                >Snö
+                <div class="measurement">
+                  <input type="number" v-model="sno" class="input-short" /><span
+                    class="unit"
+                    >kN/m²</span
+                  >
+                </div></label
               >
-            </div></label
-          >
+              <label for=""
+                >Vind <br />
+                <div class="measurement">
+                  <input
+                    type="number"
+                    v-model="vind"
+                    class="input-short"
+                  /><span class="unit">m/s</span>
+                </div></label
+              >
+            </div>
+          </div>
+          <div>
+            <GMapMap
+              :center="center"
+              :zoom="4"
+              @click="getLatLng"
+              :options="{
+                zoomControl: true,
+                mapTypeControl: false,
+                scaleControl: false,
+                streetViewControl: false,
+                rotateControl: false,
+                fullscreenControl: false,
+                disableDefaultUi: true,
+              }"
+              map-type-id="terrain"
+              class="google-map"
+            >
+              <GMapMarker
+                :key="index"
+                v-for="(m, index) in markers"
+                :position="m.position"
+                :clickable="true"
+                :draggable="true"
+                @dragend="getLatLng"
+                :icon="{
+                  url: '/swemounttest/logomarker.png',
+                  scaledSize: { width: 40, height: 40 },
+                  labelOrigin: { x: 16, y: -10 },
+                }"
+                @drag="handleMarkerDrag"
+                @click="panToMarker"
+              />
+            </GMapMap>
+            <div
+              class="childpointer"
+              :style="{ top: offsetY + 'px', left: offsetX + 'px' }"
+            ></div>
+          </div>
         </div>
       </div>
-        <div>
-          <GMapMap
-      :center="center"
-      :zoom="4"
-      @click="getLatLng"
-      :options="{
-   zoomControl: true,
-   mapTypeControl: false,
-   scaleControl: false,
-   streetViewControl: false,
-   rotateControl: false,
-   fullscreenControl: false,
-   disableDefaultUi: true
- }"
-
-      map-type-id="terrain"
-      class="google-map"
-  >
-      <GMapMarker
-          :key="index"
-          v-for="(m, index) in markers"
-          :position="m.position"
-          :clickable="true"
-          :draggable="true"
-          @dragend="getLatLng"
-
-          :icon= '{
-          url: "/swemounttest/logomarker.png",
-          scaledSize: {width: 40, height: 40},
-          labelOrigin: {x: 16, y: -10}
-      }'
-          @drag="handleMarkerDrag"
-      @click="panToMarker"
-
-      />
-  </GMapMap>
-          <div
-            class="childpointer"
-            :style="{ top: offsetY + 'px', left: offsetX + 'px' }"
-          ></div>
-        </div>
-      </div>
-
-
-
-      </div>
-
 
       <div>
-      
-        <div class="second-head"> 
-        <h1>{{ langIsSe? "Terräng och förutsättningar": "Terräng och förutsättningar" }}</h1>
-   <hr>
-  </div>
+        <div class="second-head">
+          <h1>
+            {{
+              langIsSe
+                ? "Terräng och förutsättningar"
+                : "Terräng och förutsättningar"
+            }}
+          </h1>
+          <hr />
+        </div>
 
-      
-        <p class="paragraphs">Terrängtyp Håll muspekaren över alternativen för att läsa mer om varje
-        terrängtyp.</p>
+        <p class="paragraphs">
+          Terrängtyp Håll muspekaren över alternativen för att läsa mer om varje
+          terrängtyp.
+        </p>
 
         <div class="Terrangtyp">
           <div
             @click="Terrängtyp = 0"
             :class="['selection', Terrängtyp == 0 ? '  selection-pre' : '']"
           >
-            <img src="/calc/1.jpg" alt="" :class="['imgs-selects', Terrängtyp == 0 ? ' imgs-selects-active' : '']" />
-            <p>A <span v-if="Terrängtyp == 0">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
-            <div class="discreption">Havs- eller kustområde exponerat för
-            öppet hav.</div>
+            <img
+              src="/calc/1.jpg"
+              alt=""
+              :class="[
+                'imgs-selects',
+                Terrängtyp == 0 ? ' imgs-selects-active' : '',
+              ]"
+            />
+            <p>
+              A
+              <span v-if="Terrängtyp == 0"
+                >&nbsp;&nbsp;&nbsp;&nbsp;<i
+                  class="fa-solid fa-square-check white"
+                ></i>
+              </span>
+            </p>
+            <div class="discreption">
+              Havs- eller kustområde exponerat för öppet hav.
+            </div>
           </div>
           <div
             @click="Terrängtyp = 1"
             :class="['selection', Terrängtyp == 1 ? '  selection-pre' : '']"
           >
-            <img src="/calc/2.jpg" alt="" :class="['imgs-selects ', Terrängtyp == 1 ? ' imgs-selects-active' : '']" />
-            <p>B <span v-if="Terrängtyp == 1">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
-            <div class="discreption">Sjö eller plant och horisontellt
-            område med försumbar vegetation och utan hinder.
-          </div></div>
+            <img
+              src="/calc/2.jpg"
+              alt=""
+              :class="[
+                'imgs-selects ',
+                Terrängtyp == 1 ? ' imgs-selects-active' : '',
+              ]"
+            />
+            <p>
+              B
+              <span v-if="Terrängtyp == 1"
+                >&nbsp;&nbsp;&nbsp;&nbsp;<i
+                  class="fa-solid fa-square-check white"
+                ></i>
+              </span>
+            </p>
+            <div class="discreption">
+              Sjö eller plant och horisontellt område med försumbar vegetation
+              och utan hinder.
+            </div>
+          </div>
           <div
             @click="Terrängtyp = 2"
             :class="['selection', Terrängtyp == 2 ? '  selection-pre' : '']"
           >
-            <img src="/calc/3.jpg" alt="" :class="['imgs-selects ', Terrängtyp == 2 ? ' imgs-selects-active' : '']" />
-            <p>C <span v-if="Terrängtyp == 2">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
-            <div class="discreption">Område med låg vegetation som gräs
-            och enstaka hinder (träd, byggnader) med minsta inbördes avstånd
-            lika med 20 gånger hindrets höjd.</div>
+            <img
+              src="/calc/3.jpg"
+              alt=""
+              :class="[
+                'imgs-selects ',
+                Terrängtyp == 2 ? ' imgs-selects-active' : '',
+              ]"
+            />
+            <p>
+              C
+              <span v-if="Terrängtyp == 2"
+                >&nbsp;&nbsp;&nbsp;&nbsp;<i
+                  class="fa-solid fa-square-check white"
+                ></i>
+              </span>
+            </p>
+            <div class="discreption">
+              Område med låg vegetation som gräs och enstaka hinder (träd,
+              byggnader) med minsta inbördes avstånd lika med 20 gånger hindrets
+              höjd.
+            </div>
           </div>
           <div
             @click="Terrängtyp = 3"
             :class="['selection', Terrängtyp == 3 ? '  selection-pre' : '']"
           >
-            <img src="/calc/4.jpg" alt="" :class="['imgs-selects ', Terrängtyp == 3 ? ' imgs-selects-active' : '']" />
-            <p>D <span v-if="Terrängtyp == 3">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
-            <div class="discreption">Område täckt med vegetation eller
-            byggnader eller med enstaka hinder med största inbördes avstånd lika
-            med 20 gånger hindrets höjd (till exempel byar, förorter,
-            skogsmark).</div>
+            <img
+              src="/calc/4.jpg"
+              alt=""
+              :class="[
+                'imgs-selects ',
+                Terrängtyp == 3 ? ' imgs-selects-active' : '',
+              ]"
+            />
+            <p>
+              D
+              <span v-if="Terrängtyp == 3"
+                >&nbsp;&nbsp;&nbsp;&nbsp;<i
+                  class="fa-solid fa-square-check white"
+                ></i>
+              </span>
+            </p>
+            <div class="discreption">
+              Område täckt med vegetation eller byggnader eller med enstaka
+              hinder med största inbördes avstånd lika med 20 gånger hindrets
+              höjd (till exempel byar, förorter, skogsmark).
+            </div>
           </div>
           <div
             @click="Terrängtyp = 4"
             :class="['selection', Terrängtyp == 4 ? '  selection-pre' : '']"
           >
-            <img src="/calc/5.jpg" alt="" :class="['imgs-selects ', Terrängtyp == 4 ? ' imgs-selects-active' : '']" />
-            <p>E <span v-if="Terrängtyp == 4">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
-            <div class="discreption">Område där minst 15 % av arean är
-            bebyggd och där byggnadernas medelhöjd är > 15 m.</div>
+            <img
+              src="/calc/5.jpg"
+              alt=""
+              :class="[
+                'imgs-selects ',
+                Terrängtyp == 4 ? ' imgs-selects-active' : '',
+              ]"
+            />
+            <p>
+              E
+              <span v-if="Terrängtyp == 4"
+                >&nbsp;&nbsp;&nbsp;&nbsp;<i
+                  class="fa-solid fa-square-check white"
+                ></i>
+              </span>
+            </p>
+            <div class="discreption">
+              Område där minst 15 % av arean är bebyggd och där byggnadernas
+              medelhöjd är > 15 m.
+            </div>
           </div>
         </div>
       </div>
 
-
       <div v-for="(i, index) in allTaken" v-bind:key="index">
         <taket :takNum="index" />
       </div>
+      <div style="max-width:1200px">
       <div class="p-buttons">
         <button @click="allTaken++">Lägg till nytt tak <span>+</span></button>
         <button v-if="allTaken > 1" @click="allTaken--">
           Ta bort tak <span>-</span>
         </button>
-      </div>
+      </div></div>
     </div>
   </main>
 </template>
 
 <style scoped>
-
 :root {
   --mw: 12px;
 }
 
-
+#Laglutande {
+  width: 90vw;
+}
 @media screen and (min-width: 414px) {
+
+ .p-buttons{
+width: 15vw;
+margin-right: 0;
+  }
+#element-to-pdf *{
+font-family:'Montserrat';
+  }
+
+  .table-pdf th{
+    font-family:'Montserrat-bold';
+
+  }
+
+  .table-pdf *{
+    padding: 3px;
+
+font-size: 9px;
+font-family:'Montserrat';
+text-align: center;
+  }
   main {
     margin: 0;
   }
@@ -784,7 +1076,6 @@ this.markers[0].position={lat: lat , lng:lng}
     flex-direction: column;
     cursor: pointer;
     position: relative;
-
   }
 
   .selection p {
@@ -797,7 +1088,7 @@ this.markers[0].position={lat: lat , lng:lng}
     color: #22326c;
   }
   .selection:hover p {
-    background-color: #8F7348;
+    background-color: #8f7348;
     color: #fff;
   }
 
@@ -806,112 +1097,145 @@ this.markers[0].position={lat: lat , lng:lng}
     color: #fff;
   }
 
-  .position-body{
-display: flex;
-margin-top: 5vw;
-width: 65.625vw;
+  .position-body {
+    display: flex;
+    margin-top: 5vw;
+    width: 65.625vw;
   }
 
-
-  .google-map{
+  .google-map {
     width: 33.75vw;
     height: 33.75vw;
-
   }
-input{
-  width: 24.21875vw;
-  padding: 0.5vw;
-border-radius: 0.9vw;
-margin-left: auto;
-margin-right: auto;
-}
-.input-short{
-  width: 4.583333333vw;
+  input {
+    width: 24.21875vw;
+    padding: 0.5vw;
+    border-radius: 0.9vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .input-short {
+    width: 4.583333333vw;
+  }
+  .unit {
+    background-color: #22326c;
+    color: #fcb324;
+    padding: 0.5vw 1vw;
+    border-radius: 1vw;
+  }
+  .p3 {
+    margin-top: 0vw;
+  }
+  .p3 label {
+    font-family: "Montserrat-bold";
+    display: flex;
+    flex-direction: column;
+  }
 
-}
-.unit{
-background-color: #22326c;
-color: #fcb324;
-padding: 0.5vw 1vw;
-border-radius: 1vw;
-}
-.p3{
-  margin-top: 5vw;
-}
-.p3 label{
-  font-family: "Montserrat-bold";
-display: flex;
-flex-direction:column ;
-}
+  .p3 label > div {
+    justify-content: flex-start;
+    margin: 0;
+  }
+  .p3 label > div input {
+    margin: 0.5vw 3vw 0.5vw 0;
+  }
+  .Terrangtyp {
+    display: flex;
+    margin-top: 5vw;
+    width: 70.3125vw;
+  }
+  .imgs-selects {
+    width: 11.97916667vw;
+    height: 11.97916667vw;
 
-.p3 label>div{
-  justify-content:flex-start;
-  margin: 0;
-}
-.p3 label>div input{
-  margin: 0.5vw 3vw 0.5vw 0;
-}
-.Terrangtyp{
-display: flex;
-margin-top: 5vw;
-width: 70.3125vw;
-}
-.imgs-selects{
-  width:11.97916667vw;
-  height:11.97916667vw;
+    box-shadow: 0.5vw -0.5vw 0px 0vw #fcb324;
+    border: 1px solid #707070;
+  }
 
-  box-shadow: 0.5vw -0.5vw 0px 0vw #fcb324;
-border: 1px solid #707070;
-}
+  .imgs-selects-active {
+    box-shadow: 0.5vw -0.5vw 0px 0vw #22326c;
+  }
 
-.imgs-selects-active{
-  box-shadow: 0.5vw -0.5vw 0px 0vw #22326c;
-
-}
-
-.discreption{
-  display: none;
-  background-color: #22326c;
-  color: #fff;
-  position: absolute;
-  padding: 1vw;
-  width:90%; 
-  top: 110%;
-
-}
-
-.discreption:before {
-    content:"";
+  .discreption {
+    display: none;
+    background-color: #22326c;
+    color: #fff;
     position: absolute;
-    right: 85px; 
-    top: -15px; 
+    padding: 1vw;
+    width: 90%;
+    top: 110%;
+  }
+
+  .discreption:before {
+    content: "";
+    position: absolute;
+    right: 85px;
+    top: -15px;
     width: 0px;
     height: 0px;
     border-style: solid;
     border-width: 0 15px 15px 15px;
     border-color: transparent transparent #22326c transparent;
-}
+  }
 
+  .selection:hover .discreption {
+    display: block;
+  }
+  .paragraphs {
+    text-align: center;
+    margin-top: 4vw;
 
+    margin-bottom: 0;
+  }
+  .svartlackerat {
+    background-color: #010204;
+  }
 
-.selection:hover   .discreption{
+  .varmforzinkat {
+    background-color: #979ba4;
+  }
+  .Visual-select {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 5vw;
+    width: 85.15625vw;
+    align-items: center;
+  }
 
-  display: block;
-}
-.paragraphs{
-text-align: center;
-margin-top: 4vw;
+  .p1 {
+    display: flex;
+    column-gap: 5vw;
+    align-items: center;
+  }
 
-margin-bottom: 0;
-}
-.p-buttons{
-  width: 60vw;
-}
+  #Laglutande .Visual-select {
+    margin-top: 0;
+    margin-bottom: 5vw;
+    align-items: center;
+    justify-content: space-between;
+  }
 
+  .correct-top {
+    margin-top: 5vw;
+  }
+  .calculate-button {
+    margin: 0 auto;
+    padding: 1.5vw 5vw;
+    font-size: 2vw;
+  }
 }
 
 /***********************************************************************************************************************/
 @media screen and (min-width: 1201px) {
+  .p-buttons{
+    width: 180px;
+  }
+  .Visual-select {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 60px;
+    width: 1021.875px;
+  }
 
   .multi_elements {
     width: 700px;
@@ -920,7 +1244,7 @@ margin-bottom: 0;
   .multi_elements > div {
     display: flex;
   }
-  .second-head{
+  .second-head {
     margin-top: 80px;
   }
   .multi_elements > div > img {
@@ -932,7 +1256,6 @@ margin-bottom: 0;
     flex-direction: column;
     cursor: pointer;
     position: relative;
-
   }
 
   .selection p {
@@ -945,7 +1268,7 @@ margin-bottom: 0;
     color: #22326c;
   }
   .selection:hover p {
-    background-color: #8F7348;
+    background-color: #8f7348;
     color: #fff;
   }
 
@@ -954,108 +1277,115 @@ margin-bottom: 0;
     color: #fff;
   }
 
-  .position-body{
-display: flex;
-margin-top: 60px;
-width: 787.5px;
+  .position-body {
+    display: flex;
+    margin-top: 60px;
+    width: 787.5px;
   }
 
-
-  .google-map{
+  .google-map {
     width: 405px;
     height: 405px;
-
   }
-input{
-  width: 290.625px;
-  padding: 6px;
-border-radius: 10.8px;
-margin-left: auto;
-margin-right: auto;
-}
-.input-short{
-  width: 55px;
+  input {
+    width: 290.625px;
+    padding: 6px;
+    border-radius: 10.8px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .input-short {
+    width: 55px;
+  }
+  .unit {
+    background-color: #22326c;
+    color: #fcb324;
+    padding: 6px 12px;
+    border-radius: 12px;
+  }
+  .p3 {
+    margin-top: 0px;
+  }
+  .p3 label {
+    font-family: "Montserrat-bold";
+    display: flex;
+    flex-direction: column;
+  }
 
-}
-.unit{
-background-color: #22326c;
-color: #fcb324;
-padding: 6px 12px;
-border-radius: 12px;
-}
-.p3{
-  margin-top: 60px;
-}
-.p3 label{
-  font-family: "Montserrat-bold";
-display: flex;
-flex-direction:column ;
-}
+  .p3 label > div {
+    justify-content: flex-start;
+    margin: 0;
+  }
+  .p3 label > div input {
+    margin: 6px 4px 6px 0;
+  }
+  .Terrangtyp {
+    display: flex;
+    margin-top: 60px;
+    width: 843.75px;
+  }
+  .imgs-selects {
+    width: 143.75px;
+    height: 143.75px;
 
-.p3 label>div{
-  justify-content:flex-start;
-  margin: 0;
-}
-.p3 label>div input{
-  margin: 6px 4px 6px 0;
-}
-.Terrangtyp{
-display: flex;
-margin-top: 60px;
-width: 843.75px;
-}
-.imgs-selects{
-  width:143.75px;
-  height:143.75px;
+    box-shadow: 6px -6px 0px 0px #fcb324;
+    border: 1px solid #707070;
+  }
 
-  box-shadow: 6px -6px 0px 0px #fcb324;
-border: 1px solid #707070;
-}
+  .imgs-selects-active {
+    box-shadow: 6px -6px 0px 0px #22326c;
+  }
 
-.imgs-selects-active{
-  box-shadow: 6px -6px 0px 0px #22326c;
-
-}
-
-.discreption{
-  display: none;
-  background-color: #22326c;
-  color: #fff;
-  position: absolute;
-  padding: 12px;
-  width:90%; 
-  top: 110%;
-
-}
-
-.discreption:before {
-    content:"";
+  .discreption {
+    display: none;
+    background-color: #22326c;
+    color: #fff;
     position: absolute;
-    right: 85px; 
-    top: -15px; 
+    padding: 12px;
+    width: 90%;
+    top: 110%;
+  }
+
+  .discreption:before {
+    content: "";
+    position: absolute;
+    right: 85px;
+    top: -15px;
     width: 0px;
     height: 0px;
     border-style: solid;
     border-width: 0 15px 15px 15px;
     border-color: transparent transparent #22326c transparent;
-}
+  }
 
+  .selection:hover .discreption {
+    display: block;
+  }
+  .paragraphs {
+    text-align: center;
+    margin-top: 48px;
 
+    margin-bottom: 0;
+  }
+  .p1 {
+    display: flex;
+    column-gap: 60px;
+  }
 
-.selection:hover   .discreption{
-
-  display: block;
-}
-.paragraphs{
-text-align: center;
-margin-top: 48px;
-
-margin-bottom: 0;
-}
-.p-buttons{
-  width: 720px;
-}
-
-
+  #Laglutande {
+    width: 980px;
+  }
+  #Laglutande .Visual-select {
+    margin-bottom: 60px;
+    margin-top: 0;
+  }
+  .correct-top {
+    margin-top: 60px;
+  }
+  .calculate-button {
+    margin: 0 auto;
+    padding: 18px 60px;
+    font-size: 24px;
+  }
 }
 </style>

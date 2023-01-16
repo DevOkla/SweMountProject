@@ -122,7 +122,7 @@ export default {
 
 <template>
   <main>
-    <img class="head-imgs" src="/img/swemount15.jpg" alt="">
+    <img class="head-imgs" src="/img/swemount17.jpg" alt="">
 
     <h1>
       {{ langIsSe? "Distributörer & Partners": "Distributors & Partners" }}  

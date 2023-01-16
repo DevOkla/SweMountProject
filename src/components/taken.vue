@@ -2,6 +2,7 @@
 import canvasD from "../components/canvas.vue";
 var rootBrach = "/swemounttest";
 import matrials from "../assets/matrials.json";
+import jsPDF from "jspdf";
 
 export default {
   components: {
@@ -9,8 +10,9 @@ export default {
   },
   props: {
     takNum: Number,
-  },
+    langIsSe:Boolean,
 
+  },
   data() {
     return {
       matrials: matrials,
@@ -203,6 +205,37 @@ export default {
   },
 
   computed:{
+    exportToPDF() {
+
+this.whenPdf='block';
+
+
+var doc = new jsPDF("p", 'pt','a4',true,true);
+
+let source = document.getElementById("element-to-pdf1");
+doc.addFileToVFS("/Montserrat-Regular.ttf");
+doc.addFont("Montserrat-Regular.ttf", "Montserrat", "normal");
+doc.setFont("Montserrat");
+doc.addFileToVFS("/Montserrat-Bold.ttf");
+doc.addFont("Montserrat-Bold.ttf", "Montserrat-Bold", "normal");
+doc.setFont("Montserrat-Bold");
+doc.addFont('FontAwesome', 'FontAwesome', 'normal');
+doc.setFont('FontAwesome');
+
+
+doc.html(source, {
+  callback: function (doc) {
+    doc.save('swemount')
+  },
+  x: 10,
+  y: 10,
+})
+
+setTimeout(() => {
+  this.whenPdf='none';
+}, 300)
+},
+
     selectedTak(){
 
 console.log();
@@ -806,7 +839,7 @@ this.cheker(this.selectedTak);
     </div>
   </div>
 
-  <div class="divElem">
+  <div  class="divElem">
     <canvasD
       :A="Amatt * 100"
       :B="Bmatt * 100"
@@ -870,7 +903,70 @@ this.cheker(this.selectedTak);
       </tr>
     </template>
   </table>
+  <div  :style="{display:  whenPdf, width:'565px',}">
+
+<div style="display:flex; align-items:center; gap: 180px;">
+<img src="/swemount_logo.png" alt="" style="display:block; width:30%; margin:0 0 0 30px;">
+
+<div class="footer-child">
+ <div style="display:flex; align-items: center;"> <i class="fa-solid fa-phone yellow" style="font-size:20px;   "></i> <div ><p style="font-size:12px; font-family: 'Montserrat-Bold';"> 07xxxxxxxx </p><p > <a href="mailto:info@swemount.se" style="font-size:12px;font-family: 'Montserrat-Bold';">info@swemount.se</a></p></div> </div>
+  
+  </div>
+
 </div>
+<hr style="box-shadow: 0px 0px 5px 1px #22326c; margin-top: 1px;" >
+
+
+<div class="total-calc" :style="{display:  'block', width:'565px',}">
+          <div class="second-head" style="margin-top: 10px;">
+            <h1 style="font-size:28px; font-family: 'Montserrat-Bold';">{{ langIsSe ? "Totalt" : "Total" }}</h1>
+            <hr />
+          </div>
+<div style="display:block; width:30%; margin:0 0 0 30px;">
+          <b style=" font-family: 'Montserrat-Bold';">Antal paneler:</b> {{  panelarCount  }} <br />
+
+          <b style=" font-family: 'Montserrat-Bold';">Vikt:</b> 0 kg
+          <br />
+          <b style=" font-family: 'Montserrat-Bold';">Pris:</b> 0 SEK <br />
+        </div>
+  <table>
+    <tr>
+      <th>Antal</th>
+      <th>ArtNr</th>
+      <th>Benämning</th>
+      <th>GS1</th>
+      <th>Vikt/st</th>
+      <th>Tot.vikt</th>
+      <th>Pris/st</th>
+      <th>Rabatt</th>
+      <th>Totalt (exkl. moms)</th>
+    </tr>
+    <template v-for="(ii, indexii) in finalResultArrObjects" v-bind:key="indexii">
+      <tr v-if="ii.Antal > -1">
+        <td>{{ ii.Antal }}</td>
+        <td>{{ ii.ArtNr }}</td>
+        <td>{{ ii.Benämning }}</td>
+        <td>{{ ii.GS1 }}</td>
+        <td>{{ ii.Vikt }} kg</td>
+        <td>{{ Math.round(ii.Vikt * ii.Antal * 100) / 100 }} kg</td>
+        <td>{{ ii.Pris }} SEK</td>
+        <td>0</td>
+        <td>{{ ii.Pris * ii.Antal }} SEK</td>
+      </tr>
+    </template>
+  </table>
+        </div>
+
+
+
+
+      </div>
+  <button  @click="exportToPDF" style="text-align:center;">
+        Ladda ner PDF
+      </button>
+</div>
+
+
 </template>
 
 <style scoped>
@@ -880,6 +976,22 @@ this.cheker(this.selectedTak);
 }
 
 @media screen and (min-width: 414px) {
+  #element-to-pdf *{
+font-family:'Montserrat';
+  }
+
+  .table-pdf th{
+    font-family:'Montserrat-bold';
+
+  }
+
+  .table-pdf *{
+    padding: 3px;
+
+font-size: 9px;
+font-family:'Montserrat';
+text-align: center;
+  }
 
   main {
     margin: 0 auto;
