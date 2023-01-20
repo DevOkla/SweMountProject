@@ -1608,7 +1608,7 @@ shape.setAbsolutePosition({
               }"
             />
           </v-group>
-          
+        </v-group>
           <v-line
           :config="{
             points: [
@@ -1648,7 +1648,7 @@ shape.setAbsolutePosition({
           }"
         />
 
-        </v-group>
+       
       </v-layer>
 
       
