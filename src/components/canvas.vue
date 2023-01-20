@@ -10,8 +10,8 @@ export default {
     shape: Number,
     bredd: Array,
     hojd: Array,
-    pannorBredd:Number,
-    pannorHöjd:Number,
+    pannorBredd: Number,
+    pannorHöjd: Number,
     vikt: Array,
     nockhojd: Number,
     typTak: Number,
@@ -55,7 +55,9 @@ export default {
 
       panelGrouper: [
         {
-          x: (width * (width < 1200 ? 95 : (1200 / width) * 95)) / 100 / 2 - 58.5,
+          x:
+            (width * (width < 1200 ? 95 : (1200 / width) * 95)) / 100 / 2 -
+            58.5,
           y:
             (height * (width < 1200 ? 95 : (1200 / width) * 95)) / 100 / 2 - 85,
         },
@@ -171,19 +173,27 @@ export default {
       return (height * this.canvasSize) / 100;
     },
 
-    distMellanFäst(){
+    distMellanFäst() {
       let arr = [];
 
       for (let i = 0; i < this.bredd1.length; i++) {
         this.fastTillBredd[i]
-          ? arr.push((this.hojd1[i]*10-Math.round(this.hojd1[i]*6 /this.pannorHöjd)*this.pannorHöjd)/20)
-          : arr.push((this.bredd1[i]*10-Math.round(this.bredd1[i]*6/this.pannorBredd)*this.pannorBredd)/20);
+          ? arr.push(
+              (this.hojd1[i] * 10 -
+                Math.round((this.hojd1[i] * 6) / this.pannorHöjd) *
+                  this.pannorHöjd) /
+                20
+            )
+          : arr.push(
+              (this.bredd1[i] * 10 -
+                Math.round((this.bredd1[i] * 6) / this.pannorBredd) *
+                  this.pannorBredd) /
+                20
+            );
       }
-  
 
       return arr;
     },
-
   },
   mounted() {
     this.rulersCounter();
@@ -203,9 +213,7 @@ export default {
     },
   },
   methods: {
-stopScrolling(){ 
-
-},
+    stopScrolling() {},
 
     createShapesPoints() {
       this.shapesPoints = [];
@@ -1433,8 +1441,12 @@ shape.setAbsolutePosition({
             v-for="(i, index) in panelar[indexj]"
             v-bind:key="index"
             :config="{
-              x: fastTillBredd[indexj] ? i.x - 5 : i.x-3 + distMellanFäst[indexj],
-              y: fastTillBredd[indexj] ? i.y -3 + distMellanFäst[indexj] : i.y - 5,
+              x: fastTillBredd[indexj]
+                ? i.x - 5
+                : i.x - 3 + distMellanFäst[indexj],
+              y: fastTillBredd[indexj]
+                ? i.y - 3 + distMellanFäst[indexj]
+                : i.y - 5,
               width: fastTillBredd[indexj] ? bredd1[indexj] + 10 : 6,
               height: fastTillBredd[indexj] ? 6 : hojd1[indexj] + 10,
               fill: '#ddd',
@@ -1450,8 +1462,12 @@ shape.setAbsolutePosition({
             v-for="(i, index) in panelar[indexj]"
             v-bind:key="index"
             :config="{
-              x: fastTillBredd[indexj] ? i.x - 5 : i.x - 3 -distMellanFäst[indexj]+ bredd1[indexj],
-              y: fastTillBredd[indexj] ? i.y  - 3 -distMellanFäst[indexj] + hojd1[indexj] : i.y - 5,
+              x: fastTillBredd[indexj]
+                ? i.x - 5
+                : i.x - 3 - distMellanFäst[indexj] + bredd1[indexj],
+              y: fastTillBredd[indexj]
+                ? i.y - 3 - distMellanFäst[indexj] + hojd1[indexj]
+                : i.y - 5,
               width: fastTillBredd[indexj] ? bredd1[indexj] + 10 : 6,
               height: fastTillBredd[indexj] ? 6 : hojd1[indexj] + 10,
               fill: '#ddd',
@@ -1461,10 +1477,6 @@ shape.setAbsolutePosition({
               moveToTop: true,
             }"
           />
-
-        
-
-
 
           <v-rect
             @mousedown="cursorMove"
@@ -1506,18 +1518,16 @@ shape.setAbsolutePosition({
                 moveToTop: true,
               }"
             />
-            
+
             <v-image
               :config="{
                 image: imageTrash,
-                x: bredd1[indexj]-9,
+                x: bredd1[indexj] - 9,
                 y: -10,
                 width: 20,
                 height: 20,
               }"
             />
-
-            
           </v-group>
 
           <v-group>
@@ -1608,50 +1618,79 @@ shape.setAbsolutePosition({
               }"
             />
           </v-group>
+   
         </v-group>
+        <v-group v-for="(j, indexj) in panelar" v-bind:key="indexj">
           <v-line
-          :config="{
-            points: [
-            fastTillBredd[indexj] ? j[0].x + 5 : j[0].x+6 + distMellanFäst[indexj], 
-            fastTillBredd[indexj] ? j[0].y + distMellanFäst[indexj] +3 : j[0].y +16, 
-            fastTillBredd[indexj] ? j[0].x + 5 : j[0].x-6 + distMellanFäst[indexj] + ((fastTillBredd[indexj]?hojd1[indexj]:bredd1[indexj]) - distMellanFäst[indexj]*2), 
-            fastTillBredd[indexj] ? j[0].y + distMellanFäst[indexj] -3 + ((fastTillBredd[indexj]?hojd1[indexj]:bredd1[indexj]) - distMellanFäst[indexj]*2) : j[0].y +16 
-          ],
-            closed: false,
-            stroke: '#22326C',
-            strokeWidth: 1,
-          }"
-        />
+            :config="{
+              points: [
+                fastTillBredd[indexj]
+                  ? j[0].x + 5
+                  : j[0].x + 6 + distMellanFäst[indexj],
+                fastTillBredd[indexj]
+                  ? j[0].y + distMellanFäst[indexj] + 3
+                  : j[0].y + 16,
+                fastTillBredd[indexj]
+                  ? j[0].x + 5
+                  : j[0].x -
+                    6 +
+                    distMellanFäst[indexj] +
+                    ((fastTillBredd[indexj] ? hojd1[indexj] : bredd1[indexj]) -
+                      distMellanFäst[indexj] * 2),
+                fastTillBredd[indexj]
+                  ? j[0].y +
+                    distMellanFäst[indexj] -
+                    3 +
+                    ((fastTillBredd[indexj] ? hojd1[indexj] : bredd1[indexj]) -
+                      distMellanFäst[indexj] * 2)
+                  : j[0].y + 16,
+              ],
+              closed: false,
+              stroke: '#22326C',
+              strokeWidth: 1,
+            }"
+          />
 
-        <!--((fastTillBredd[indexj]?hojd1[indexj]:bredd1[indexj]) - distMellanFäst[indexj]*2)-->
-        <v-ellipse
-          :config="{
-            x:fastTillBredd[indexj] ? j[0].x +5 : j[0].x+bredd1[indexj]/2,
-            y: fastTillBredd[indexj] ? j[0].y+hojd1[indexj]/2 : j[0].y+16,
-            fill: '#22326C',
-            radiusX: 20,
-            radiusY: 10,
-          }"
-        />
+          <!--((fastTillBredd[indexj]?hojd1[indexj]:bredd1[indexj]) - distMellanFäst[indexj]*2)-->
+          <v-ellipse
+            :config="{
+              x: fastTillBredd[indexj]
+                ? j[0].x + 5
+                : j[0].x + bredd1[indexj] / 2,
+              y: fastTillBredd[indexj]
+                ? j[0].y + hojd1[indexj] / 2
+                : j[0].y + 16,
+              fill: '#22326C',
+              radiusX: 20,
+              radiusY: 10,
+            }"
+          />
+
+          <v-text
+            :config="{
+              offsetX: fastTillBredd[indexj] ? 10 : 8,
+              offsetY: fastTillBredd[indexj] ? 6 : 6,
+              x: fastTillBredd[indexj]
+                ? j[0].x + 5
+                : j[0].x + bredd1[indexj] / 2,
+              y: fastTillBredd[indexj]
+                ? j[0].y + hojd1[indexj] / 2
+                : j[0].y + 16,
+              text:
+                (fastTillBredd[indexj] ? hojd1[indexj] : bredd1[indexj]) -
+                distMellanFäst[indexj] * 2,
+              textAlign: 'center',
+              fill: 'white',
+              fontSize: 15,
+            }"
+          />
 
 
-        <v-text
-          :config="{
-            offsetX: fastTillBredd[indexj] ? 10 : 8,
-            offsetY: fastTillBredd[indexj] ? 6 : 6,
-            x: fastTillBredd[indexj] ? j[0].x +5 : j[0].x+bredd1[indexj]/2,
-            y: fastTillBredd[indexj] ? j[0].y+hojd1[indexj]/2 : j[0].y+16,
-            text: (fastTillBredd[indexj]?hojd1[indexj]:bredd1[indexj]) - distMellanFäst[indexj]*2  ,
-            textAlign: 'center',
-            fill: 'white',
-            fontSize: 15,
-          }"
-        />
 
-       
+        </v-group>
+
       </v-layer>
 
-      
       <v-layer>
         <v-rect
           :config="{
