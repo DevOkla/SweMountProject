@@ -182,8 +182,8 @@ export default {
 
       Bredd: 300,
       Höjd: 330,
-      AvståndFalser: 0,
-      AvståndToppar: 0,
+      AvståndFalser: 600,
+      AvståndToppar: 100,
       Material: "Stålplåt",
       colorName: "black",
       taktTyp: 0,
@@ -195,8 +195,8 @@ export default {
       Amatt: 5,
       Bmatt: 3,
       Cmatt: 2,
-      PanelBredd: [1000],
-      PanelHöjd: [1400],
+      PanelBredd: [1170],
+      PanelHöjd: [1700],
       PanelVikt: [0],
       panelarCount: 0,
       showResult: false,
@@ -270,8 +270,8 @@ console.log();
       this.PanelVikt.splice(v, 1);
     },
     addNewGroup(v) {
-      this.PanelBredd.push(1000);
-      this.PanelHöjd.push(1400);
+      this.PanelBredd.push(1170);
+      this.PanelHöjd.push(1700);
       this.PanelVikt.push(0);
     },
 
@@ -305,6 +305,9 @@ this.cheker(this.selectedTak);
       @click="
         taktTyp = '0';
         Infästning = 0;
+        Bredd=300;
+        Höjd=330;
+
       "
     >
       <img
@@ -341,6 +344,8 @@ this.cheker(this.selectedTak);
       @click="
         taktTyp = '1';
         Infästning = 0;
+        Bredd=240;
+        Höjd=375;
       "
     >
       <img
@@ -376,6 +381,9 @@ this.cheker(this.selectedTak);
       @click="
         taktTyp = '2';
         Infästning = 0;
+        Bredd=1;
+        Höjd=1;
+
       "
     >
       <img
@@ -403,6 +411,10 @@ this.cheker(this.selectedTak);
       @click="
         taktTyp = '3';
         Infästning = 0;
+        AvståndToppar=100;
+        Bredd=1;
+        Höjd=1;
+
       "
     >
       <img
@@ -439,6 +451,10 @@ this.cheker(this.selectedTak);
       @click="
         taktTyp = '4';
         Infästning = 0;
+        AvståndToppar=200;
+        Bredd=1;
+        Höjd=1;
+
       "
     >
       <img
@@ -474,6 +490,9 @@ this.cheker(this.selectedTak);
       @click="
         taktTyp = '5';
         Infästning = 0;
+        Bredd=1;
+        Höjd=1;
+
       "
     >
       <img
@@ -847,6 +866,8 @@ this.cheker(this.selectedTak);
       :shape="Takform"
       :bredd="PanelBredd"
       :hojd="PanelHöjd"
+      :pannorBredd="Bredd"
+      :pannorHöjd="Höjd"
       :vikt="PanelVikt"
       :nockhojd="nockhöjd"
       :typTak="TypAvTak"
@@ -903,13 +924,13 @@ this.cheker(this.selectedTak);
       </tr>
     </template>
   </table>
-  <div  :style="{display:  whenPdf, width:'565px',}">
+  <div class="element-to-pdf1"  :style="{display:  'none', width:'565px',}">
 
 <div style="display:flex; align-items:center; gap: 180px;">
 <img src="/swemount_logo.png" alt="" style="display:block; width:30%; margin:0 0 0 30px;">
 
 <div class="footer-child">
- <div style="display:flex; align-items: center;"> <i class="fa-solid fa-phone yellow" style="font-size:20px;   "></i> <div ><p style="font-size:12px; font-family: 'Montserrat-Bold';"> 07xxxxxxxx </p><p > <a href="mailto:info@swemount.se" style="font-size:12px;font-family: 'Montserrat-Bold';">info@swemount.se</a></p></div> </div>
+ <div style="display:flex; align-items: center;"> <i class="fa-solid fa-phone yellow" style="font-size:20px;   "></i> <div ><p class="bold-font" style="font-size:12px;"> 07xxxxxxxx </p><p > <a class="bold-font"  href="mailto:info@swemount.se" style="font-size:12px;">info@swemount.se</a></p></div> </div>
   
   </div>
 
@@ -917,17 +938,17 @@ this.cheker(this.selectedTak);
 <hr style="box-shadow: 0px 0px 5px 1px #22326c; margin-top: 1px;" >
 
 
-<div class="total-calc" :style="{display:  'block', width:'565px',}">
+<div class="total-calc" :style="{display:  'block', width:'565px',} ">
           <div class="second-head" style="margin-top: 10px;">
-            <h1 style="font-size:28px; font-family: 'Montserrat-Bold';">{{ langIsSe ? "Totalt" : "Total" }}</h1>
+            <h1 class="bold-font" style="font-size:28px;">{{ langIsSe ? "Totalt" : "Total" }}</h1>
             <hr />
           </div>
 <div style="display:block; width:30%; margin:0 0 0 30px;">
-          <b style=" font-family: 'Montserrat-Bold';">Antal paneler:</b> {{  panelarCount  }} <br />
+          <b style=" ">Antal paneler:</b> {{  panelarCount  }} <br />
 
-          <b style=" font-family: 'Montserrat-Bold';">Vikt:</b> 0 kg
+          <b class="bold-font">Vikt:</b> 0 kg
           <br />
-          <b style=" font-family: 'Montserrat-Bold';">Pris:</b> 0 SEK <br />
+          <b class="bold-font">Pris:</b> 0 SEK <br />
         </div>
   <table>
     <tr>
@@ -976,7 +997,7 @@ this.cheker(this.selectedTak);
 }
 
 @media screen and (min-width: 414px) {
-  #element-to-pdf *{
+  #element-to-pdf1 *{
 font-family:'Montserrat';
   }
 
