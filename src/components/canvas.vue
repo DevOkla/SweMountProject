@@ -692,7 +692,8 @@ setTimeout(() => {
       width: maxX - minX,
       height: maxY - minY,
       callback: function(img) {
-        imgToExport = img.src;
+        console.log(img);
+        imgToExport = img;
 
       }
     });

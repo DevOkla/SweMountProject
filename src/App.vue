@@ -23,7 +23,7 @@ export default {
 
     <a href="/"><img src="/swemount_logo.png" alt="swemount"></a>
    <div style="display:flex;gap:7vw;">
-    <div class="lang-mobile" style="cursor:pointer;" @click="langIsSe=!langIsSe,menuMobile = false"><i class="fa-solid fa-earth-americas "></i> {{langIsSe?"SV":"EN"}}</div>
+    <div class="lang-mobile" style="cursor:pointer;" @click="langIsSe=!langIsSe,menuMobile = false"><i class="fa-solid fa-earth-americas "></i> {{langIsSe?"EN":"SV"}}</div>
 
     <div   @click="menuMobile = true"> <i class="fa-solid fa-bars menu-bar yellow" ></i></div>
   </div>
@@ -45,7 +45,7 @@ export default {
         <RouterLink class="nav-children" to="/partners">{{ langIsSe? "Distributörer & Partners": "Distributors & Partners" }}</RouterLink><span style="color:#ABABAB;">|</span>
         <RouterLink class="nav-children" to="/about">{{ langIsSe? "Om oss": "About us" }}</RouterLink><span style="color:#ABABAB;">|</span>
         <RouterLink class="nav-children" to="/contact">Support</RouterLink><span style="color:#ABABAB;">|</span>
-        <div style="cursor:pointer;" @click="langIsSe=!langIsSe"><i class="fa-solid fa-earth-americas"></i> {{langIsSe?"SV":"EN"}}</div>
+        <div style="cursor:pointer;" @click="langIsSe=!langIsSe"><i class="fa-solid fa-earth-americas"></i> {{langIsSe?"EN":"SV"}}</div>
 
       </nav>
     </div>

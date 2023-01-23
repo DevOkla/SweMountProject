@@ -225,18 +225,18 @@ let today = new Date().toISOString().slice(0, 10)
 var doc = new jsPDF("p", 'pt','a4',true,true);
 
 
-doc.addFileToVFS("/Montserrat-Bold.ttf");
+doc.addFileToVFS(`${rootBrach}/Montserrat-Bold.ttf`);
 doc.addFont("Montserrat-Bold.ttf", "Montserrat-Bold", "normal");
 doc.setFont("Montserrat-Bold");
 
-doc.addFileToVFS("/Montserrat-Regular.ttf");
+doc.addFileToVFS(`${rootBrach}/Montserrat-Regular.ttf`);
 doc.addFont("Montserrat-Regular.ttf", "Montserrat", "normal");
 doc.setFont("Montserrat");
 
 
 //595 x 842
 function fotterAndHeader(){
-  doc.addImage('/swemount_logo.png','png', 20, 20, 129, 26);
+  doc.addImage(`${rootBrach}/swemount_logo.png`,'png', 20, 20, 129, 26);
 doc.setFont("Montserrat-Bold").setFontSize(18).setTextColor('#22326C').text('ARTIKELSPECIFIKATION',300,30);
 doc.setFont("Montserrat").setFontSize(12).text(today,300,45);
 doc.setDrawColor('#22326C').setLineWidth(1).line(10, 60, 585, 60)
@@ -989,6 +989,7 @@ this.cheker(this.selectedTak);
       @deleteGroup="deleteThisGroup"
     />
   </div>
+
 
   <div v-if="showResult" class="konfiguration-info"> 
   <div style="display:flex;">
