@@ -668,13 +668,16 @@ table {
   border: 0.0833vw solid;
   padding: 0.5vw;
 }
+table * {
+  text-align: center;
+}
 
 th {
   border: 0.0833vw solid;
   padding: 0.5vw;
   background-color: #22326C;
   color: #fcb324;
-  border-color: #22326C;
+  border-color: #fff;
   font-family: "Montserrat-bold";
 }
 
@@ -1287,7 +1290,6 @@ tr:nth-child(odd) {
   th {
     border: 0.0833vw solid;
     padding: 0.5vw;
-    background-color: #22326C;
     color: #fcb324;
     border-color: #22326C;
     font-family: "Montserrat-bold";
@@ -1295,12 +1297,6 @@ tr:nth-child(odd) {
   td {
     border: 0.0833vw solid;
     padding: 0.5vw;
-  }
-  tr:nth-child(even) {
-    background: #eee;
-  }
-  tr:nth-child(odd) {
-    background: #fff;
   }
   .video-container {
     height: 44.84375vw;
@@ -1843,7 +1839,6 @@ tr:nth-child(odd) {
   th {
     border: 0.9996px solid;
     padding: 6px;
-    background-color: #22326C;
     color: #fcb324;
     border-color: #22326C;
     font-family: "Montserrat-bold";
@@ -1851,12 +1846,6 @@ tr:nth-child(odd) {
   td {
     border: 0.9996px solid;
     padding: 6px;
-  }
-  tr:nth-child(even) {
-    background: #eee;
-  }
-  tr:nth-child(odd) {
-    background: #fff;
   }
   .video-container {
     height: 538.125px;

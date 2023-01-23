@@ -1,4 +1,6 @@
 <script >
+import canvasD from "../components/canvas.vue";
+
 import axios from "axios";
 import taket from "./taken.vue";
 import matrials from "../assets/matrials.json";
@@ -81,7 +83,7 @@ export default {
       Terrängtyp: 0,
       allTaken: 1,
       showKon: [false],
-      whenPdf:'none',
+      whenPdf:'block',
     };
   },
   computed: {
@@ -339,6 +341,7 @@ export default {
     },
 
     exportToPDF() {
+      console.log(jsPDF.version);
 
       this.whenPdf='block';
 
@@ -346,6 +349,7 @@ export default {
       var doc = new jsPDF("p", 'pt','a4',true,true);
 
       let source = document.getElementById("element-to-pdf");
+
       doc.addFileToVFS("/Montserrat-Regular.ttf");
     doc.addFont("Montserrat-Regular.ttf", "Montserrat", "normal");
     doc.setFont("Montserrat");
@@ -1011,7 +1015,7 @@ export default {
       </div>
 
       <div v-for="(i, index) in allTaken" v-bind:key="index">
-        <taket :takNum="index" />
+        <taket :takNum="index" :sno="sno" :vind="vind" :places="Terrängtyp"/>
       </div>
       <div style="max-width:1200px">
       <div class="p-buttons">

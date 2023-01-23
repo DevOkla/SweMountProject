@@ -3,6 +3,7 @@ import canvasD from "../components/canvas.vue";
 var rootBrach = "/swemounttest";
 import matrials from "../assets/matrials.json";
 import jsPDF from "jspdf";
+import 'jspdf-autotable';
 
 export default {
   components: {
@@ -11,6 +12,9 @@ export default {
   props: {
     takNum: Number,
     langIsSe:Boolean,
+    sno:Number,
+    vind:Number,
+    Terrängtyp:Number,
 
   },
   data() {
@@ -198,43 +202,144 @@ export default {
       PanelBredd: [1170],
       PanelHöjd: [1700],
       PanelVikt: [0],
+      panelarAll:[[]],
+      panelarRows:[],
       panelarCount: 0,
       showResult: false,
       finalResultArrObjects:[],
+      whenPdf:'none',
+      imgToExport:null,
+          distTop:[],
+          distLeft:[],
+          distMellanFästningar:[],
     };
   },
 
   computed:{
     exportToPDF() {
 
-this.whenPdf='block';
+this.whenPdf='none';
+let today = new Date().toISOString().slice(0, 10)
 
 
 var doc = new jsPDF("p", 'pt','a4',true,true);
 
-let source = document.getElementById("element-to-pdf1");
-doc.addFileToVFS("/Montserrat-Regular.ttf");
-doc.addFont("Montserrat-Regular.ttf", "Montserrat", "normal");
-doc.setFont("Montserrat");
+
 doc.addFileToVFS("/Montserrat-Bold.ttf");
 doc.addFont("Montserrat-Bold.ttf", "Montserrat-Bold", "normal");
 doc.setFont("Montserrat-Bold");
-doc.addFont('FontAwesome', 'FontAwesome', 'normal');
-doc.setFont('FontAwesome');
+
+doc.addFileToVFS("/Montserrat-Regular.ttf");
+doc.addFont("Montserrat-Regular.ttf", "Montserrat", "normal");
+doc.setFont("Montserrat");
 
 
-doc.html(source, {
-  callback: function (doc) {
-    doc.save('swemount')
-  },
-  x: 10,
-  y: 10,
-})
+//595 x 842
+function fotterAndHeader(){
+  doc.addImage('/swemount_logo.png','png', 20, 20, 129, 26);
+doc.setFont("Montserrat-Bold").setFontSize(18).setTextColor('#22326C').text('ARTIKELSPECIFIKATION',300,30);
+doc.setFont("Montserrat").setFontSize(12).text(today,300,45);
+doc.setDrawColor('#22326C').setLineWidth(1).line(10, 60, 585, 60)
+doc.setDrawColor('#22326C').setLineWidth(1).line(10, 770, 585, 770)
+doc.setFont("Montserrat-Bold").setFontSize(10).setTextColor('#22326C').text('Swemount AB',20,790);
+doc.setFont("Montserrat").setFontSize(9).setTextColor('#22326C').text('Fabriksgatan 15',20,805);
+doc.setFont("Montserrat").setFontSize(9).setTextColor('#22326C').text('571 78 Forserum',20,820);
+doc.setFont("Montserrat-Bold").setFontSize(10).setTextColor('#22326C').text('07xxxxxxxx',250,800);
+doc.setFont("Montserrat-Bold").setFontSize(10).setTextColor('#22326C').text('info@swemount.se',460,800);
 
-setTimeout(() => {
-  this.whenPdf='none';
-}, 300)
+}
+fotterAndHeader();
+
+
+
+doc.setFont("Montserrat-Bold").setFontSize(24).setTextColor('#22326C').text('Total',250,110);
+doc.setDrawColor('#fcb324').setLineWidth(8).setLineCap("round").line(250, 120, 315, 120)
+
+doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text(`Antal: ${this.panelarCount}`   ,50,150);
+doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text(`Antal paneler:  ${this.panelarCount}`,50,165);
+doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text('Vikt: '+'kg',50,180);
+doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text('Pris: '+'kr',50,195);
+
+
+doc.autoTable({
+  html: '#table-topdf',
+  useCss: true,
+  startY: 230, 
+  startX: 10,
+
+});
+
+
+
+doc.addPage();
+
+fotterAndHeader();
+
+doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text('Geometri',50,180);
+doc.autoTable({
+  html: '#Geometri',
+  useCss: true,
+  startY: 200, 
+  margin: 50,
+    tableWidth:200,
+  
+});
+
+doc.autoTable({
+  html: '#Geometri2',
+  useCss: true,
+  startY: 200, 
+  margin: 300,
+  tableWidth:200,
+
+});
+
+
+doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text('Lastförutsättningar',50,300);
+
+doc.autoTable({
+  html: '#Lastförutsättningar',
+  useCss: true,
+  startY: 320,
+  margin: 50,
+  tableWidth:450,
+
+});
+
+
+doc.addPage();
+
+doc.addImage( this.imgToExport,'png',50,-480,803,500,undefined,'NONE',-90 )
+
+for (let i =0; i<this.panelarAll.length ;i++){
+doc.addPage();
+
+fotterAndHeader();
+doc.setFont("Montserrat-Bold").setFontSize(24).setTextColor('#22326C').text('Sektion ' + (i+1) ,100,150);
+doc.setDrawColor('#fcb324').setLineWidth(8).setLineCap("round").line(100, 170, 150, 170)
+
+
+doc.autoTable({
+  html: '#sektion'+i,
+  useCss: true,
+  startY: 200,
+  margin: 50,
+  tableWidth:500,
+
+});
+}
+
+
+
+
+//doc.output('dataurlnewwindow')
+
+doc.save("swemount.pdf");
+
+ 
+
 },
+
 
     selectedTak(){
 
@@ -276,14 +381,21 @@ console.log();
     },
 
     passValues(v) {
-      console.log(v[0]);
-      console.log(v[0].length);
+
       let finTotal = 0;
-      for (let i = 0; i < v[0].length; i++) {
-        finTotal += v[0][i].length;
+      for (let j in v[0]){
+        finTotal += v[0][j].length;
       }
 
+      this.imgToExport=v[1];
+console.log(this.imgToExport);
 this.cheker(this.selectedTak);
+      this.panelarAll=v[0];
+      this.panelarRows=v[2];
+      this.panelarRows=v[2];
+      this.distTop=v[3];
+      this.distLeft=v[4];
+      this.distMellanFästningar=v[5];
 
       this.showResult = true;
       this.panelarCount = finTotal;
@@ -898,7 +1010,7 @@ this.cheker(this.selectedTak);
 
 </div>
 </div>
-  <table>
+  <table id="table-topdf">
     <tr>
       <th>Antal</th>
       <th>ArtNr</th>
@@ -924,64 +1036,125 @@ this.cheker(this.selectedTak);
       </tr>
     </template>
   </table>
-  <div class="element-to-pdf1"  :style="{display:  'none', width:'565px',}">
 
-<div style="display:flex; align-items:center; gap: 180px;">
-<img src="/swemount_logo.png" alt="" style="display:block; width:30%; margin:0 0 0 30px;">
+<div class="to-export-tabels" style="display:none;">
+<table id="Geometri">
+  <tr>
+    <td>Mått A</td>
+    <td>{{ Amatt }}</td>
+  </tr>
+  <tr>
+    <td>Mått B</td>
+    <td>{{ Bmatt }}</td>
+  </tr>
+  <tr v-if="Takform!=0">
+    <td >Mått C</td>
+    <td>{{Cmatt}}</td>
+  </tr>
+  <tr>
+    <td>Byggnadens höjd</td>
+    <td>{{ nockhöjd }}</td>
+  </tr>
 
-<div class="footer-child">
- <div style="display:flex; align-items: center;"> <i class="fa-solid fa-phone yellow" style="font-size:20px;   "></i> <div ><p class="bold-font" style="font-size:12px;"> 07xxxxxxxx </p><p > <a class="bold-font"  href="mailto:info@swemount.se" style="font-size:12px;">info@swemount.se</a></p></div> </div>
-  
-  </div>
+</table>
+<table id="Geometri2">
+  <tr>
+    <td>Taklutning</td>
+    <td>{{ Taklutning }}</td>
+  </tr>
+  <tr>
+    <td>Taktyp</td>
+    <td>{{ TypAvTak }}</td>
+  </tr>
+  <tr>
+    <td>Typ av infästning</td>
+    <td>0</td>
+  </tr>
 
+</table>
+<table id="Lastförutsättningar">
+  <tr>
+    <td>Säkerhetsklass</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>Dimensionerande livslängd</td>
+    <td>30</td>
+  </tr>
+  <tr>
+    <td>Referensvindhastighet</td>
+    <td>{{ vind }}</td>
+  </tr>
+  <tr>
+    <td>Lastkombination faktor 0v</td>
+    <td>xxxxxxxxxxxxxxxxxxxxxx</td>
+  </tr>
+  <tr>
+    <td>Snözon</td>
+    <td>{{ sno }}</td>
+  </tr>
+  <tr>
+    <td>Lastkombination faktor 0s</td>
+    <td>xxxxxxxxxxxxxxxxxxxxxxxx</td>
+  </tr>
+  <tr>
+    <td>Snörasskydd</td>
+    <td>Nej</td>
+  </tr>
+
+</table>
+
+<div v-for="( s , indexS) in panelarAll" :key="indexS">
+  <table :id="'sektion'+indexS" >
+  <tr>
+    <td>Startpunkt: Nock:</td>
+    <td> {{ distTop[indexS] }} </td>
+  </tr>
+  <tr>
+    <td>Startpunkt: Vänster:</td>
+    <td>{{ distLeft[indexS] }} </td>
+  </tr>
+  <tr>
+    <td>Antal rader</td>
+    <td>{{ panelarRows[indexS] }}</td>
+  </tr>
+  <tr>
+    <td>Antal paneler per rad</td>
+    <td>{{ panelarAll[indexS].length/panelarRows[indexS] }}</td>
+  </tr>
+  <tr>
+    <td>Avstånd skenor</td>
+    <td> {{ distMellanFästningar[indexS] }} </td>
+  </tr>
+  <tr>
+    <td>Avstånd infästning (max)</td>
+    <td>xxxxxxxxxxxxxxxxxxxxxxxx</td>
+  </tr>
+  <tr>
+    <td>Avstånd infästning (max) i randzon</td>
+    <td> xxxxxxxxxxxxxxxxxxxxxxxx</td>
+  </tr>
+  <tr>
+    <td>Antal infästningar (min)</td>
+    <td> xxxxxxxxxxxxxxxxxxxxxxxx</td>
+  </tr>
+  <tr>    
+    <td>Panellängd</td>
+    <td> {{ PanelHöjd[indexS] }}</td>
+  </tr>
+  <tr>
+    <td>Panelbredd</td>
+    <td> {{ PanelBredd[indexS]  }}</td>
+  </tr>
+  <tr>
+    <td>Panelvikt</td>
+    <td> {{ PanelVikt[indexS] }}</td>
+  </tr>
+
+</table>
 </div>
-<hr style="box-shadow: 0px 0px 5px 1px #22326c; margin-top: 1px;" >
-
-
-<div class="total-calc" :style="{display:  'block', width:'565px',} ">
-          <div class="second-head" style="margin-top: 10px;">
-            <h1 class="bold-font" style="font-size:28px;">{{ langIsSe ? "Totalt" : "Total" }}</h1>
-            <hr />
-          </div>
-<div style="display:block; width:30%; margin:0 0 0 30px;">
-          <b style=" ">Antal paneler:</b> {{  panelarCount  }} <br />
-
-          <b class="bold-font">Vikt:</b> 0 kg
-          <br />
-          <b class="bold-font">Pris:</b> 0 SEK <br />
-        </div>
-  <table>
-    <tr>
-      <th>Antal</th>
-      <th>ArtNr</th>
-      <th>Benämning</th>
-      <th>GS1</th>
-      <th>Vikt/st</th>
-      <th>Tot.vikt</th>
-      <th>Pris/st</th>
-      <th>Rabatt</th>
-      <th>Totalt (exkl. moms)</th>
-    </tr>
-    <template v-for="(ii, indexii) in finalResultArrObjects" v-bind:key="indexii">
-      <tr v-if="ii.Antal > -1">
-        <td>{{ ii.Antal }}</td>
-        <td>{{ ii.ArtNr }}</td>
-        <td>{{ ii.Benämning }}</td>
-        <td>{{ ii.GS1 }}</td>
-        <td>{{ ii.Vikt }} kg</td>
-        <td>{{ Math.round(ii.Vikt * ii.Antal * 100) / 100 }} kg</td>
-        <td>{{ ii.Pris }} SEK</td>
-        <td>0</td>
-        <td>{{ ii.Pris * ii.Antal }} SEK</td>
-      </tr>
-    </template>
-  </table>
-        </div>
-
-
-
-
-      </div>
+</div>
+ 
   <button  @click="exportToPDF" style="text-align:center;">
         Ladda ner PDF
       </button>
@@ -995,18 +1168,35 @@ this.cheker(this.selectedTak);
   max-width: 1140px;
   margin: 0 auto;
 }
+#table-pdf *{
+    padding: 3px;
 
-@media screen and (min-width: 414px) {
-  #element-to-pdf1 *{
+font-size: 9px;
 font-family:'Montserrat';
+text-align: center;
+  }
+  #element-to-pdfa *{
+    font-family:'Montserrat';
+
   }
 
-  .table-pdf th{
+#element-to-pdfa {
+font-family:'Montserrat';
+width:565px; 
+  }
+  th{
+    font-family:'Montserrat-bold';
+    border-color: #aaa ;
+
+  }
+@media screen and (min-width: 414px) {
+
+  #table-pdf th{
     font-family:'Montserrat-bold';
 
   }
 
-  .table-pdf *{
+  #table-pdf *{
     padding: 3px;
 
 font-size: 9px;

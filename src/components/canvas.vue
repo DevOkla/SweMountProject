@@ -82,12 +82,16 @@ export default {
       fastTillBredd: [false],
       topLine: [[]],
       leftLine: [[]],
+      allRight: [[]],
+      allBottom: [[]],
+
       topDist: [0],
       leftDist: [0],
       randUpDown: 50,
       randLeftRight: 50,
       imageTrash: null,
       imageCalc: null,
+
       imageBack: null,
       imageFullScreen: null,
       imageSmallScreen: null,
@@ -98,6 +102,9 @@ export default {
       fullToSmall: false,
       shapesPoints: [],
       randzonPoints: [],
+      TLShow:false,
+      WHShow:false,
+
     };
   },
 
@@ -194,8 +201,54 @@ export default {
 
       return arr;
     },
+    distMellanFästToExport(){
+      let arr = [];
+    for (let i =0;i<this.distMellanFäst.length;i++){
+
+      arr.push((this.fastTillBredd[i] ? this.hojd1[i] : this.bredd1[i]) - this.distMellanFäst[i] * 2)
+    }
+    return arr;
+
+    },
+
+
+
+    distTop() {
+      let arr = [];
+
+      for (let i=0 ; i<this.topLine.length ;i++){
+        console.log(arr);
+
+        arr.push(Math.round(this.distance12(this.topLine[i][0],this.topLine[i][1],this.topLine[i][2],this.topLine[i][3])))
+      }
+      return arr;
+    },
+
+    distLeft() {
+      let arr = [];
+
+      for (let i in this.topLine){
+        arr.push(Math.round(this.distance12(this.leftLine[i][0],this.leftLine[i][1],this.leftLine[i][2],this.leftLine[i][3])))
+      }
+console.log(arr);
+
+      return arr;
+    },
+    rowsCount() {
+      let arr = [];
+
+for (let i =0;i<this.fastTillBredd.length;i++){
+  if(!this.fastTillBredd[i]){arr = this.rows}else{arr=this.columns}
+};
+
+      return arr;
+    },
+
   },
   mounted() {
+    this.distanceLines();
+      this.distanceLinesRB();
+
     this.rulersCounter();
   },
   watch: {
@@ -490,6 +543,9 @@ export default {
       this.fastTillBredd.splice(num, 1);
       this.topLine.splice(num, 1);
       this.leftLine.splice(num, 1);
+      this.allBottom.splice(num, 1);
+      this.allRight.splice(num, 1);
+
       this.topDist.splice(num, 1);
       this.leftDist.splice(num, 1);
     },
@@ -498,6 +554,9 @@ export default {
       this.$emit("newGroup", 1);
 
       this.newPanelaGroup();
+      this.distanceLines();
+      this.distanceLinesRB();
+
     },
     newPanelaGroup() {
       this.panelar.push([
@@ -517,6 +576,9 @@ export default {
       this.fastTillBredd.push(false);
       this.topLine.push([]);
       this.leftLine.push([]);
+      this.allBottom.push([]);
+      this.allRight.push([]);
+
       this.topDist.push(0);
       this.leftDist.push(0);
 
@@ -560,28 +622,99 @@ export default {
     backProcess() {
       this.fixElement = true;
     },
-    distanceLines() {
+    distanceLinesRB() {
+
       for (let i = 0; i < this.panelar.length; i++) {
-        this.topLine = [
-          this.panelar[i][0].x,
+        this.allRight[i] = [
+          this.panelar[i][0].x-10,
           this.panelar[i][0].y,
-          this.panelar[i][0].x,
-          this.panelar[i][0].y + this.topDist[i],
+          this.panelar[i][0].x-10,
+          this.panelar[i][this.panelar[i].length-1].y+this.hojd1[i],
         ];
-        this.leftLine = [
-          this.panelar[i][0].x,
-          this.panelar[i][0].y,
-          this.panelar[i][0].x + this.leftDist[i],
-          this.panelar[i][0].y,
+        this.allBottom[i] = [
+          this.panelar[i][this.panelar[i].length-1].x+this.bredd1[i],
+          this.panelar[i][0].y-20,
+          this.panelar[i][0].x ,
+          this.panelar[i][0].y-20,
         ];
       }
     },
+    distanceLines() {
+
+for (let i = 0; i < this.panelar.length; i++) {
+  this.topLine[i] = [
+    this.panelar[i][0].x,
+    this.panelar[i][0].y,
+    this.panelar[i][0].x,
+    this.panelar[i][0].y + this.topDist[i],
+  ];
+  this.leftLine[i] = [
+    this.panelar[i][0].x,
+    this.panelar[i][0].y,
+    this.panelar[i][0].x + this.leftDist[i],
+    this.panelar[i][0].y,
+  ];
+}
+},
+showHideArrows(){
+  this.TLShow=!this.TLShow;
+  this.WHShow=!this.WHShow;
+},
     completeProcess() {
       this.deletRedPanel();
 
       this.fixElement = false;
       this.distanceLines();
-      this.$emit("values", [this.panelar]);
+      this.distanceLinesRB();
+
+let imgToExport;
+
+
+let scaleholder = this.scalePercentage;
+console.log(scaleholder);
+  this.scalePercentage=1;
+  console.log(scaleholder);
+
+
+
+
+
+setTimeout(() => {
+  const childrenBounds = this.$refs.toexport.getNode().children.map(child => child.getClientRect());
+    const minX = Math.min(...childrenBounds.map(b => b.x?b.x:999999999));
+    const minY = Math.min(...childrenBounds.map(b => b.y?b.y:999999999));
+    const maxX = Math.max(...childrenBounds.map(b => (b.x?(b.x+b.width):0)));
+    const maxY = Math.max(...childrenBounds.map(b => (b.y?(b.y+b.height):0)));
+
+    this.$refs.toexport.getNode().toImage({
+      x: minX,
+      y: minY,
+      width: maxX - minX,
+      height: maxY - minY,
+      callback: function(img) {
+        imgToExport = img.src;
+
+      }
+    });
+    this.scalePercentage=scaleholder;
+    console.log(scaleholder);
+
+/*
+  this.$refs.toexport.getNode().toImage({
+    
+  callback(img) {
+    imgToExport = img.src;
+  }
+})*/}, 100)
+
+
+setTimeout(() => {
+  this.$emit("values", [this.panelar , imgToExport, this.rowsCount , this.distTop , this.distLeft, this.distMellanFästToExport ]);
+  
+}, 300)
+
+
+
     },
 
     rulersCounter() {
@@ -741,6 +874,7 @@ shape.setAbsolutePosition({
       this.drawPanelar(e.target);
       this.checkIfOut(e);
       this.distanceLines();
+      this.distanceLinesRB();
     },
     drawPanelar(e) {
       this.panelar[e.id()] = [];
@@ -1092,6 +1226,8 @@ shape.setAbsolutePosition({
       this.panelGrouper[e.target.id()].y = e.target.y();
 
       this.drawPanelar(e.target);
+      this.distanceLinesRB();
+
     },
 
     handleStageMouseDown(e) {
@@ -1238,6 +1374,8 @@ shape.setAbsolutePosition({
       </v-layer>
 
       <v-layer
+      ref="toexport"
+
         @dragmove="rulersCounter"
         :config="{
           draggable: true,
@@ -1256,8 +1394,8 @@ shape.setAbsolutePosition({
               name: 'shape0',
               closed: true,
               fill: '#fff',
-              shadowBlur: 100,
-              shadowOffset: { x: 5, y: 5 },
+              shadowBlur: 15,
+              shadowOffset: { x: 0, y: 0 },
             }"
           />
 
@@ -1281,8 +1419,8 @@ shape.setAbsolutePosition({
 
               closed: true,
               fill: '#fff',
-              shadowBlur: 100,
-              shadowOffset: { x: 5, y: 5 },
+              shadowBlur: 15,
+              shadowOffset: { x: 0, y: 0 },
             }"
           />
           <v-line
@@ -1305,8 +1443,8 @@ shape.setAbsolutePosition({
 
               closed: true,
               fill: '#fff',
-              shadowBlur: 100,
-              shadowOffset: { x: 5, y: 5 },
+              shadowBlur: 15,
+              shadowOffset: { x: 0, y: 0 },
             }"
           />
 
@@ -1332,8 +1470,8 @@ shape.setAbsolutePosition({
 
               closed: true,
               fill: '#fff',
-              shadowBlur: 100,
-              shadowOffset: { x: 5, y: 5 },
+              shadowBlur: 15,
+              shadowOffset: { x: 0, y: 0 },
             }"
           />
           <v-line
@@ -1357,8 +1495,8 @@ shape.setAbsolutePosition({
 
               closed: true,
               fill: '#fff',
-              shadowBlur: 100,
-              shadowOffset: { x: 5, y: 5 },
+              shadowBlur: 15,
+              shadowOffset: { x: 0, y: 0 },
             }"
           />
           <v-line
@@ -1382,8 +1520,8 @@ shape.setAbsolutePosition({
 
               closed: true,
               fill: '#fff',
-              shadowBlur: 100,
-              shadowOffset: { x: 5, y: 5 },
+              shadowBlur: 15,
+              shadowOffset: { x: 0, y: 0 },
             }"
           />
           <v-line
@@ -1406,8 +1544,8 @@ shape.setAbsolutePosition({
 
               closed: true,
               fill: '#fff',
-              shadowBlur: 100,
-              shadowOffset: { x: 5, y: 5 },
+              shadowBlur: 15,
+              shadowOffset: { x: 0, y: 0 },
             }"
           />
           <v-line
@@ -1530,24 +1668,110 @@ shape.setAbsolutePosition({
             />
           </v-group>
 
-          <v-group>
-            <v-line
+          <v-group v-if="TLShow">
+            <v-arrow
               :config="{
                 points: topLine[indexj],
                 closed: false,
-                stroke: '#0005',
-                strokeWidth: 1,
+                stroke: '#00f5',
+                strokeWidth: 2,
               }"
             />
-            <v-line
+            
+            <v-text :config="{
+            x: topLine[indexj][0]-15,
+            y: topLine[indexj][3]-40,
+            align: 'center',
+            verticalAlign: 'middle',
+            fill: '#00f5',
+            text: Math.round(distance12(topLine[indexj][0],topLine[indexj][1],topLine[indexj][2],topLine[indexj][3])),
+            fontSize: 30,
+          }"
+/>
+            <v-arrow
               :config="{
                 points: leftLine[indexj],
                 closed: false,
-                stroke: '#0005',
-                strokeWidth: 1,
+                stroke: '#00f5',
+                strokeWidth: 2,
+
               }"
             />
+
+            <v-text :config="{
+            x: leftLine[indexj][2]-60,
+            y: leftLine[indexj][1]-15,
+            align: 'center',
+            verticalAlign: 'middle',
+            fill: '#00f5',
+            text: Math.round(distance12(leftLine[indexj][0],leftLine[indexj][1],leftLine[indexj][2],leftLine[indexj][3])),
+            fontSize: 30,
+          }"
+/>
+
           </v-group>
+
+          <v-group v-if="WHShow">
+            <v-arrow
+              :config="{
+                points: [allRight[indexj][0],allRight[indexj][1]+distance12(allRight[indexj][0],allRight[indexj][1],allRight[indexj][2],allRight[indexj][3])/2+20,allRight[indexj][2],allRight[indexj][3]],
+                closed: false,
+                stroke: '#fc993f',
+                strokeWidth: 2,
+
+              }"
+            />
+            <v-arrow
+              :config="{
+                points: [allRight[indexj][2],allRight[indexj][3]-distance12(allRight[indexj][0],allRight[indexj][1],allRight[indexj][2],allRight[indexj][3])/2-20,allRight[indexj][0],allRight[indexj][1]],
+                closed: false,
+                stroke: '#fc993f',
+                strokeWidth: 2,
+
+              }"
+            />
+
+            <v-text :config="{
+            x: allRight[indexj][0]-30,
+            y: allRight[indexj][1]+distance12(allRight[indexj][0],allRight[indexj][1],allRight[indexj][2],allRight[indexj][3])/2-8,
+            align: 'center',
+            verticalAlign: 'middle',
+            fill: '#fc993f',
+            text: Math.round(distance12(allRight[indexj][0],allRight[indexj][1],allRight[indexj][2],allRight[indexj][3])),
+            fontSize: 20,
+          }"
+/>
+            <v-arrow
+              :config="{
+                points: [allBottom[indexj][0]-distance12(allBottom[indexj][0],allBottom[indexj][1],allBottom[indexj][2],allBottom[indexj][3])/2-20,allBottom[indexj][1],allBottom[indexj][2],allBottom[indexj][3]],
+                closed: false,
+                stroke: '#fc993f',
+                strokeWidth: 2,
+
+              }"
+            />
+            <v-arrow
+              :config="{
+                points: [allBottom[indexj][2]+distance12(allBottom[indexj][0],allBottom[indexj][1],allBottom[indexj][2],allBottom[indexj][3])/2+20,allBottom[indexj][3],allBottom[indexj][0],allBottom[indexj][1]],
+                closed: false,
+                stroke: '#fc993f',
+                strokeWidth: 2,
+
+              }"
+            />
+            <v-text :config="{
+            x: topLine[indexj][0]+distance12(allBottom[indexj][0],allBottom[indexj][1],allBottom[indexj][2],allBottom[indexj][3])/2-18,
+            y: allBottom[indexj][1]-10,
+            align: 'center',
+            verticalAlign: 'middle',
+            fill: '#fc993f',
+            text: Math.round(distance12(allBottom[indexj][0],allBottom[indexj][1],allBottom[indexj][2],allBottom[indexj][3])),
+            fontSize: 20,
+          }"
+/>
+
+          </v-group>
+
         </v-group>
         <v-transformer
           ref="transformer"
@@ -1691,7 +1915,8 @@ shape.setAbsolutePosition({
 
       </v-layer>
 
-      <v-layer>
+      <v-layer 
+      >
         <v-rect
           :config="{
             x: 0,
@@ -2044,6 +2269,41 @@ shape.setAbsolutePosition({
         <v-group
           @mouseover="cursorPoint"
           @mouseleave="cursorNorm"
+          @click="showHideArrows"
+          @touchstart="showHideArrows"
+          :config="{
+            x: w - 140,
+            y: 180,
+          }"
+        >
+          <v-ellipse
+            :config="{
+              x:0,
+              y:0,
+              radiusX: 50,
+              radiusY: 20,
+              
+              fill: 'black',
+            }"
+          />
+
+            <v-text 
+            :config="{
+x:-35,y:-5,              
+text:  !TLShow? 'Show Arrows':'Hide Arrows',
+
+
+fill: 'white',
+            }"
+
+            
+            />
+
+        </v-group>
+
+        <v-group
+          @mouseover="cursorPoint"
+          @mouseleave="cursorNorm"
           @click="fullCanvas"
           @touchstart="fullCanvas"
           :config="{
@@ -2092,40 +2352,6 @@ shape.setAbsolutePosition({
               y: -17,
               width: 35,
               height: 35,
-            }"
-          />
-        </v-group>
-        <v-group
-          :config="{
-            x: w - 50,
-            y: 300,
-          }"
-        >
-          <v-text
-            :config="{
-              x: 0,
-              y: 0,
-              align: 'center',
-              verticalAlign: 'middle',
-              offsetX: 100,
-              offsetY: 12,
-              fill: 'black',
-              text: 'To top: ' + Math.round(-topDist[markedGroup]) + 'cm',
-              fontSize: 15,
-            }"
-          />
-          >
-          <v-text
-            :config="{
-              x: 0,
-              y: 0,
-              align: 'center',
-              verticalAlign: 'middle',
-              offsetX: 100,
-              offsetY: -20,
-              fill: 'black',
-              text: 'To left: ' + Math.round(-leftDist[markedGroup]) + 'cm',
-              fontSize: 15,
             }"
           />
         </v-group>
