@@ -11,7 +11,7 @@ export default {
 
   data(){
     return{
-    loggedIn:true,
+    loggedIn:false,
     showPassword:false,
     emailCheck:'',
     passwordCheck:'',
