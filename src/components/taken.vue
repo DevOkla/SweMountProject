@@ -233,9 +233,8 @@ doc.addFileToVFS(`${rootBrach}/Montserrat-Regular.ttf`);
 doc.addFont("Montserrat-Regular.ttf", "Montserrat", "normal");
 doc.setFont("Montserrat");
 
-
 //595 x 842
-function fotterAndHeader(){
+function fotterAndHeader(pageN){
   doc.addImage(`${rootBrach}/swemount_logo.png`,'png', 20, 20, 129, 26);
 doc.setFont("Montserrat-Bold").setFontSize(18).setTextColor('#22326C').text('ARTIKELSPECIFIKATION',300,30);
 doc.setFont("Montserrat").setFontSize(12).text(today,300,45);
@@ -245,15 +244,17 @@ doc.setFont("Montserrat-Bold").setFontSize(10).setTextColor('#22326C').text('Swe
 doc.setFont("Montserrat").setFontSize(9).setTextColor('#22326C').text('Fabriksgatan 15',20,805);
 doc.setFont("Montserrat").setFontSize(9).setTextColor('#22326C').text('571 78 Forserum',20,820);
 doc.setFont("Montserrat-Bold").setFontSize(10).setTextColor('#22326C').text('07xxxxxxxx',250,800);
+doc.setFont("Montserrat").setFontSize(8).setTextColor('#22326C').text(String(pageN),280,820);
+
 doc.setFont("Montserrat-Bold").setFontSize(10).setTextColor('#22326C').text('info@swemount.se',460,800);
 
 }
-fotterAndHeader();
+fotterAndHeader(1);
 
 
 
-doc.setFont("Montserrat-Bold").setFontSize(24).setTextColor('#22326C').text('Total',250,110);
-doc.setDrawColor('#fcb324').setLineWidth(8).setLineCap("round").line(250, 120, 315, 120)
+doc.setFont("Montserrat-Bold").setFontSize(16).setTextColor('#22326C').text('Total',250,110);
+doc.setDrawColor('#fcb324').setLineWidth(4).setLineCap("round").line(250, 120, 290, 120)
 
 doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text(`Antal: ${this.panelarCount}`   ,50,150);
 doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text(`Antal paneler:  ${this.panelarCount}`,50,165);
@@ -273,13 +274,13 @@ doc.autoTable({
 
 doc.addPage();
 
-fotterAndHeader();
+fotterAndHeader(2);
 
 doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text('Geometri',50,180);
 doc.autoTable({
   html: '#Geometri',
   useCss: true,
-  startY: 200, 
+  startY: 195, 
   margin: 50,
     tableWidth:200,
   
@@ -288,19 +289,19 @@ doc.autoTable({
 doc.autoTable({
   html: '#Geometri2',
   useCss: true,
-  startY: 200, 
+  startY: 195, 
   margin: 300,
   tableWidth:200,
 
 });
 
 
-doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text('Lastförutsättningar',50,300);
+doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text('Lastförutsättningar',50,320);
 
 doc.autoTable({
   html: '#Lastförutsättningar',
   useCss: true,
-  startY: 320,
+  startY: 335,
   margin: 50,
   tableWidth:450,
 
@@ -314,9 +315,9 @@ doc.addImage( this.imgToExport,'png',50,-480,803,500,undefined,'NONE',-90 )
 for (let i =0; i<this.panelarAll.length ;i++){
 doc.addPage();
 
-fotterAndHeader();
-doc.setFont("Montserrat-Bold").setFontSize(24).setTextColor('#22326C').text('Sektion ' + (i+1) ,100,150);
-doc.setDrawColor('#fcb324').setLineWidth(8).setLineCap("round").line(100, 170, 150, 170)
+fotterAndHeader(3+i*3);
+doc.setFont("Montserrat-Bold").setFontSize(16).setTextColor('#22326C').text('Sektion ' + (i+1) ,250,150);
+doc.setDrawColor('#fcb324').setLineWidth(4).setLineCap("round").line(250, 160, 325, 160)
 
 
 doc.autoTable({
@@ -327,14 +328,80 @@ doc.autoTable({
   tableWidth:500,
 
 });
+
+doc.addPage();
+
+fotterAndHeader(4+i*3);
+doc.setFont("Montserrat-Bold").setFontSize(16).setTextColor('#22326C').text('Result ' + (i+1),100,150);
+doc.setDrawColor('#fcb324').setLineWidth(4).setLineCap("round").line(100, 160, 150, 160)
+
+doc.setFont("Montserrat-Bold").setFontSize(13).setTextColor('#22326C').text('Utbredda laster',50,200);
+doc.autoTable({
+  html: '#Utbredda'+i,
+  useCss: true,
+  startY: 215,
+  margin: 50,
+  tableWidth:500,
+
+});
+
+doc.setFont("Montserrat-Bold").setFontSize(13).setTextColor('#22326C').text('Kraft/infästning i skena',50,350);
+doc.autoTable({
+  html: '#skena'+i,
+  useCss: true,
+  startY: 365,
+  margin: 50,
+  tableWidth:500,
+
+});
+
+doc.setFont("Montserrat-Bold").setFontSize(13).setTextColor('#22326C').text('Kraft/infästning i tak',50,500);
+doc.autoTable({
+  html: '#tak'+i,
+  useCss: true,
+  startY: 515,
+  margin: 50,
+  tableWidth:500,
+
+});
+
+doc.addPage();
+
+fotterAndHeader(5+i*3);
+doc.setFont("Montserrat-Bold").setFontSize(16).setTextColor('#22326C').text('Utnyttjandegrader ' + (i+1),100,150);
+doc.setDrawColor('#fcb324').setLineWidth(4).setLineCap("round").line(100, 160, 150, 160)
+
+doc.setFont("Montserrat-Bold").setFontSize(13).setTextColor('#22326C').text('Kapacitet i infästningsskena',50,200);
+doc.setFont("Montserrat").setFontSize(12).setTextColor('#22326C').text('Utstickande skena: x.x%' ,50,215);
+
+doc.autoTable({
+  html: '#infästningsskena'+i,
+  useCss: true,
+  startY: 230,
+  margin: 50,
+  tableWidth:500,
+
+});
+
+doc.setFont("Montserrat-Bold").setFontSize(13).setTextColor('#22326C').text('Kapacitet för infästningar mellan skena och tak',50,350);
+doc.autoTable({
+  html: '#infästningar'+i,
+  useCss: true,
+  startY: 365,
+  margin: 50,
+  tableWidth:500,
+
+});
+
+
 }
 
 
 
 
-//doc.output('dataurlnewwindow')
+doc.output('dataurlnewwindow')
 
-doc.save("swemount.pdf");
+//doc.save("swemount.pdf");
 
  
 
@@ -1153,6 +1220,133 @@ this.cheker(this.selectedTak);
   </tr>
 
 </table>
+<table :id="'Utbredda'+indexS" >
+  <tr>
+    <th></th>
+    <th>I randzon (F, G & J)</th>
+    <th>Innanför randzon (H & I)</th>
+  </tr>
+  <tr>
+    <td>Lyftkraft</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+  <tr>
+    <td>Tryckkraft</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+  <tr>
+    <td>Horisontell kraft</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+
+
+</table>
+<table :id="'skena'+indexS" >
+  <tr>
+    <th></th>
+    <th>I randzon (F, G & J)</th>
+    <th>Innanför randzon (H & I)</th>
+  </tr>
+  <tr>
+    <td>Lyftkraft</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+  <tr>
+    <td>Tryckkraft</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+  <tr>
+    <td>Horisontell kraft</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+
+
+</table>
+<table :id="'tak'+indexS" >
+  <tr>
+    <th></th>
+    <th>I randzon (F, G & J)</th>
+    <th>Innanför randzon (H & I)</th>
+  </tr>
+  <tr>
+    <td>Lyftkraft</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+  <tr>
+    <td>Tryckkraft</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+  <tr>
+    <td>Horisontell kraft</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+
+
+</table>
+<table :id="'infästningsskena'+indexS" >
+  <tr>
+    <th></th>
+    <th>I randzon (F, G & J)</th>
+    <th>Innanför randzon (H & I)</th>
+  </tr>
+  <tr>
+    <td>Max för lyft</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+  <tr>
+    <td>Max för tryck</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+
+
+</table>
+<table :id="'infästningar'+indexS" >
+  <tr>
+    <th></th>
+    <th>I randzon (F, G & J)</th>
+    <th>Innanför randzon (H & I)</th>
+  </tr>
+  <tr>
+    <td>Max för lyft</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+  <tr>
+    <td>Max för tryck</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+  <tr>
+    <td>Max för horisontell kraft</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+  <tr>
+    <td>Max för komb. lyft + h-last</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+  <tr>
+    <td>Max för komb. tryck + h-last</td>
+    <td>xxxxxxxxx</td>
+    <td>xxxxxxxxx</td>
+  </tr>
+
+</table>
+
+
+
 </div>
 </div>
  

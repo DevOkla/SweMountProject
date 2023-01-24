@@ -664,8 +664,18 @@ showHideArrows(){
       this.deletRedPanel();
 
       this.fixElement = false;
+
       this.distanceLines();
+
+
       this.distanceLinesRB();
+
+      var goToDefult=false;
+
+      if (!this.TLShow){
+        this.showHideArrows();
+        goToDefult=true;
+      };
 
 let imgToExport;
 
@@ -698,7 +708,10 @@ setTimeout(() => {
       }
     });
     this.scalePercentage=scaleholder;
-    console.log(scaleholder);
+
+    if (goToDefult){
+        this.showHideArrows();
+      };
 
 /*
   this.$refs.toexport.getNode().toImage({
@@ -1395,7 +1408,7 @@ shape.setAbsolutePosition({
               name: 'shape0',
               closed: true,
               fill: '#fff',
-              shadowBlur: 15,
+              shadowBlur: 5,
               shadowOffset: { x: 0, y: 0 },
             }"
           />
@@ -1420,7 +1433,7 @@ shape.setAbsolutePosition({
 
               closed: true,
               fill: '#fff',
-              shadowBlur: 15,
+              shadowBlur: 5,
               shadowOffset: { x: 0, y: 0 },
             }"
           />
@@ -1444,7 +1457,7 @@ shape.setAbsolutePosition({
 
               closed: true,
               fill: '#fff',
-              shadowBlur: 15,
+              shadowBlur: 5,
               shadowOffset: { x: 0, y: 0 },
             }"
           />
@@ -1471,7 +1484,7 @@ shape.setAbsolutePosition({
 
               closed: true,
               fill: '#fff',
-              shadowBlur: 15,
+              shadowBlur: 5,
               shadowOffset: { x: 0, y: 0 },
             }"
           />
@@ -1496,7 +1509,7 @@ shape.setAbsolutePosition({
 
               closed: true,
               fill: '#fff',
-              shadowBlur: 15,
+              shadowBlur: 5,
               shadowOffset: { x: 0, y: 0 },
             }"
           />
@@ -1521,7 +1534,7 @@ shape.setAbsolutePosition({
 
               closed: true,
               fill: '#fff',
-              shadowBlur: 15,
+              shadowBlur: 5,
               shadowOffset: { x: 0, y: 0 },
             }"
           />
@@ -1545,7 +1558,7 @@ shape.setAbsolutePosition({
 
               closed: true,
               fill: '#fff',
-              shadowBlur: 15,
+              shadowBlur: 5,
               shadowOffset: { x: 0, y: 0 },
             }"
           />
@@ -1574,6 +1587,27 @@ shape.setAbsolutePosition({
               moveToTop: true,
             }"
           />
+          <v-circle
+              :config="{
+                x: j[0].x+10,
+                y: j[0].y+10,
+                radius: 8,
+                fill: '#fcb324',
+                moveToTop: true,
+              }"
+            />
+            <v-text 
+
+            :config="{
+                x: j[0].x+7,
+                y: j[0].y+6,
+            align: 'center',
+            verticalAlign: 'middle',
+            fill: '#fff',
+            text:indexj+1 ,
+            fontSize: 10,
+          }"
+/>
 
           <v-rect
             ref="panelsLefter"
@@ -1805,15 +1839,12 @@ shape.setAbsolutePosition({
               :config="{
                 x: bredd1[indexj] / 2,
                 y: hojd1[indexj] / 2,
-                width:
+                radius:
                   bredd1[indexj] < hojd1[indexj]
-                    ? bredd1[indexj] / 2
-                    : hojd1[indexj] / 2,
-                height:
-                  bredd1[indexj] < hojd1[indexj]
-                    ? bredd1[indexj] / 2
-                    : hojd1[indexj] / 2,
-                fill: '#ff0000',
+                    ? bredd1[indexj] / 5
+                    : hojd1[indexj] / 5,
+            
+                    fill: '#ff0000',
                 draggable: false,
                 moveToTop: true,
               }"
@@ -1825,21 +1856,21 @@ shape.setAbsolutePosition({
                 x:
                   bredd1[indexj] / 2 -
                   (bredd1[indexj] < hojd1[indexj]
-                    ? bredd1[indexj] / 7
-                    : hojd1[indexj] / 7),
+                    ? bredd1[indexj] / 10
+                    : hojd1[indexj] / 10),
                 y:
                   hojd1[indexj] / 2 -
                   (bredd1[indexj] < hojd1[indexj]
-                    ? bredd1[indexj] / 7
-                    : hojd1[indexj] / 7),
+                    ? bredd1[indexj] / 10
+                    : hojd1[indexj] / 10),
                 width:
                   bredd1[indexj] < hojd1[indexj]
-                    ? bredd1[indexj] / 3.5
-                    : hojd1[indexj] / 3.5,
+                    ? bredd1[indexj] / 5
+                    : hojd1[indexj] / 5,
                 height:
                   bredd1[indexj] < hojd1[indexj]
-                    ? bredd1[indexj] / 3.5
-                    : hojd1[indexj] / 3.5,
+                    ? bredd1[indexj] / 5
+                    : hojd1[indexj] / 5,
               }"
             />
           </v-group>
