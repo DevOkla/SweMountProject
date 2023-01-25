@@ -20,19 +20,6 @@ export default {
 
   data() {
     return {
-      laglutandeCountMatrialsVChecker: [
-        "LL1505",
-        "LL1530",
-        "KL3050",
-        "TP3552",
-        "GB0010",
-        "VB1305",
-        "VB1301",
-        "MU1010",
-        "MU1001",
-        "MA1008",
-        "MA5105",
-      ],
 
       canvasSize: width < 1200 ? 95 : (1200 / width) * 95,
 
@@ -217,7 +204,6 @@ export default {
       let arr = [];
 
       for (let i=0 ; i<this.topLine.length ;i++){
-        console.log(arr);
 
         arr.push(Math.round(this.distance12(this.topLine[i][0],this.topLine[i][1],this.topLine[i][2],this.topLine[i][3])))
       }
@@ -230,7 +216,6 @@ export default {
       for (let i in this.topLine){
         arr.push(Math.round(this.distance12(this.leftLine[i][0],this.leftLine[i][1],this.leftLine[i][2],this.leftLine[i][3])))
       }
-console.log(arr);
 
       return arr;
     },
@@ -242,6 +227,19 @@ for (let i =0;i<this.fastTillBredd.length;i++){
 };
 
       return arr;
+    },
+
+    rowsLong(){
+      let arr=[];
+      for (let i in this.panelar) {
+        if (!this.fastTillBredd[i]){
+        arr.push(this.distance12(this.allRight[i][0],this.allRight[i][1],this.allRight[i][2],this.allRight[i][3]))
+       } else {
+        arr.push(this.distance12(this.allBottom[i][0],this.allBottom[i][1],this.allBottom[i][2],this.allBottom[i][3]))
+       }
+      }
+
+      return arr
     },
 
   },
@@ -513,10 +511,6 @@ for (let i =0;i<this.fastTillBredd.length;i++){
 
       const shapeType1 = this.$refs.stage.getNode().findOne(".panelGroup0");
 
-      console.log("shapePoint" + shapeType.points()[0]);
-
-      console.log("pgX" + shapeType1.x());
-      console.log("width" + this.w);
     },
     fullCanvas() {
       this.canvasSize = 100;
@@ -621,6 +615,8 @@ for (let i =0;i<this.fastTillBredd.length;i++){
     },
     backProcess() {
       this.fixElement = true;
+      this.$emit("Hide", 1);
+
     },
     distanceLinesRB() {
 
@@ -681,9 +677,7 @@ let imgToExport;
 
 
 let scaleholder = this.scalePercentage;
-console.log(scaleholder);
   this.scalePercentage=1;
-  console.log(scaleholder);
 
 
 
@@ -702,7 +696,6 @@ setTimeout(() => {
       width: maxX - minX,
       height: maxY - minY,
       callback: function(img) {
-        console.log(img);
         imgToExport = img;
 
       }
@@ -723,7 +716,7 @@ setTimeout(() => {
 
 
 setTimeout(() => {
-  this.$emit("values", [this.panelar , imgToExport, this.rowsCount , this.distTop , this.distLeft, this.distMellanFästToExport ]);
+  this.$emit("values", [this.panelar , imgToExport, this.rowsCount , this.distTop , this.distLeft, this.distMellanFästToExport, this.rowsLong ]);
   
 }, 300)
 
@@ -1086,7 +1079,6 @@ shape.setAbsolutePosition({
           );
           let dist4 = tan * adj2;
 
-          //console.log("1: " + dist1+" 2: " + dist2+" 3: " + dist3+" 4: " + dist4 );
 
           checker =
             (dist1 > dist2 && this.panelar[e.target.id()][i].x < xB) ||
@@ -1283,11 +1275,11 @@ shape.setAbsolutePosition({
         // attach to another node
         transformerNode.nodes([selectedNode]);
         transformerNode.boundBoxFunc((oldBox, newBox) => {
-          if (newBox.width / this.bredd1[e.target.id()] < 1) {
-            newBox.width = this.bredd1[e.target.id()];
+          if (newBox.width/this.scalePercentage / this.bredd1[e.target.id()] < 1) {
+            newBox.width = this.bredd1[e.target.id()]*this.scalePercentage;
           }
-          if (newBox.height / this.hojd1[e.target.id()] < 1) {
-            newBox.height = this.hojd1[e.target.id()];
+          if (newBox.height/this.scalePercentage / this.hojd1[e.target.id()] < 1) {
+            newBox.height = this.hojd1[e.target.id()]*this.scalePercentage;
           }
 
           /*let r = Math.floor(newBox.width)>oldBox.width ? Math.floor(newBox.width):oldBox.width ;
@@ -1927,17 +1919,17 @@ shape.setAbsolutePosition({
               offsetX: fastTillBredd[indexj] ? 10 : 8,
               offsetY: fastTillBredd[indexj] ? 6 : 6,
               x: fastTillBredd[indexj]
-                ? j[0].x + 5
-                : j[0].x + bredd1[indexj] / 2,
+                ? j[0].x +5
+                : j[0].x + bredd1[indexj] / 2.1,
               y: fastTillBredd[indexj]
-                ? j[0].y + hojd1[indexj] / 2
-                : j[0].y + 16,
+                ? j[0].y + hojd1[indexj] / 1.95
+                : j[0].y + 18,
               text:
                 (fastTillBredd[indexj] ? hojd1[indexj] : bredd1[indexj]) -
                 distMellanFäst[indexj] * 2,
               textAlign: 'center',
               fill: 'white',
-              fontSize: 15,
+              fontSize: 10,
             }"
           />
 

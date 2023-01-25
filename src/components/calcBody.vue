@@ -104,7 +104,6 @@ export default {
   },
   watch: {
     convertCoordinates: function () {
-      console.log("done");
       this.getSnoAndVind();
     },
   },
@@ -126,7 +125,6 @@ export default {
       const lat = e.geometry.location.lat();
       const lng = e.geometry.location.lng();
       this.markers[0].position = { lat: lat, lng: lng };
-      console.log(e);
     },
 
     getSnoAndVind() {
@@ -145,7 +143,6 @@ export default {
           `https://api.boverket.se/klimatlast/v1/snolast?x-koord=${klimatlastY}&y-koord=${klimatlastX}`
         )
         .then((response1) => {
-          console.log(response1);
           this.sno = response1.data.värde.replace(",", ".");
         });
       axios
@@ -341,7 +338,6 @@ export default {
     },
 
     exportToPDF() {
-      console.log(jsPDF.version);
 
       this.whenPdf='block';
 
@@ -1015,7 +1011,7 @@ export default {
       </div>
 
       <div v-for="(i, index) in allTaken" v-bind:key="index">
-        <taket :takNum="index" :sno="sno" :vind="vind" :places="Terrängtyp"/>
+        <taket :takNum="index" :sno="sno" :vind="vind" :places="Terrängtyp+1"/>
       </div>
       <div style="max-width:1200px">
       <div class="p-buttons">

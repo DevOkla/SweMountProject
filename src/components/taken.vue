@@ -3,7 +3,7 @@ import canvasD from "../components/canvas.vue";
 var rootBrach = "/swemounttest";
 import matrials from "../assets/matrials.json";
 import jsPDF from "jspdf";
-import 'jspdf-autotable';
+import "jspdf-autotable";
 
 export default {
   components: {
@@ -11,11 +11,10 @@ export default {
   },
   props: {
     takNum: Number,
-    langIsSe:Boolean,
-    sno:Number,
-    vind:Number,
-    Terrängtyp:Number,
-
+    langIsSe: Boolean,
+    sno: Number,
+    vind: Number,
+    places: Number,
   },
   data() {
     return {
@@ -25,6 +24,8 @@ export default {
         "BF1400",
         "FP1400",
         "BU1200",
+        "BU1201",
+
         "IS2450",
         "PL5050",
         "KL1000",
@@ -32,26 +33,28 @@ export default {
         "SS6190",
         "SS6191",
         "TS6310",
+        "TS6301",
+
         "MA5111",
         "MA5102",
-        "TS6301",
-        "BU1201",
       ],
       BetongpannorLäktfäste: [
         "BF1400",
         "LF1400",
         "BU1200",
+        "BU1201",
+
         "IS2450",
         "PL5050",
         "KL1000",
         "KL2000",
         "SS6190",
+        "SS6191",
+
         "TS6310",
         "TS6301",
         "MA5111",
         "MA5104",
-        "BU1201",
-        "SS6191",
       ],
       TegelpannorFotplatta: [
         "TF1400",
@@ -63,11 +66,12 @@ export default {
         "KL1000",
         "KL2000",
         "SS6190",
+        "SS6191",
+
         "TS6310",
         "TS6301",
         "MA5111",
         "MA5102",
-        "SS6191",
       ],
       TegelpannorLäktfäste: [
         "TF1400",
@@ -79,11 +83,12 @@ export default {
         "KL1000",
         "KL2000",
         "SS6190",
+        "SS6191",
+
         "TS6310",
         "TS6301",
         "MA5111",
         "MA5104",
-        "SS6191",
       ],
       FalsatPlåttakKlicktakFalsfäste: [
         "FF1400",
@@ -92,9 +97,10 @@ export default {
         "KL1000",
         "KL2000",
         "SS6190",
+        "SS6191",
+
         "MA5111",
         "MA5101",
-        "SS6191",
       ],
       ProfileratPlåttakLångSkena: [
         "IS2450",
@@ -125,14 +131,17 @@ export default {
         "KL2000",
         "TP3552",
         "VB1305",
+        "VB1301",
+
         "MU1010",
+        "MU1001",
+
         "GB0010",
         "SS6190",
         "SS6191",
         "MA5111",
         "MA1008",
         "MA5103",
-        "MU1001",
       ],
 
       InfästningArr: [
@@ -202,229 +211,330 @@ export default {
       PanelBredd: [1170],
       PanelHöjd: [1700],
       PanelVikt: [0],
-      panelarAll:[[]],
-      panelarRows:[],
+      panelarAll: [[]],
+      panelarRows: [],
       panelarCount: 0,
       showResult: false,
-      finalResultArrObjects:[],
-      whenPdf:'none',
-      imgToExport:null,
-          distTop:[],
-          distLeft:[],
-          distMellanFästningar:[],
+      finalResultArrObjects: [],
+      totalFinalResultArrObjects: [],
+      whenPdf: "none",
+      imgToExport: null,
+      distTop: [],
+      distLeft: [],
+      distMellanFästningar: [],
+      rowLongs: [],
     };
   },
 
-  computed:{
-    exportToPDF() {
-
-this.whenPdf='none';
-let today = new Date().toISOString().slice(0, 10)
-
-
-var doc = new jsPDF("p", 'pt','a4',true,true);
-
-
-doc.addFileToVFS(`${rootBrach}/Montserrat-Bold.ttf`);
-doc.addFont("Montserrat-Bold.ttf", "Montserrat-Bold", "normal");
-doc.setFont("Montserrat-Bold");
-
-doc.addFileToVFS(`${rootBrach}/Montserrat-Regular.ttf`);
-doc.addFont("Montserrat-Regular.ttf", "Montserrat", "normal");
-doc.setFont("Montserrat");
-
-//595 x 842
-function fotterAndHeader(pageN){
-  doc.addImage(`${rootBrach}/swemount_logo.png`,'png', 20, 20, 129, 26);
-doc.setFont("Montserrat-Bold").setFontSize(18).setTextColor('#22326C').text('ARTIKELSPECIFIKATION',300,30);
-doc.setFont("Montserrat").setFontSize(12).text(today,300,45);
-doc.setDrawColor('#22326C').setLineWidth(1).line(10, 60, 585, 60)
-doc.setDrawColor('#22326C').setLineWidth(1).line(10, 770, 585, 770)
-doc.setFont("Montserrat-Bold").setFontSize(10).setTextColor('#22326C').text('Swemount AB',20,790);
-doc.setFont("Montserrat").setFontSize(9).setTextColor('#22326C').text('Fabriksgatan 15',20,805);
-doc.setFont("Montserrat").setFontSize(9).setTextColor('#22326C').text('571 78 Forserum',20,820);
-doc.setFont("Montserrat-Bold").setFontSize(10).setTextColor('#22326C').text('07xxxxxxxx',250,800);
-doc.setFont("Montserrat").setFontSize(8).setTextColor('#22326C').text(String(pageN),280,820);
-
-doc.setFont("Montserrat-Bold").setFontSize(10).setTextColor('#22326C').text('info@swemount.se',460,800);
-
-}
-fotterAndHeader(1);
-
-
-
-doc.setFont("Montserrat-Bold").setFontSize(16).setTextColor('#22326C').text('Total',250,110);
-doc.setDrawColor('#fcb324').setLineWidth(4).setLineCap("round").line(250, 120, 290, 120)
-
-doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text(`Antal: ${this.panelarCount}`   ,50,150);
-doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text(`Antal paneler:  ${this.panelarCount}`,50,165);
-doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text('Vikt: '+'kg',50,180);
-doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text('Pris: '+'kr',50,195);
-
-
-doc.autoTable({
-  html: '#table-topdf',
-  useCss: true,
-  startY: 230, 
-  startX: 10,
-
-});
-
-
-
-doc.addPage();
-
-fotterAndHeader(2);
-
-doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text('Geometri',50,180);
-doc.autoTable({
-  html: '#Geometri',
-  useCss: true,
-  startY: 195, 
-  margin: 50,
-    tableWidth:200,
-  
-});
-
-doc.autoTable({
-  html: '#Geometri2',
-  useCss: true,
-  startY: 195, 
-  margin: 300,
-  tableWidth:200,
-
-});
-
-
-doc.setFont("Montserrat-Bold").setFontSize(9).setTextColor('#22326C').text('Lastförutsättningar',50,320);
-
-doc.autoTable({
-  html: '#Lastförutsättningar',
-  useCss: true,
-  startY: 335,
-  margin: 50,
-  tableWidth:450,
-
-});
-
-
-doc.addPage();
-
-doc.addImage( this.imgToExport,'png',50,-480,803,500,undefined,'NONE',-90 )
-
-for (let i =0; i<this.panelarAll.length ;i++){
-doc.addPage();
-
-fotterAndHeader(3+i*3);
-doc.setFont("Montserrat-Bold").setFontSize(16).setTextColor('#22326C').text('Sektion ' + (i+1) ,250,150);
-doc.setDrawColor('#fcb324').setLineWidth(4).setLineCap("round").line(250, 160, 325, 160)
-
-
-doc.autoTable({
-  html: '#sektion'+i,
-  useCss: true,
-  startY: 200,
-  margin: 50,
-  tableWidth:500,
-
-});
-
-doc.addPage();
-
-fotterAndHeader(4+i*3);
-doc.setFont("Montserrat-Bold").setFontSize(16).setTextColor('#22326C').text('Result ' + (i+1),100,150);
-doc.setDrawColor('#fcb324').setLineWidth(4).setLineCap("round").line(100, 160, 150, 160)
-
-doc.setFont("Montserrat-Bold").setFontSize(13).setTextColor('#22326C').text('Utbredda laster',50,200);
-doc.autoTable({
-  html: '#Utbredda'+i,
-  useCss: true,
-  startY: 215,
-  margin: 50,
-  tableWidth:500,
-
-});
-
-doc.setFont("Montserrat-Bold").setFontSize(13).setTextColor('#22326C').text('Kraft/infästning i skena',50,350);
-doc.autoTable({
-  html: '#skena'+i,
-  useCss: true,
-  startY: 365,
-  margin: 50,
-  tableWidth:500,
-
-});
-
-doc.setFont("Montserrat-Bold").setFontSize(13).setTextColor('#22326C').text('Kraft/infästning i tak',50,500);
-doc.autoTable({
-  html: '#tak'+i,
-  useCss: true,
-  startY: 515,
-  margin: 50,
-  tableWidth:500,
-
-});
-
-doc.addPage();
-
-fotterAndHeader(5+i*3);
-doc.setFont("Montserrat-Bold").setFontSize(16).setTextColor('#22326C').text('Utnyttjandegrader ' + (i+1),100,150);
-doc.setDrawColor('#fcb324').setLineWidth(4).setLineCap("round").line(100, 160, 150, 160)
-
-doc.setFont("Montserrat-Bold").setFontSize(13).setTextColor('#22326C').text('Kapacitet i infästningsskena',50,200);
-doc.setFont("Montserrat").setFontSize(12).setTextColor('#22326C').text('Utstickande skena: x.x%' ,50,215);
-
-doc.autoTable({
-  html: '#infästningsskena'+i,
-  useCss: true,
-  startY: 230,
-  margin: 50,
-  tableWidth:500,
-
-});
-
-doc.setFont("Montserrat-Bold").setFontSize(13).setTextColor('#22326C').text('Kapacitet för infästningar mellan skena och tak',50,350);
-doc.autoTable({
-  html: '#infästningar'+i,
-  useCss: true,
-  startY: 365,
-  margin: 50,
-  tableWidth:500,
-
-});
-
-
-}
-
-
-
-
-doc.output('dataurlnewwindow')
-
-//doc.save("swemount.pdf");
-
- 
-
-},
-
-
-    selectedTak(){
-
-console.log();
-
-
-      if (this.taktTyp==0&&this.Infästning==0) {return this.BetongpannorFotplatta}
-      if (this.taktTyp==0&&this.Infästning==1) {return this.BetongpannorLäktfäste}
-      if (this.taktTyp==1&&this.Infästning==0) {return this.TegelpannorFotplatta}
-      if (this.taktTyp==1&&this.Infästning==1) {return this.TegelpannorLäktfäste}
-      if (this.taktTyp==2) {return this.FalsatPlåttakKlicktakFalsfäste}
-      if (this.taktTyp==3) {return this.ProfileratPlåttakLångSkena}
-      if (this.taktTyp==4) {return this.TegelprofileratPlåttakLångSkena}
-      if (this.taktTyp==5) {return this.SlätaTakTätplåtSlät}
-    }
+  computed: {
+    selectedTak() {
+      if (this.taktTyp == 0 && this.Infästning == 0) {
+        return this.BetongpannorFotplatta;
+      }
+      if (this.taktTyp == 0 && this.Infästning == 1) {
+        return this.BetongpannorLäktfäste;
+      }
+      if (this.taktTyp == 1 && this.Infästning == 0) {
+        return this.TegelpannorFotplatta;
+      }
+      if (this.taktTyp == 1 && this.Infästning == 1) {
+        return this.TegelpannorLäktfäste;
+      }
+      if (this.taktTyp == 2) {
+        return this.FalsatPlåttakKlicktakFalsfäste;
+      }
+      if (this.taktTyp == 3) {
+        return this.ProfileratPlåttakLångSkena;
+      }
+      if (this.taktTyp == 4) {
+        return this.TegelprofileratPlåttakLångSkena;
+      }
+      if (this.taktTyp == 5) {
+        return this.SlätaTakTätplåtSlät;
+      }
+    },
   },
 
   methods: {
+    exportToPDF() {
+      this.whenPdf = "none";
+      let today = new Date().toISOString().slice(0, 10);
+
+      var doc = new jsPDF("p", "pt", "a4", true, true);
+
+      doc.addFileToVFS(`${rootBrach}/Montserrat-Bold.ttf`);
+      doc.addFont("Montserrat-Bold.ttf", "Montserrat-Bold", "normal");
+      doc.setFont("Montserrat-Bold");
+
+      doc.addFileToVFS(`${rootBrach}/Montserrat-Regular.ttf`);
+      doc.addFont("Montserrat-Regular.ttf", "Montserrat", "normal");
+      doc.setFont("Montserrat");
+      var totalPanel = this.panelarAll.length - 1;
+      //595 x 842
+      function fotterAndHeader(pageN) {
+        doc.addImage(`${rootBrach}/swemount_logo.png`, "png", 20, 20, 129, 26);
+        doc
+          .setFont("Montserrat-Bold")
+          .setFontSize(18)
+          .setTextColor("#22326C")
+          .text("ARTIKELSPECIFIKATION", 300, 30);
+        doc.setFont("Montserrat").setFontSize(12).text(today, 300, 45);
+        doc.setDrawColor("#22326C").setLineWidth(1).line(10, 60, 585, 60);
+        doc.setDrawColor("#22326C").setLineWidth(1).line(10, 770, 585, 770);
+        doc
+          .setFont("Montserrat-Bold")
+          .setFontSize(10)
+          .setTextColor("#22326C")
+          .text("Swemount AB", 20, 790);
+        doc
+          .setFont("Montserrat")
+          .setFontSize(9)
+          .setTextColor("#22326C")
+          .text("Fabriksgatan 15", 20, 805);
+        doc
+          .setFont("Montserrat")
+          .setFontSize(9)
+          .setTextColor("#22326C")
+          .text("571 78 Forserum", 20, 820);
+        doc
+          .setFont("Montserrat-Bold")
+          .setFontSize(10)
+          .setTextColor("#22326C")
+          .text("07xxxxxxxx", 250, 800);
+        doc
+          .setFont("Montserrat")
+          .setFontSize(8)
+          .setTextColor("#22326C")
+          .text(String(pageN) + " (" + (5 + totalPanel * 3) + ")", 280, 820);
+
+        doc
+          .setFont("Montserrat-Bold")
+          .setFontSize(10)
+          .setTextColor("#22326C")
+          .text("info@swemount.se", 460, 800);
+      }
+      fotterAndHeader(1);
+
+      doc
+        .setFont("Montserrat-Bold")
+        .setFontSize(16)
+        .setTextColor("#22326C")
+        .text("Total", 250, 110);
+      doc
+        .setDrawColor("#fcb324")
+        .setLineWidth(4)
+        .setLineCap("round")
+        .line(250, 120, 290, 120);
+
+      doc
+        .setFont("Montserrat-Bold")
+        .setFontSize(9)
+        .setTextColor("#22326C")
+        .text(`Antal: ${this.panelarCount}`, 50, 150);
+      doc
+        .setFont("Montserrat-Bold")
+        .setFontSize(9)
+        .setTextColor("#22326C")
+        .text(`Antal paneler:  ${this.panelarCount}`, 50, 165);
+      doc
+        .setFont("Montserrat-Bold")
+        .setFontSize(9)
+        .setTextColor("#22326C")
+        .text("Vikt: " + "kg", 50, 180);
+      doc
+        .setFont("Montserrat-Bold")
+        .setFontSize(9)
+        .setTextColor("#22326C")
+        .text("Pris: " + "kr", 50, 195);
+
+      doc.autoTable({
+        html: "#table-topdf",
+        useCss: true,
+        startY: 230,
+        startX: 10,
+      });
+
+      doc.addPage();
+
+      fotterAndHeader(2);
+
+      doc
+        .setFont("Montserrat-Bold")
+        .setFontSize(9)
+        .setTextColor("#22326C")
+        .text("Geometri", 50, 180);
+      doc.autoTable({
+        html: "#Geometri",
+        useCss: true,
+        startY: 195,
+        margin: 50,
+        tableWidth: 200,
+      });
+
+      doc.autoTable({
+        html: "#Geometri2",
+        useCss: true,
+        startY: 195,
+        margin: 300,
+        tableWidth: 200,
+      });
+
+      doc
+        .setFont("Montserrat-Bold")
+        .setFontSize(9)
+        .setTextColor("#22326C")
+        .text("Lastförutsättningar", 50, 320);
+
+      doc.autoTable({
+        html: "#Lastförutsättningar",
+        useCss: true,
+        startY: 335,
+        margin: 50,
+        tableWidth: 450,
+      });
+
+      doc.addPage();
+
+      doc.addImage(
+        this.imgToExport,
+        "png",
+        50,
+        -480,
+        803,
+        500,
+        undefined,
+        "NONE",
+        -90
+      );
+
+      for (let i = 0; i < this.panelarAll.length; i++) {
+        doc.addPage();
+
+        fotterAndHeader(3 + i * 3);
+        doc
+          .setFont("Montserrat-Bold")
+          .setFontSize(16)
+          .setTextColor("#22326C")
+          .text("Sektion " + (i + 1), 250, 150);
+        doc
+          .setDrawColor("#fcb324")
+          .setLineWidth(4)
+          .setLineCap("round")
+          .line(250, 160, 325, 160);
+
+        doc.autoTable({
+          html: "#sektion" + i,
+          useCss: true,
+          startY: 200,
+          margin: 50,
+          tableWidth: 500,
+        });
+
+        doc.addPage();
+
+        fotterAndHeader(4 + i * 3);
+        doc
+          .setFont("Montserrat-Bold")
+          .setFontSize(16)
+          .setTextColor("#22326C")
+          .text("Result " + (i + 1), 100, 150);
+        doc
+          .setDrawColor("#fcb324")
+          .setLineWidth(4)
+          .setLineCap("round")
+          .line(100, 160, 150, 160);
+
+        doc
+          .setFont("Montserrat-Bold")
+          .setFontSize(13)
+          .setTextColor("#22326C")
+          .text("Utbredda laster", 50, 200);
+        doc.autoTable({
+          html: "#Utbredda" + i,
+          useCss: true,
+          startY: 215,
+          margin: 50,
+          tableWidth: 500,
+        });
+
+        doc
+          .setFont("Montserrat-Bold")
+          .setFontSize(13)
+          .setTextColor("#22326C")
+          .text("Kraft/infästning i skena", 50, 350);
+        doc.autoTable({
+          html: "#skena" + i,
+          useCss: true,
+          startY: 365,
+          margin: 50,
+          tableWidth: 500,
+        });
+
+        doc
+          .setFont("Montserrat-Bold")
+          .setFontSize(13)
+          .setTextColor("#22326C")
+          .text("Kraft/infästning i tak", 50, 500);
+        doc.autoTable({
+          html: "#tak" + i,
+          useCss: true,
+          startY: 515,
+          margin: 50,
+          tableWidth: 500,
+        });
+
+        doc.addPage();
+
+        fotterAndHeader(5 + i * 3);
+        doc
+          .setFont("Montserrat-Bold")
+          .setFontSize(16)
+          .setTextColor("#22326C")
+          .text("Utnyttjandegrader " + (i + 1), 100, 150);
+        doc
+          .setDrawColor("#fcb324")
+          .setLineWidth(4)
+          .setLineCap("round")
+          .line(100, 160, 150, 160);
+
+        doc
+          .setFont("Montserrat-Bold")
+          .setFontSize(13)
+          .setTextColor("#22326C")
+          .text("Kapacitet i infästningsskena", 50, 200);
+        doc
+          .setFont("Montserrat")
+          .setFontSize(12)
+          .setTextColor("#22326C")
+          .text("Utstickande skena: x.x%", 50, 215);
+
+        doc.autoTable({
+          html: "#infästningsskena" + i,
+          useCss: true,
+          startY: 230,
+          margin: 50,
+          tableWidth: 500,
+        });
+
+        doc
+          .setFont("Montserrat-Bold")
+          .setFontSize(13)
+          .setTextColor("#22326C")
+          .text("Kapacitet för infästningar mellan skena och tak", 50, 350);
+        doc.autoTable({
+          html: "#infästningar" + i,
+          useCss: true,
+          startY: 365,
+          margin: 50,
+          tableWidth: 500,
+        });
+      }
+
+      doc.output("dataurlnewwindow");
+
+      //doc.save("swemount.pdf");
+    },
+
     cheker(checkerArr) {
       this.finalResultArrObjects = [];
       for (let i in checkerArr) {
@@ -446,26 +556,546 @@ console.log();
       this.PanelHöjd.push(1700);
       this.PanelVikt.push(0);
     },
+    backHide() {
+      this.showResult = false;
+    },
+    selectCheap(largeArtNr, smallArtNr, c, largeCount, smallCount) {
+      
+      let VB5P = this.finalResultArrObjects.find(
+        (element) => element.ArtNr == largeArtNr
+      );
 
-    passValues(v) {
+      let VB1P = this.finalResultArrObjects.find(
+        (element) => element.ArtNr == smallArtNr
+      );
 
-      let finTotal = 0;
-      for (let j in v[0]){
-        finTotal += v[0][j].length;
+      console.log(VB5P+' '+VB1P+' '+ largeArtNr+ ' '+smallArtNr );
+
+console.log(VB5P+' '+VB1P);
+      let MVB1 = Math.floor(VB5P.Pris / VB1P.Pris);
+      let VB5C = Math.floor((2 * c) / largeCount);
+
+      let VB1C = Math.ceil((2 * c - VB5C * largeCount) / smallCount);
+
+      if (VB1C > MVB1) {
+        VB5C++;
+        VB1C = 0;
+      }
+      return [VB5C, VB1C];
+    },
+
+    antalCalc() {
+
+      this.totalFinalResultArrObjects = [];
+
+      if (this.selectedTak == this.BetongpannorFotplatta) {
+        for (let i in this.panelarAll) {
+          let test1 = 4;
+          let oneRow = Math.ceil(this.rowLongs[i] / 100/2.26);
+          let panelInRow = this.panelarAll[i].length/this.panelarRows[i];
+          let BU12 = this.selectCheap("BU1200", "BU1201", test1, 100, 10);
+          let TS63 = this.selectCheap("TS6310", "TS6301", test1*2, 100, 10);
+          let SS61 = this.selectCheap("SS6190", "SS6191", test1+oneRow*2*this.panelarRows[i]*2, 100, 10);
+
+console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
+          for (let frao in this.finalResultArrObjects) {
+            switch (this.finalResultArrObjects[frao].ArtNr) {
+              case "BF1400":
+                this.finalResultArrObjects[frao].Antal = test1;
+                break;
+              case "FP1400":
+                this.finalResultArrObjects[frao].Antal = test1;
+                break;
+              case "BU1200":
+                this.finalResultArrObjects[frao].Antal = BU12[0];
+                break;
+              case "BU1201":
+                this.finalResultArrObjects[frao].Antal = BU12[1];
+                break;
+              case "IS2450":
+                this.finalResultArrObjects[frao].Antal = oneRow*2*this.panelarRows[i]; ////////////fråga korrekt
+                break;
+              case "PL5050":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL1000":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL2000":
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                break;
+              case "SS6190":
+                this.finalResultArrObjects[frao].Antal = SS61[0];
+                break;
+              case "SS6191":
+                this.finalResultArrObjects[frao].Antal = SS61[1];   ////////////fråga behövs korrekt
+                break;
+              case "TS6310":
+                this.finalResultArrObjects[frao].Antal = TS63[0];
+                break;
+              case "TS6301":
+                this.finalResultArrObjects[frao].Antal = TS63[1];
+                break;
+              case "MA5111":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+              case "MA5102":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+
+              default:
+                this.finalResultArrObjects[frao].Antal = 0;
+                break;
+            }
+          }
+          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+        }
       }
 
-      this.imgToExport=v[1];
-console.log(this.imgToExport);
-this.cheker(this.selectedTak);
-      this.panelarAll=v[0];
-      this.panelarRows=v[2];
-      this.panelarRows=v[2];
-      this.distTop=v[3];
-      this.distLeft=v[4];
-      this.distMellanFästningar=v[5];
+
+
+
+      if (this.selectedTak == this.BetongpannorLäktfäste) {
+        for (let i in this.panelarAll) {
+          let test1 = 4;
+          let oneRow = Math.ceil(this.rowLongs[i] / 100/2.26);
+          let panelInRow = this.panelarAll[i].length/this.panelarRows[i];
+          let BU12 = this.selectCheap("BU1200", "BU1201", test1, 100, 10);
+          let TS63 = this.selectCheap("TS6310", "TS6301", test1*2, 100, 10);
+          let SS61 = this.selectCheap("SS6190", "SS6191", test1+oneRow*2*this.panelarRows[i]*2, 100, 10);
+
+console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
+          for (let frao in this.finalResultArrObjects) {
+            switch (this.finalResultArrObjects[frao].ArtNr) {
+              case "BF1400":
+                this.finalResultArrObjects[frao].Antal = test1;
+                break;
+              case "LF1400":
+                this.finalResultArrObjects[frao].Antal = test1;
+                break;
+              case "BU1200":
+                this.finalResultArrObjects[frao].Antal = BU12[0];
+                break;
+              case "BU1201":
+                this.finalResultArrObjects[frao].Antal = BU12[1];
+                break;
+              case "IS2450":
+                this.finalResultArrObjects[frao].Antal = oneRow*2*this.panelarRows[i]; ////////////fråga korrekt
+                break;
+              case "PL5050":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL1000":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL2000":
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                break;
+              case "SS6190":
+                this.finalResultArrObjects[frao].Antal = SS61[0];
+                break;
+              case "SS6191":
+                this.finalResultArrObjects[frao].Antal = SS61[1];   ////////////fråga behövs korrekt
+                break;
+              case "TS6310":
+                this.finalResultArrObjects[frao].Antal = TS63[0];
+                break;
+              case "TS6301":
+                this.finalResultArrObjects[frao].Antal = TS63[1];
+                break;
+              case "MA5111":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+              case "MA5102":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+
+              default:
+                this.finalResultArrObjects[frao].Antal = 0;
+                break;
+            }
+          }
+          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+        }
+      }
+
+
+
+      if (this.selectedTak == this.TegelpannorFotplatta) {
+        for (let i in this.panelarAll) {
+          let test1 = 4;
+          let oneRow = Math.ceil(this.rowLongs[i] / 100/2.26);
+          let panelInRow = this.panelarAll[i].length/this.panelarRows[i];
+          let BU12 = this.selectCheap("BU1200", "BU1201", test1, 100, 10);
+          let TS63 = this.selectCheap("TS6310", "TS6301", test1*2, 100, 10);
+          let SS61 = this.selectCheap("SS6190", "SS6191", test1+oneRow*2*this.panelarRows[i]*2, 100, 10);
+
+console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
+          for (let frao in this.finalResultArrObjects) {
+            switch (this.finalResultArrObjects[frao].ArtNr) {
+              case "TF1400":
+                this.finalResultArrObjects[frao].Antal = test1;
+                break;
+              case "FP1400":
+                this.finalResultArrObjects[frao].Antal = test1;
+                break;
+              case "BU1200":
+                this.finalResultArrObjects[frao].Antal = BU12[0];
+                break;
+              case "BU1201":
+                this.finalResultArrObjects[frao].Antal = BU12[1];
+                break;
+              case "IS2450":
+                this.finalResultArrObjects[frao].Antal = oneRow*2*this.panelarRows[i]; ////////////fråga korrekt
+                break;
+              case "PL5050":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL1000":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL2000":
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                break;
+              case "SS6190":
+                this.finalResultArrObjects[frao].Antal = SS61[0];
+                break;
+              case "SS6191":
+                this.finalResultArrObjects[frao].Antal = SS61[1];   ////////////fråga behövs korrekt
+                break;
+              case "TS6310":
+                this.finalResultArrObjects[frao].Antal = TS63[0];
+                break;
+              case "TS6301":
+                this.finalResultArrObjects[frao].Antal = TS63[1];
+                break;
+              case "MA5111":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+              case "MA5102":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+
+              default:
+                this.finalResultArrObjects[frao].Antal = 0;
+                break;
+            }
+          }
+          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+        }
+      }
+
+
+
+
+      if (this.selectedTak == this.TegelpannorLäktfäste) {
+        for (let i in this.panelarAll) {
+          let test1 = 4;
+          let oneRow = Math.ceil(this.rowLongs[i] / 100/2.26);
+          let panelInRow = this.panelarAll[i].length/this.panelarRows[i];
+          let BU12 = this.selectCheap("BU1200", "BU1201", test1, 100, 10);
+          let TS63 = this.selectCheap("TS6310", "TS6301", test1*2, 100, 10);
+          let SS61 = this.selectCheap("SS6190", "SS6191", test1+oneRow*2*this.panelarRows[i]*2, 100, 10);
+
+console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
+          for (let frao in this.finalResultArrObjects) {
+            switch (this.finalResultArrObjects[frao].ArtNr) {
+              case "TF1400":
+                this.finalResultArrObjects[frao].Antal = test1;
+                break;
+              case "LF1400":
+                this.finalResultArrObjects[frao].Antal = test1;
+                break;
+              case "BU1200":
+                this.finalResultArrObjects[frao].Antal = BU12[0];
+                break;
+              case "BU1201":
+                this.finalResultArrObjects[frao].Antal = BU12[1];
+                break;
+              case "IS2450":
+                this.finalResultArrObjects[frao].Antal = oneRow*2*this.panelarRows[i]; ////////////fråga korrekt
+                break;
+              case "PL5050":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL1000":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL2000":
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                break;
+              case "SS6190":
+                this.finalResultArrObjects[frao].Antal = SS61[0];
+                break;
+              case "SS6191":
+                this.finalResultArrObjects[frao].Antal = SS61[1];   ////////////fråga behövs korrekt
+                break;
+              case "TS6310":
+                this.finalResultArrObjects[frao].Antal = TS63[0];
+                break;
+              case "TS6301":
+                this.finalResultArrObjects[frao].Antal = TS63[1];
+                break;
+              case "MA5111":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+              case "MA5102":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+
+              default:
+                this.finalResultArrObjects[frao].Antal = 0;
+                break;
+            }
+          }
+          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+        }
+      }
+
+
+
+      
+      if (this.selectedTak == this.FalsatPlåttakKlicktakFalsfäste) {
+        for (let i in this.panelarAll) {
+          let test1 = 4;
+          let oneRow = Math.ceil(this.rowLongs[i] / 100/2.26);
+          let panelInRow = this.panelarAll[i].length/this.panelarRows[i];
+          let SS61 = this.selectCheap("SS6190", "SS6191", test1+oneRow*2*this.panelarRows[i]*2, 100, 10);
+
+console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
+          for (let frao in this.finalResultArrObjects) {
+            switch (this.finalResultArrObjects[frao].ArtNr) {
+              case "FF1400":
+                this.finalResultArrObjects[frao].Antal = test1;
+                break;
+              case "IS2450":
+                this.finalResultArrObjects[frao].Antal = oneRow*2*this.panelarRows[i]; ////////////fråga korrekt
+                break;
+              case "PL5050":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL1000":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL2000":
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                break;
+              case "SS6190":
+                this.finalResultArrObjects[frao].Antal = SS61[0];
+                break;
+              case "SS6191":
+                this.finalResultArrObjects[frao].Antal = SS61[1];   ////////////fråga behövs korrekt
+                break;
+              case "MA5111":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+              case "MA5102":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+
+              default:
+                this.finalResultArrObjects[frao].Antal = 0;
+                break;
+            }
+          }
+          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+        }
+      }
+
+
+
+
+      if (this.selectedTak == this.ProfileratPlåttakLångSkena) {
+        for (let i in this.panelarAll) {
+          let test1 = 4;
+          let oneRow = Math.ceil(this.rowLongs[i] / 100/2.26);
+          let panelInRow = this.panelarAll[i].length/this.panelarRows[i];
+          let SS61 = this.selectCheap("SS6190", "SS6191", test1+oneRow*2*this.panelarRows[i]*2, 100, 10);
+
+console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
+          for (let frao in this.finalResultArrObjects) {
+            switch (this.finalResultArrObjects[frao].ArtNr) {
+              case "IS2450":
+                this.finalResultArrObjects[frao].Antal = oneRow*2*this.panelarRows[i]; ////////////fråga korrekt
+                break;
+              case "PL5050":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL1000":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL2000":
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                break;
+              case "SS6190":
+                this.finalResultArrObjects[frao].Antal = SS61[0];
+                break;
+              case "SS6191":
+                this.finalResultArrObjects[frao].Antal = SS61[1];   ////////////fråga behövs korrekt
+                break;
+              case "MA5111":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+              case "MA5102":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+
+              default:
+                this.finalResultArrObjects[frao].Antal = 0;
+                break;
+            }
+          }
+          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+        }
+      }
+
+
+
+
+      
+      if (this.selectedTak == this.TegelprofileratPlåttakLångSkena) {
+        for (let i in this.panelarAll) {
+          let test1 = 4;
+          let oneRow = Math.ceil(this.rowLongs[i] / 100/2.26);
+          let panelInRow = this.panelarAll[i].length/this.panelarRows[i];
+          let SS61 = this.selectCheap("SS6190", "SS6191", test1+oneRow*2*this.panelarRows[i]*2, 100, 10);
+
+console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
+          for (let frao in this.finalResultArrObjects) {
+            switch (this.finalResultArrObjects[frao].ArtNr) {
+              case "IS2450":
+                this.finalResultArrObjects[frao].Antal = oneRow*2*this.panelarRows[i]; ////////////fråga korrekt
+                break;
+              case "PL5050":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL1000":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL2000":
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                break;
+              case "SS6190":
+                this.finalResultArrObjects[frao].Antal = SS61[0];
+                break;
+              case "SS6191":
+                this.finalResultArrObjects[frao].Antal = SS61[1];   ////////////fråga behövs korrekt
+                break;
+              case "MA5111":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+              case "MA5102":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+
+              default:
+                this.finalResultArrObjects[frao].Antal = 0;
+                break;
+            }
+          }
+          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+        }
+      }
+
+
+      if (this.selectedTak == this.SlätaTakTätplåtSlät) {
+        for (let i in this.panelarAll) {
+          let test1 = 4;
+          let oneRow = Math.ceil(this.rowLongs[i] / 100/2.26);
+          let panelInRow = this.panelarAll[i].length/this.panelarRows[i];
+          let VB13 = this.selectCheap("VB1305", "VB1301", test1, 50, 10);
+          let MU10 = this.selectCheap("MU1010", "MU1001", test1, 100, 10);
+          let SS61 = this.selectCheap("SS6190", "SS6191", test1+oneRow*2*this.panelarRows[i]*2, 100, 10);
+
+
+
+console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
+          for (let frao in this.finalResultArrObjects) {
+            switch (this.finalResultArrObjects[frao].ArtNr) {
+              case "CP1400":
+                this.finalResultArrObjects[frao].Antal = test1;
+                break;
+              case "IS2450":
+                this.finalResultArrObjects[frao].Antal = oneRow*2*this.panelarRows[i]; ////////////fråga korrekt
+                break;
+              case "PL5050":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL1000":
+                this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
+                break;
+              case "KL2000":
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                break;
+
+                case "TP3552":
+                this.finalResultArrObjects[frao].Antal = test1 ;
+                break;
+
+                case "VB1305":
+                this.finalResultArrObjects[frao].Antal = VB13[0] ;
+                break;
+                case "VB1301":
+                this.finalResultArrObjects[frao].Antal = VB13[1] ;
+                break;
+
+                case "MU1010":
+                this.finalResultArrObjects[frao].Antal = MU10[0] ;
+                break;
+                case "MU1001":
+                this.finalResultArrObjects[frao].Antal = MU10[1] ;
+                break;
+
+                case "GB0010":
+                this.finalResultArrObjects[frao].Antal = test1*2 ;
+                break;
+
+              case "SS6190":
+                this.finalResultArrObjects[frao].Antal = SS61[0];
+                break;
+              case "SS6191":
+                this.finalResultArrObjects[frao].Antal = SS61[1];   ////////////fråga behövs korrekt
+                break;
+
+              case "MA5111":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+              case "MA1008":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+                case "MA5103":
+                this.finalResultArrObjects[frao].Antal = 1;
+                break;
+
+              default:
+                this.finalResultArrObjects[frao].Antal = 0;
+                break;
+            }
+          }
+          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+        }
+      }
+
+    },
+
+    passValues(v) {
+      let finTotal = 0;
+      for (let j in v[0]) {
+        finTotal += v[0][j].length;
+      }
+      this.panelarCount = finTotal;
+
+      this.imgToExport = v[1];
+      this.cheker(this.selectedTak);
+      this.panelarAll = v[0];
+      this.panelarRows = v[2];
+      this.distTop = v[3];
+      this.distLeft = v[4];
+      this.distMellanFästningar = v[5];
+      this.rowLongs = v[6];
+      this.antalCalc();
 
       this.showResult = true;
-      this.panelarCount = finTotal;
     },
   },
 };
@@ -484,9 +1114,8 @@ this.cheker(this.selectedTak);
       @click="
         taktTyp = '0';
         Infästning = 0;
-        Bredd=300;
-        Höjd=330;
-
+        Bredd = 300;
+        Höjd = 330;
       "
     >
       <img
@@ -495,7 +1124,14 @@ this.cheker(this.selectedTak);
         alt=""
       />
 
-      <p>Betongpannor <span v-if="taktTyp == 0">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+      <p>
+        Betongpannor
+        <span v-if="taktTyp == 0"
+          >&nbsp;&nbsp;&nbsp;&nbsp;<i
+            class="fa-solid fa-square-check white"
+          ></i>
+        </span>
+      </p>
       <div :class="['p3', taktTyp != 0 ? 'hidden-div' : '']">
         <label for="">
           Bredd
@@ -523,8 +1159,8 @@ this.cheker(this.selectedTak);
       @click="
         taktTyp = '1';
         Infästning = 0;
-        Bredd=240;
-        Höjd=375;
+        Bredd = 240;
+        Höjd = 375;
       "
     >
       <img
@@ -533,7 +1169,14 @@ this.cheker(this.selectedTak);
         alt=""
       />
 
-      <p>Tegelpannor <span v-if="taktTyp == 1">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+      <p>
+        Tegelpannor
+        <span v-if="taktTyp == 1"
+          >&nbsp;&nbsp;&nbsp;&nbsp;<i
+            class="fa-solid fa-square-check white"
+          ></i>
+        </span>
+      </p>
       <div :class="['p3', taktTyp != 1 ? 'hidden-div' : '']">
         <label for=""
           >Bredd
@@ -560,9 +1203,8 @@ this.cheker(this.selectedTak);
       @click="
         taktTyp = '2';
         Infästning = 0;
-        Bredd=1;
-        Höjd=1;
-
+        Bredd = 1;
+        Höjd = 1;
       "
     >
       <img
@@ -571,7 +1213,14 @@ this.cheker(this.selectedTak);
         alt=""
       />
 
-      <p>Falsat plåttak/Klicktak <span v-if="taktTyp == 2">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+      <p>
+        Falsat plåttak/Klicktak
+        <span v-if="taktTyp == 2"
+          >&nbsp;&nbsp;&nbsp;&nbsp;<i
+            class="fa-solid fa-square-check white"
+          ></i>
+        </span>
+      </p>
       <div :class="['p3', taktTyp != 2 ? 'hidden-div' : '']">
         <label for=""
           >Avstånd falser
@@ -590,10 +1239,9 @@ this.cheker(this.selectedTak);
       @click="
         taktTyp = '3';
         Infästning = 0;
-        AvståndToppar=100;
-        Bredd=1;
-        Höjd=1;
-
+        AvståndToppar = 100;
+        Bredd = 1;
+        Höjd = 1;
       "
     >
       <img
@@ -602,7 +1250,14 @@ this.cheker(this.selectedTak);
         alt=""
       />
 
-      <p>Profilerat plåttak <span v-if="taktTyp == 3">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+      <p>
+        Profilerat plåttak
+        <span v-if="taktTyp == 3"
+          >&nbsp;&nbsp;&nbsp;&nbsp;<i
+            class="fa-solid fa-square-check white"
+          ></i>
+        </span>
+      </p>
 
       <div :class="['p3', taktTyp != 3 ? 'hidden-div' : '']">
         <label for="">
@@ -630,10 +1285,9 @@ this.cheker(this.selectedTak);
       @click="
         taktTyp = '4';
         Infästning = 0;
-        AvståndToppar=200;
-        Bredd=1;
-        Höjd=1;
-
+        AvståndToppar = 200;
+        Bredd = 1;
+        Höjd = 1;
       "
     >
       <img
@@ -642,7 +1296,14 @@ this.cheker(this.selectedTak);
         alt=""
       />
 
-      <p>Tegelprofilerat plåttak <span v-if="taktTyp == 4">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+      <p>
+        Tegelprofilerat plåttak
+        <span v-if="taktTyp == 4"
+          >&nbsp;&nbsp;&nbsp;&nbsp;<i
+            class="fa-solid fa-square-check white"
+          ></i>
+        </span>
+      </p>
       <div :class="['p3', taktTyp != 4 ? 'hidden-div' : '']">
         <label for=""
           >C-C Avstånd toppar
@@ -669,9 +1330,8 @@ this.cheker(this.selectedTak);
       @click="
         taktTyp = '5';
         Infästning = 0;
-        Bredd=1;
-        Höjd=1;
-
+        Bredd = 1;
+        Höjd = 1;
       "
     >
       <img
@@ -679,7 +1339,14 @@ this.cheker(this.selectedTak);
         src="/calc/SlätaTak.jpg"
         alt=""
       />
-      <p>Släta tak <span v-if="taktTyp == 5">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+      <p>
+        Släta tak
+        <span v-if="taktTyp == 5"
+          >&nbsp;&nbsp;&nbsp;&nbsp;<i
+            class="fa-solid fa-square-check white"
+          ></i>
+        </span>
+      </p>
     </div>
   </div>
   <div class="second-head">
@@ -710,7 +1377,14 @@ this.cheker(this.selectedTak);
         v-model="Infästning"
       />-->
 
-      <p>{{ i.name }} <span v-if="Infästning == index">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+      <p>
+        {{ i.name }}
+        <span v-if="Infästning == index"
+          >&nbsp;&nbsp;&nbsp;&nbsp;<i
+            class="fa-solid fa-square-check white"
+          ></i>
+        </span>
+      </p>
     </div>
   </div>
 
@@ -730,7 +1404,14 @@ this.cheker(this.selectedTak);
       />
 
       <!--<input type="radio" :name="'klammer' + takNum" value="" checked />-->
-      <p>Komplett <span >&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+      <p>
+        Komplett
+        <span
+          >&nbsp;&nbsp;&nbsp;&nbsp;<i
+            class="fa-solid fa-square-check white"
+          ></i>
+        </span>
+      </p>
     </div>
   </div>
 
@@ -752,7 +1433,14 @@ this.cheker(this.selectedTak);
           colorName == 'gray' ? ' imgs-selects-active' : '',
         ]"
       ></div>
-      <p>Varmförzinkat <span v-if="colorName == 'gray'">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+      <p>
+        Varmförzinkat
+        <span v-if="colorName == 'gray'"
+          >&nbsp;&nbsp;&nbsp;&nbsp;<i
+            class="fa-solid fa-square-check white"
+          ></i>
+        </span>
+      </p>
       <!--<input
         type="radio"
         :name="'color' + takNum"
@@ -770,7 +1458,14 @@ this.cheker(this.selectedTak);
           colorName == 'black' ? ' imgs-selects-active' : '',
         ]"
       ></div>
-      <p>Svartlackerat <span v-if="colorName == 'black'">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+      <p>
+        Svartlackerat
+        <span v-if="colorName == 'black'"
+          >&nbsp;&nbsp;&nbsp;&nbsp;<i
+            class="fa-solid fa-square-check white"
+          ></i>
+        </span>
+      </p>
       <!-- <input
         type="radio"
         :name="'color' + takNum"
@@ -805,7 +1500,14 @@ this.cheker(this.selectedTak);
             TypAvTak == 0 ? ' imgs-selects-active' : '',
           ]"
         />
-        <p>Pulpet <span v-if="TypAvTak == 0">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+        <p>
+          Pulpet
+          <span v-if="TypAvTak == 0"
+            >&nbsp;&nbsp;&nbsp;&nbsp;<i
+              class="fa-solid fa-square-check white"
+            ></i>
+          </span>
+        </p>
       </div>
       <div
         @click="TypAvTak = 1"
@@ -819,7 +1521,14 @@ this.cheker(this.selectedTak);
             TypAvTak == 1 ? ' imgs-selects-active' : '',
           ]"
         />
-        <p>Sadel <span v-if="TypAvTak == 1">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+        <p>
+          Sadel
+          <span v-if="TypAvTak == 1"
+            >&nbsp;&nbsp;&nbsp;&nbsp;<i
+              class="fa-solid fa-square-check white"
+            ></i>
+          </span>
+        </p>
       </div>
       <div
         @click="TypAvTak = 2"
@@ -833,7 +1542,14 @@ this.cheker(this.selectedTak);
             TypAvTak == 2 ? ' imgs-selects-active' : '',
           ]"
         />
-        <p>Motfalls <span v-if="TypAvTak == 2">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+        <p>
+          Motfalls
+          <span v-if="TypAvTak == 2"
+            >&nbsp;&nbsp;&nbsp;&nbsp;<i
+              class="fa-solid fa-square-check white"
+            ></i>
+          </span>
+        </p>
       </div>
     </div>
 
@@ -875,7 +1591,14 @@ this.cheker(this.selectedTak);
           alt=""
           :class="['imgs-selects ', Takform == 0 ? ' imgs-selects-active' : '']"
         />
-        <p>Rektangel <span v-if="Takform == 0">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+        <p>
+          Rektangel
+          <span v-if="Takform == 0"
+            >&nbsp;&nbsp;&nbsp;&nbsp;<i
+              class="fa-solid fa-square-check white"
+            ></i>
+          </span>
+        </p>
       </div>
       <div
         @click="Takform = 1"
@@ -886,7 +1609,14 @@ this.cheker(this.selectedTak);
           alt=""
           :class="['imgs-selects ', Takform == 1 ? ' imgs-selects-active' : '']"
         />
-        <p>Vinkel 1 <span v-if="Takform == 1">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+        <p>
+          Vinkel 1
+          <span v-if="Takform == 1"
+            >&nbsp;&nbsp;&nbsp;&nbsp;<i
+              class="fa-solid fa-square-check white"
+            ></i>
+          </span>
+        </p>
       </div>
       <div
         @click="Takform = 2"
@@ -897,7 +1627,14 @@ this.cheker(this.selectedTak);
           alt=""
           :class="['imgs-selects ', Takform == 2 ? ' imgs-selects-active' : '']"
         />
-        <p>Vinkel 2 <span v-if="Takform == 2">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+        <p>
+          Vinkel 2
+          <span v-if="Takform == 2"
+            >&nbsp;&nbsp;&nbsp;&nbsp;<i
+              class="fa-solid fa-square-check white"
+            ></i>
+          </span>
+        </p>
       </div>
       <div
         @click="Takform = 3"
@@ -908,7 +1645,14 @@ this.cheker(this.selectedTak);
           alt=""
           :class="['imgs-selects ', Takform == 3 ? ' imgs-selects-active' : '']"
         />
-        <p>Romb 1 <span v-if="Takform == 3">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+        <p>
+          Romb 1
+          <span v-if="Takform == 3"
+            >&nbsp;&nbsp;&nbsp;&nbsp;<i
+              class="fa-solid fa-square-check white"
+            ></i>
+          </span>
+        </p>
       </div>
       <div
         @click="Takform = 4"
@@ -919,7 +1663,14 @@ this.cheker(this.selectedTak);
           alt=""
           :class="['imgs-selects ', Takform == 4 ? ' imgs-selects-active' : '']"
         />
-        <p>Romb 2 <span v-if="Takform == 4">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+        <p>
+          Romb 2
+          <span v-if="Takform == 4"
+            >&nbsp;&nbsp;&nbsp;&nbsp;<i
+              class="fa-solid fa-square-check white"
+            ></i>
+          </span>
+        </p>
       </div>
       <div
         @click="Takform = 5"
@@ -930,7 +1681,14 @@ this.cheker(this.selectedTak);
           alt=""
           :class="['imgs-selects ', Takform == 5 ? ' imgs-selects-active' : '']"
         />
-        <p>Trapets 1 <span v-if="Takform == 5">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+        <p>
+          Trapets 1
+          <span v-if="Takform == 5"
+            >&nbsp;&nbsp;&nbsp;&nbsp;<i
+              class="fa-solid fa-square-check white"
+            ></i>
+          </span>
+        </p>
       </div>
       <div
         @click="Takform = 6"
@@ -941,7 +1699,14 @@ this.cheker(this.selectedTak);
           alt=""
           :class="['imgs-selects ', Takform == 6 ? ' imgs-selects-active' : '']"
         />
-        <p>Trapets 2 <span v-if="Takform == 6">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="fa-solid fa-square-check white"></i> </span></p>
+        <p>
+          Trapets 2
+          <span v-if="Takform == 6"
+            >&nbsp;&nbsp;&nbsp;&nbsp;<i
+              class="fa-solid fa-square-check white"
+            ></i>
+          </span>
+        </p>
       </div>
     </div>
 
@@ -1037,7 +1802,7 @@ this.cheker(this.selectedTak);
     </div>
   </div>
 
-  <div  class="divElem">
+  <div class="divElem">
     <canvasD
       :A="Amatt * 100"
       :B="Bmatt * 100"
@@ -1052,310 +1817,314 @@ this.cheker(this.selectedTak);
       :typTak="TypAvTak"
       :canvasNum="takNum"
       @values="passValues"
+      @Hide="backHide"
       @newGroup="addNewGroup"
       @deleteGroup="deleteThisGroup"
     />
   </div>
 
+  <div v-if="showResult" class="konfiguration-info">
+    <div style="display: flex">
+      <div class="second-head" style="margin: 0">
+        <h2 style="text-align: left; margin-top: 0">
+          Konfiguration {{ takNum + 1 }}
+        </h2>
+        <hr style="margin: 0" />
+      </div>
 
-  <div v-if="showResult" class="konfiguration-info"> 
-  <div style="display:flex;">
-  <div class="second-head" style="margin: 0; "> 
-        <h2 style="text-align: left; margin-top: 0;"> Konfiguration  {{ takNum +1 }}</h2>
-   <hr style="margin:0; ">
-  </div>
-
-  <div>
-    <ul><li>Antal: 1</li>
-    <li>Antal paneler: {{ panelarCount }}</li>
-    <li>Vikt: 708.88 kg</li>
-    <li>Pris: 84962 SEK</li></ul>
-  
-
-
-
-
-
-</div>
-</div>
-  <table id="table-topdf">
-    <tr>
-      <th>Antal</th>
-      <th>ArtNr</th>
-      <th>Benämning</th>
-      <th>GS1</th>
-      <th>Vikt/st</th>
-      <th>Tot.vikt</th>
-      <th>Pris/st</th>
-      <th>Rabatt</th>
-      <th>Totalt (exkl. moms)</th>
-    </tr>
-    <template v-for="(ii, indexii) in finalResultArrObjects" v-bind:key="indexii">
-      <tr v-if="ii.Antal > -1">
-        <td>{{ ii.Antal }}</td>
-        <td>{{ ii.ArtNr }}</td>
-        <td>{{ ii.Benämning }}</td>
-        <td>{{ ii.GS1 }}</td>
-        <td>{{ ii.Vikt }} kg</td>
-        <td>{{ Math.round(ii.Vikt * ii.Antal * 100) / 100 }} kg</td>
-        <td>{{ ii.Pris }} SEK</td>
-        <td>0</td>
-        <td>{{ ii.Pris * ii.Antal }} SEK</td>
+      <div>
+        <ul>
+          <li>Antal: {{ panelarAll.length }}</li>
+          <li>Antal paneler: {{ panelarCount }}</li>
+          <li>Vikt: 708.88 kg</li>
+          <li>Pris: 84962 SEK</li>
+        </ul>
+      </div>
+    </div>
+    <table id="table-topdf">
+      <tr>
+        <th>Antal</th>
+        <th>ArtNr</th>
+        <th>Benämning</th>
+        <th>GS1</th>
+        <th>Vikt/st</th>
+        <th>Tot.vikt</th>
+        <th>Pris/st</th>
+        <th>Rabatt</th>
+        <th>Totalt (exkl. moms)</th>
       </tr>
-    </template>
-  </table>
+      <template
+        v-for="(ii, indexii) in finalResultArrObjects"
+        v-bind:key="indexii"
+      >
+        <tr v-if="ii.Antal >0">
+          <td>{{ ii.Antal }}</td>
+          <td>{{ ii.ArtNr }}</td>
+          <td>{{ ii.Benämning }}</td>
+          <td>{{ ii.GS1 }}</td>
+          <td>{{ ii.Vikt }} kg</td>
+          <td>{{ Math.round(ii.Vikt * ii.Antal * 100) / 100 }} kg</td>
+          <td>{{ ii.Pris }} SEK</td>
+          <td>0</td>
+          <td>{{ ii.Pris * ii.Antal }} SEK</td>
+        </tr>
+      </template>
+    </table>
 
-<div class="to-export-tabels" style="display:none;">
-<table id="Geometri">
-  <tr>
-    <td>Mått A</td>
-    <td>{{ Amatt }}</td>
-  </tr>
-  <tr>
-    <td>Mått B</td>
-    <td>{{ Bmatt }}</td>
-  </tr>
-  <tr v-if="Takform!=0">
-    <td >Mått C</td>
-    <td>{{Cmatt}}</td>
-  </tr>
-  <tr>
-    <td>Byggnadens höjd</td>
-    <td>{{ nockhöjd }}</td>
-  </tr>
+    <div class="to-export-tabels" style="display: none">
+      <table id="Geometri">
+        <tr>
+          <td>Mått A</td>
+          <td>{{ Amatt }} m</td>
+        </tr>
+        <tr>
+          <td>Mått B</td>
+          <td>{{ Bmatt }} m</td>
+        </tr>
+        <tr v-if="Takform != 0">
+          <td>Mått C</td>
+          <td>{{ Cmatt }} m</td>
+        </tr>
+        <tr>
+          <td>Byggnadens höjd</td>
+          <td>{{ nockhöjd }} m</td>
+        </tr>
+      </table>
+      <table id="Geometri2">
+        <tr>
+          <td>Taklutning</td>
+          <td>{{ Taklutning }}°</td>
+        </tr>
+        <tr>
+          <td>Taktyp</td>
+          <td>
+            {{ TypAvTak == 0 ? "Pulpet" : "" }}{{ TypAvTak == 1 ? "Sadel" : ""
+            }}{{ TypAvTak == 2 ? "Motfallstak" : "" }}
+          </td>
+        </tr>
+        <tr>
+          <td>Typ av infästning</td>
+          <td>
+            {{ selectedTak == BetongpannorFotplatta ? "Fotplatta" : "" }}
+            {{ selectedTak == BetongpannorLäktfäste ? "Läktfäste" : "" }}
+            {{ selectedTak == TegelpannorFotplatta ? "Fotplatta" : "" }}
+            {{ selectedTak == TegelpannorLäktfäste ? "Läktfäste" : "" }}
+            {{
+              selectedTak == FalsatPlåttakKlicktakFalsfäste ? "Falsfäste" : ""
+            }}
+            {{ selectedTak == ProfileratPlåttakLångSkena ? "LångSkena" : "" }}
+            {{
+              selectedTak == TegelprofileratPlåttakLångSkena ? "LångSkena" : ""
+            }}
+            {{ selectedTak == SlätaTakTätplåtSlät ? "tplåtSlät" : "" }}
+          </td>
+        </tr>
+      </table>
+      <table id="Lastförutsättningar">
+        <tr>
+          <td>Säkerhetsklass</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Dimensionerande livslängd</td>
+          <td>30 år</td>
+        </tr>
+        <tr>
+          <td>Referensvindhastighet</td>
+          <td>{{ vind }} m/s</td>
+        </tr>
+        <tr>
+          <td>Terrängtyp</td>
+          <td>{{ places - 1 }}</td>
+        </tr>
 
-</table>
-<table id="Geometri2">
-  <tr>
-    <td>Taklutning</td>
-    <td>{{ Taklutning }}</td>
-  </tr>
-  <tr>
-    <td>Taktyp</td>
-    <td>{{ TypAvTak }}</td>
-  </tr>
-  <tr>
-    <td>Typ av infästning</td>
-    <td>0</td>
-  </tr>
+        <tr>
+          <td>Lastkombination faktor 0v</td>
+          <td>xxxxxxx</td>
+        </tr>
+        <tr>
+          <td>Snözon</td>
+          <td>{{ sno }} kN/m2</td>
+        </tr>
+        <tr>
+          <td>Lastkombination faktor 0s</td>
+          <td>xxxxxxxx</td>
+        </tr>
+        <tr>
+          <td>Snörasskydd</td>
+          <td>Nej</td>
+        </tr>
+      </table>
 
-</table>
-<table id="Lastförutsättningar">
-  <tr>
-    <td>Säkerhetsklass</td>
-    <td>2</td>
-  </tr>
-  <tr>
-    <td>Dimensionerande livslängd</td>
-    <td>30</td>
-  </tr>
-  <tr>
-    <td>Referensvindhastighet</td>
-    <td>{{ vind }}</td>
-  </tr>
-  <tr>
-    <td>Lastkombination faktor 0v</td>
-    <td>xxxxxxxxxxxxxxxxxxxxxx</td>
-  </tr>
-  <tr>
-    <td>Snözon</td>
-    <td>{{ sno }}</td>
-  </tr>
-  <tr>
-    <td>Lastkombination faktor 0s</td>
-    <td>xxxxxxxxxxxxxxxxxxxxxxxx</td>
-  </tr>
-  <tr>
-    <td>Snörasskydd</td>
-    <td>Nej</td>
-  </tr>
+      <div v-for="(s, indexS) in panelarAll" :key="indexS">
+        <table :id="'sektion' + indexS">
+          <tr>
+            <td>Startpunkt: Nock:</td>
+            <td>{{ distTop[indexS] }} cm</td>
+          </tr>
+          <tr>
+            <td>Startpunkt: Vänster:</td>
+            <td>{{ distLeft[indexS] }} cm</td>
+          </tr>
+          <tr>
+            <td>Antal rader</td>
+            <td>{{ panelarRows[indexS] }} st</td>
+          </tr>
+          <tr>
+            <td>Antal paneler per rad</td>
+            <td>{{ panelarAll[indexS].length / panelarRows[indexS] }} st</td>
+          </tr>
+          <tr>
+            <td>Avstånd skenor</td>
+            <td>{{ distMellanFästningar[indexS] }} cm</td>
+          </tr>
+          <tr>
+            <td>Avstånd infästning (max)</td>
+            <td>xxxxxx cm</td>
+          </tr>
+          <tr>
+            <td>Avstånd infästning (max) i randzon</td>
+            <td>xxxxx cm</td>
+          </tr>
+          <tr>
+            <td>Antal infästningar (min)</td>
+            <td>xxxxxxxx cm</td>
+          </tr>
+          <tr>
+            <td>Panellängd</td>
+            <td>{{ PanelHöjd[indexS] }} mm</td>
+          </tr>
+          <tr>
+            <td>Panelbredd</td>
+            <td>{{ PanelBredd[indexS] }} mm</td>
+          </tr>
+          <tr>
+            <td>Panelvikt</td>
+            <td>{{ PanelVikt[indexS] }} kg</td>
+          </tr>
+        </table>
+        <table :id="'Utbredda' + indexS">
+          <tr>
+            <th></th>
+            <th>I randzon (F, G & J)</th>
+            <th>Innanför randzon (H & I)</th>
+          </tr>
+          <tr>
+            <td>Lyftkraft</td>
+            <td>xxxxxxxxx kN/m2</td>
+            <td>xxxxxxxxx kN/m2</td>
+          </tr>
+          <tr>
+            <td>Tryckkraft</td>
+            <td>xxxxxxxxx kN/m2</td>
+            <td>xxxxxxxxx kN/m2</td>
+          </tr>
+          <tr>
+            <td>Horisontell kraft</td>
+            <td>xxxxxxxxx kN/m2</td>
+            <td>xxxxxxxxx kN/m2</td>
+          </tr>
+        </table>
+        <table :id="'skena' + indexS">
+          <tr>
+            <th></th>
+            <th>I randzon (F, G & J)</th>
+            <th>Innanför randzon (H & I)</th>
+          </tr>
+          <tr>
+            <td>Lyftkraft</td>
+            <td>xxxxxxxxx kN</td>
+            <td>xxxxxxxxx kN</td>
+          </tr>
+          <tr>
+            <td>Tryckkraft</td>
+            <td>xxxxxxxxx kN</td>
+            <td>xxxxxxxxx kN</td>
+          </tr>
+          <tr>
+            <td>Horisontell kraft</td>
+            <td>xxxxxxxxx kN</td>
+            <td>xxxxxxxxx kN</td>
+          </tr>
+        </table>
+        <table :id="'tak' + indexS">
+          <tr>
+            <th></th>
+            <th>I randzon (F, G & J)</th>
+            <th>Innanför randzon (H & I)</th>
+          </tr>
+          <tr>
+            <td>Lyftkraft</td>
+            <td>xxxxxxxxx kN</td>
+            <td>xxxxxxxxx kN</td>
+          </tr>
+          <tr>
+            <td>Tryckkraft</td>
+            <td>xxxxxxxxx kN</td>
+            <td>xxxxxxxxx kN</td>
+          </tr>
+          <tr>
+            <td>Horisontell kraft</td>
+            <td>xxxxxxxxx kN</td>
+            <td>xxxxxxxxx kN</td>
+          </tr>
+        </table>
+        <table :id="'infästningsskena' + indexS">
+          <tr>
+            <th></th>
+            <th>I randzon (F, G & J)</th>
+            <th>Innanför randzon (H & I)</th>
+          </tr>
+          <tr>
+            <td>Max för lyft</td>
+            <td>xxxxxxxxx %</td>
+            <td>xxxxxxxxx %</td>
+          </tr>
+          <tr>
+            <td>Max för tryck</td>
+            <td>xxxxxxxxx %</td>
+            <td>xxxxxxxxx %</td>
+          </tr>
+        </table>
+        <table :id="'infästningar' + indexS">
+          <tr>
+            <th></th>
+            <th>I randzon (F, G & J)</th>
+            <th>Innanför randzon (H & I)</th>
+          </tr>
+          <tr>
+            <td>Max för lyft</td>
+            <td>xxxxxxxxx %</td>
+            <td>xxxxxxxxx %</td>
+          </tr>
+          <tr>
+            <td>Max för tryck</td>
+            <td>xxxxxxxxx %</td>
+            <td>xxxxxxxxx %</td>
+          </tr>
+          <tr>
+            <td>Max för horisontell kraft</td>
+            <td>xxxxxxxxx %</td>
+            <td>xxxxxxxxx %</td>
+          </tr>
+          <tr>
+            <td>Max för komb. lyft + h-last</td>
+            <td>xxxxxxxxx %</td>
+            <td>xxxxxxxxx %</td>
+          </tr>
+          <tr>
+            <td>Max för komb. tryck + h-last</td>
+            <td>xxxxxxxxx %</td>
+            <td>xxxxxxxxx %</td>
+          </tr>
+        </table>
+      </div>
+    </div>
 
-</table>
-
-<div v-for="( s , indexS) in panelarAll" :key="indexS">
-  <table :id="'sektion'+indexS" >
-  <tr>
-    <td>Startpunkt: Nock:</td>
-    <td> {{ distTop[indexS] }} </td>
-  </tr>
-  <tr>
-    <td>Startpunkt: Vänster:</td>
-    <td>{{ distLeft[indexS] }} </td>
-  </tr>
-  <tr>
-    <td>Antal rader</td>
-    <td>{{ panelarRows[indexS] }}</td>
-  </tr>
-  <tr>
-    <td>Antal paneler per rad</td>
-    <td>{{ panelarAll[indexS].length/panelarRows[indexS] }}</td>
-  </tr>
-  <tr>
-    <td>Avstånd skenor</td>
-    <td> {{ distMellanFästningar[indexS] }} </td>
-  </tr>
-  <tr>
-    <td>Avstånd infästning (max)</td>
-    <td>xxxxxxxxxxxxxxxxxxxxxxxx</td>
-  </tr>
-  <tr>
-    <td>Avstånd infästning (max) i randzon</td>
-    <td> xxxxxxxxxxxxxxxxxxxxxxxx</td>
-  </tr>
-  <tr>
-    <td>Antal infästningar (min)</td>
-    <td> xxxxxxxxxxxxxxxxxxxxxxxx</td>
-  </tr>
-  <tr>    
-    <td>Panellängd</td>
-    <td> {{ PanelHöjd[indexS] }}</td>
-  </tr>
-  <tr>
-    <td>Panelbredd</td>
-    <td> {{ PanelBredd[indexS]  }}</td>
-  </tr>
-  <tr>
-    <td>Panelvikt</td>
-    <td> {{ PanelVikt[indexS] }}</td>
-  </tr>
-
-</table>
-<table :id="'Utbredda'+indexS" >
-  <tr>
-    <th></th>
-    <th>I randzon (F, G & J)</th>
-    <th>Innanför randzon (H & I)</th>
-  </tr>
-  <tr>
-    <td>Lyftkraft</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-  <tr>
-    <td>Tryckkraft</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-  <tr>
-    <td>Horisontell kraft</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-
-
-</table>
-<table :id="'skena'+indexS" >
-  <tr>
-    <th></th>
-    <th>I randzon (F, G & J)</th>
-    <th>Innanför randzon (H & I)</th>
-  </tr>
-  <tr>
-    <td>Lyftkraft</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-  <tr>
-    <td>Tryckkraft</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-  <tr>
-    <td>Horisontell kraft</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-
-
-</table>
-<table :id="'tak'+indexS" >
-  <tr>
-    <th></th>
-    <th>I randzon (F, G & J)</th>
-    <th>Innanför randzon (H & I)</th>
-  </tr>
-  <tr>
-    <td>Lyftkraft</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-  <tr>
-    <td>Tryckkraft</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-  <tr>
-    <td>Horisontell kraft</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-
-
-</table>
-<table :id="'infästningsskena'+indexS" >
-  <tr>
-    <th></th>
-    <th>I randzon (F, G & J)</th>
-    <th>Innanför randzon (H & I)</th>
-  </tr>
-  <tr>
-    <td>Max för lyft</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-  <tr>
-    <td>Max för tryck</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-
-
-</table>
-<table :id="'infästningar'+indexS" >
-  <tr>
-    <th></th>
-    <th>I randzon (F, G & J)</th>
-    <th>Innanför randzon (H & I)</th>
-  </tr>
-  <tr>
-    <td>Max för lyft</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-  <tr>
-    <td>Max för tryck</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-  <tr>
-    <td>Max för horisontell kraft</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-  <tr>
-    <td>Max för komb. lyft + h-last</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-  <tr>
-    <td>Max för komb. tryck + h-last</td>
-    <td>xxxxxxxxx</td>
-    <td>xxxxxxxxx</td>
-  </tr>
-
-</table>
-
-
-
-</div>
-</div>
- 
-  <button  @click="exportToPDF" style="text-align:center;">
-        Ladda ner PDF
-      </button>
-</div>
-
-
+    <button @click="exportToPDF" style="text-align: center">
+      Ladda ner PDF
+    </button>
+  </div>
 </template>
 
 <style scoped>
@@ -1363,40 +2132,36 @@ this.cheker(this.selectedTak);
   max-width: 1140px;
   margin: 0 auto;
 }
-#table-pdf *{
-    padding: 3px;
+#table-pdf * {
+  padding: 3px;
 
-font-size: 9px;
-font-family:'Montserrat';
-text-align: center;
-  }
-  #element-to-pdfa *{
-    font-family:'Montserrat';
-
-  }
+  font-size: 9px;
+  font-family: "Montserrat";
+  text-align: center;
+}
+#element-to-pdfa * {
+  font-family: "Montserrat";
+}
 
 #element-to-pdfa {
-font-family:'Montserrat';
-width:565px; 
-  }
-  th{
-    font-family:'Montserrat-bold';
-    border-color: #aaa ;
-
-  }
+  font-family: "Montserrat";
+  width: 565px;
+}
+th {
+  font-family: "Montserrat-bold";
+  border-color: #aaa;
+}
 @media screen and (min-width: 414px) {
-
-  #table-pdf th{
-    font-family:'Montserrat-bold';
-
+  #table-pdf th {
+    font-family: "Montserrat-bold";
   }
 
-  #table-pdf *{
+  #table-pdf * {
     padding: 3px;
 
-font-size: 9px;
-font-family:'Montserrat';
-text-align: center;
+    font-size: 9px;
+    font-family: "Montserrat";
+    text-align: center;
   }
 
   main {
@@ -1434,7 +2199,7 @@ text-align: center;
     color: #22326c;
   }
   .selection:hover p {
-    background-color: #8F7348;
+    background-color: #8f7348;
     color: #fff;
   }
 
@@ -1594,29 +2359,25 @@ text-align: center;
     margin-top: 4.5vw;
   }
 
-  .konfiguration-info{
-    width:80vw;
-
+  .konfiguration-info {
+    width: 80vw;
   }
-  .konfiguration-info>div{
+  .konfiguration-info > div {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-gap: 1vw;  
+    gap: 1vw;
+  }
+  .konfiguration-info > div div {
+    margin: 0;
+    width: 50%;
+  }
 
-}
-.konfiguration-info>div div{
-margin: 0;
-  width:50%;
-}
-
-.konfiguration-info>div li{
-margin: 0;
-  width:50%;
-font-family: "Montserrat-bold";
-}
-
-
+  .konfiguration-info > div li {
+    margin: 0;
+    width: 50%;
+    font-family: "Montserrat-bold";
+  }
 }
 
 /***********************************************************************************************************************/
@@ -1625,7 +2386,6 @@ font-family: "Montserrat-bold";
     margin: 0;
   }
   .multi_elements {
-
     display: flex;
     margin-top: 96.875px;
   }
@@ -1656,7 +2416,7 @@ font-family: "Montserrat-bold";
     color: #22326c;
   }
   .selection:hover p {
-    background-color: #8F7348;
+    background-color: #8f7348;
     color: #fff;
   }
 
@@ -1816,28 +2576,24 @@ font-family: "Montserrat-bold";
     margin-top: 54px;
   }
 
-  .konfiguration-info{
-    width:960px;
-
+  .konfiguration-info {
+    width: 960px;
   }
-  .konfiguration-info>div{
+  .konfiguration-info > div {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-gap: 12px;  
+    gap: 12px;
+  }
+  .konfiguration-info > div div {
+    margin: 0;
+    width: 50%;
+  }
 
-}
-.konfiguration-info>div div{
-margin: 0;
-  width:50%;
-}
-
-.konfiguration-info>div li{
-margin: 0;
-  width:50%;
-font-family: "Montserrat-bold";
-}
-
-
+  .konfiguration-info > div li {
+    margin: 0;
+    width: 50%;
+    font-family: "Montserrat-bold";
+  }
 }
 </style>
