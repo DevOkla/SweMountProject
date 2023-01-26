@@ -217,6 +217,8 @@ export default {
       showResult: false,
       finalResultArrObjects: [],
       totalFinalResultArrObjects: [],
+      SumTotalFinalResultArrObjects: [],
+
       whenPdf: "none",
       imgToExport: null,
       distTop: [],
@@ -569,9 +571,6 @@ export default {
         (element) => element.ArtNr == smallArtNr
       );
 
-      console.log(VB5P+' '+VB1P+' '+ largeArtNr+ ' '+smallArtNr );
-
-console.log(VB5P+' '+VB1P);
       let MVB1 = Math.floor(VB5P.Pris / VB1P.Pris);
       let VB5C = Math.floor((2 * c) / largeCount);
 
@@ -593,11 +592,12 @@ console.log(VB5P+' '+VB1P);
           let test1 = 4;
           let oneRow = Math.ceil(this.rowLongs[i] / 100/2.26);
           let panelInRow = this.panelarAll[i].length/this.panelarRows[i];
+
+
           let BU12 = this.selectCheap("BU1200", "BU1201", test1, 100, 10);
           let TS63 = this.selectCheap("TS6310", "TS6301", test1*2, 100, 10);
           let SS61 = this.selectCheap("SS6190", "SS6191", test1+oneRow*2*this.panelarRows[i]*2, 100, 10);
 
-console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
           for (let frao in this.finalResultArrObjects) {
             switch (this.finalResultArrObjects[frao].ArtNr) {
               case "BF1400":
@@ -622,7 +622,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
                 break;
               case "KL2000":
-                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows[i] ;
                 break;
               case "SS6190":
                 this.finalResultArrObjects[frao].Antal = SS61[0];
@@ -648,7 +648,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 break;
             }
           }
-          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+          this.totalFinalResultArrObjects.push(JSON.parse(JSON.stringify(this.finalResultArrObjects)));
         }
       }
 
@@ -664,7 +664,6 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
           let TS63 = this.selectCheap("TS6310", "TS6301", test1*2, 100, 10);
           let SS61 = this.selectCheap("SS6190", "SS6191", test1+oneRow*2*this.panelarRows[i]*2, 100, 10);
 
-console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
           for (let frao in this.finalResultArrObjects) {
             switch (this.finalResultArrObjects[frao].ArtNr) {
               case "BF1400":
@@ -689,7 +688,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
                 break;
               case "KL2000":
-                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows[i] ;
                 break;
               case "SS6190":
                 this.finalResultArrObjects[frao].Antal = SS61[0];
@@ -715,7 +714,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 break;
             }
           }
-          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+          this.totalFinalResultArrObjects.push(JSON.parse(JSON.stringify(this.finalResultArrObjects)));
         }
       }
 
@@ -730,7 +729,6 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
           let TS63 = this.selectCheap("TS6310", "TS6301", test1*2, 100, 10);
           let SS61 = this.selectCheap("SS6190", "SS6191", test1+oneRow*2*this.panelarRows[i]*2, 100, 10);
 
-console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
           for (let frao in this.finalResultArrObjects) {
             switch (this.finalResultArrObjects[frao].ArtNr) {
               case "TF1400":
@@ -755,7 +753,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
                 break;
               case "KL2000":
-                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows[i] ;
                 break;
               case "SS6190":
                 this.finalResultArrObjects[frao].Antal = SS61[0];
@@ -781,7 +779,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 break;
             }
           }
-          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+          this.totalFinalResultArrObjects.push(JSON.parse(JSON.stringify(this.finalResultArrObjects)));
         }
       }
 
@@ -797,7 +795,6 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
           let TS63 = this.selectCheap("TS6310", "TS6301", test1*2, 100, 10);
           let SS61 = this.selectCheap("SS6190", "SS6191", test1+oneRow*2*this.panelarRows[i]*2, 100, 10);
 
-console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
           for (let frao in this.finalResultArrObjects) {
             switch (this.finalResultArrObjects[frao].ArtNr) {
               case "TF1400":
@@ -822,7 +819,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
                 break;
               case "KL2000":
-                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows[i] ;
                 break;
               case "SS6190":
                 this.finalResultArrObjects[frao].Antal = SS61[0];
@@ -848,7 +845,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 break;
             }
           }
-          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+          this.totalFinalResultArrObjects.push(JSON.parse(JSON.stringify(this.finalResultArrObjects)));
         }
       }
 
@@ -862,7 +859,6 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
           let panelInRow = this.panelarAll[i].length/this.panelarRows[i];
           let SS61 = this.selectCheap("SS6190", "SS6191", test1+oneRow*2*this.panelarRows[i]*2, 100, 10);
 
-console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
           for (let frao in this.finalResultArrObjects) {
             switch (this.finalResultArrObjects[frao].ArtNr) {
               case "FF1400":
@@ -878,7 +874,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
                 break;
               case "KL2000":
-                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows[i] ;
                 break;
               case "SS6190":
                 this.finalResultArrObjects[frao].Antal = SS61[0];
@@ -898,7 +894,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 break;
             }
           }
-          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+          this.totalFinalResultArrObjects.push(JSON.parse(JSON.stringify(this.finalResultArrObjects)));
         }
       }
 
@@ -912,7 +908,6 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
           let panelInRow = this.panelarAll[i].length/this.panelarRows[i];
           let SS61 = this.selectCheap("SS6190", "SS6191", test1+oneRow*2*this.panelarRows[i]*2, 100, 10);
 
-console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
           for (let frao in this.finalResultArrObjects) {
             switch (this.finalResultArrObjects[frao].ArtNr) {
               case "IS2450":
@@ -925,7 +920,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
                 break;
               case "KL2000":
-                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows[i] ;
                 break;
               case "SS6190":
                 this.finalResultArrObjects[frao].Antal = SS61[0];
@@ -945,7 +940,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 break;
             }
           }
-          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+          this.totalFinalResultArrObjects.push(JSON.parse(JSON.stringify(this.finalResultArrObjects)));
         }
       }
 
@@ -960,7 +955,6 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
           let panelInRow = this.panelarAll[i].length/this.panelarRows[i];
           let SS61 = this.selectCheap("SS6190", "SS6191", test1+oneRow*2*this.panelarRows[i]*2, 100, 10);
 
-console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
           for (let frao in this.finalResultArrObjects) {
             switch (this.finalResultArrObjects[frao].ArtNr) {
               case "IS2450":
@@ -973,7 +967,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
                 break;
               case "KL2000":
-                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows[i] ;
                 break;
               case "SS6190":
                 this.finalResultArrObjects[frao].Antal = SS61[0];
@@ -993,7 +987,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 break;
             }
           }
-          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+          this.totalFinalResultArrObjects.push(JSON.parse(JSON.stringify(this.finalResultArrObjects)));
         }
       }
 
@@ -1009,7 +1003,6 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
 
 
 
-console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelInRow '+this.panelarRows[i]+'panelarRows' );
           for (let frao in this.finalResultArrObjects) {
             switch (this.finalResultArrObjects[frao].ArtNr) {
               case "CP1400":
@@ -1025,7 +1018,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 this.finalResultArrObjects[frao].Antal = this.panelarRows[i]*4;
                 break;
               case "KL2000":
-                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows ;
+                this.finalResultArrObjects[frao].Antal = (panelInRow-1)*2*this.panelarRows[i] ;
                 break;
 
                 case "TP3552":
@@ -1072,9 +1065,31 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
                 break;
             }
           }
-          this.totalFinalResultArrObjects.push(this.finalResultArrObjects);
+          this.totalFinalResultArrObjects.push(JSON.parse(JSON.stringify(this.finalResultArrObjects)));
         }
       }
+
+      console.log(this.totalFinalResultArrObjects);
+
+      //Object.values(this.SumTotalFinalResultArrObjects)
+
+this.SumTotalFinalResultArrObjects = this.finalResultArrObjects;
+
+for (let i in this.SumTotalFinalResultArrObjects){
+let sum=0;
+  for (let j in this.totalFinalResultArrObjects){
+
+    sum += this.totalFinalResultArrObjects[j][i].Antal
+  
+
+}
+
+this.SumTotalFinalResultArrObjects[i].Antal=sum;
+
+
+}
+
+
 
     },
 
@@ -1854,7 +1869,7 @@ console.log(oneRow+' oneRow '+this.rowLongs[i]+' rowLongs '+panelInRow+' panelIn
         <th>Totalt (exkl. moms)</th>
       </tr>
       <template
-        v-for="(ii, indexii) in finalResultArrObjects"
+        v-for="(ii, indexii) in SumTotalFinalResultArrObjects"
         v-bind:key="indexii"
       >
         <tr v-if="ii.Antal >0">

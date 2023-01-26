@@ -223,7 +223,10 @@ export default {
       let arr = [];
 
 for (let i =0;i<this.fastTillBredd.length;i++){
-  if(!this.fastTillBredd[i]){arr = this.rows}else{arr=this.columns}
+  let arrAssist=0;
+  if(!this.fastTillBredd[i]){arrAssist = this.rows[i]}else{arrAssist = this.columns[i]}
+arr.push(arrAssist);
+
 };
 
       return arr;
@@ -791,15 +794,81 @@ setTimeout(() => {
       for (let i = 0; i < this.panelar.length; i++) {
         for (let j = 0; j < this.panelar[i].length; j++) {
           if (this.panelar[i][j].outSurf == true) {
-            this.panelar[i].splice(j, 1);
+            this.deletPanel(j, i);
             j--;
           }
         }
       }
     },
-    deletPanel(i, j) {
-      this.panelar[j].splice(i, 1);
+    deletPanel(j, i) {
+
+      let countsXP = this.panelar[i].reduce((acc, obj) => {
+    acc[obj.x] = (acc[obj.x] || 0) + 1;
+    return acc;
+}, {});
+
+ let countsYP = this.panelar[i].reduce((acc, obj) => {
+    acc[obj.y] = (acc[obj.y] || 0) + 1;
+    return acc;
+}, {});
+
+
+let rowsObjPK=(!this.fastTillBredd[i]? Object.keys(countsXP): Object.keys(countsYP));
+
+let panelInRows=(!this.fastTillBredd[i]? Object.values(countsXP)[0]: Object.values(countsYP)[0]);
+
+
+      this.panelar[i].splice(j, 1);
+
+      let countsX = this.panelar[i].reduce((acc, obj) => {
+    acc[obj.x] = (acc[obj.x] || 0) + 1;
+    return acc;
+}, {});
+
+ let countsY = this.panelar[i].reduce((acc, obj) => {
+    acc[obj.y] = (acc[obj.y] || 0) + 1;
+    return acc;
+}, {});
+
+let rowsObjK=(!this.fastTillBredd[i]? countsX: countsY);
+
+
+ let maxValue = Math.max(...Object.values(!this.fastTillBredd[i]? countsX: countsY));
+
+ let ifNextX=[];
+ let ifNextY=[];
+
+ let arrCorrecter=0
+
+for (let i in Object.keys(countsXP) ){
+  if (Object.keys(countsXP)[i]==Object.keys(countsX)[i-arrCorrecter]){ifNextX.push(true)}else{ifNextX.push(false);arrCorrecter++};
+console.log(Object.keys(countsXP)[i]+' '+Object.keys(countsX)[i-arrCorrecter]);
+
+};
+
+for (let i in Object.keys(countsYP) ){
+  if (Object.keys(countsYP)[i]==Object.keys(countsY)[i-arrCorrecter]){ifNextY.push(true)}else{ifNextY.push(false);arrCorrecter++};
+  console.log(Object.keys(countsYP)[i]+' '+Object.keys(countsY)[i-arrCorrecter]);
+
+};
+
+
+console.log(ifNextX+' a '+ifNextY);
+
+
+
+
     },
+
+
+
+
+
+
+
+
+
+
 
     rulersLine() {
       const stage = this.$refs.stage.getNode();
@@ -1822,6 +1891,8 @@ shape.setAbsolutePosition({
             v-for="(i, index) in j"
             v-bind:key="index"
             @click="deletPanel(index, indexj)"
+            @touchstart="deletPanel(index, indexj)"
+
             :config="{
               x: i.x,
               y: i.y,
