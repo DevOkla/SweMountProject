@@ -153,7 +153,7 @@ export default {
 
           {
             name: "Läktfäste",
-            pic: `${rootBrach}/products/LF1400.jpg`,
+            pic: `${rootBrach}/products/LF1400koplat.jpg`,
           },
         ],
         [
@@ -164,13 +164,13 @@ export default {
 
           {
             name: "Läktfäste",
-            pic: `${rootBrach}/products/LF1400.jpg`,
+            pic: `${rootBrach}/products/LF1400koplat.jpg`,
           },
         ],
         [
           {
             name: "Falsfäste",
-            pic: `${rootBrach}/products/FF1300.jpg`,
+            pic: `${rootBrach}/products/FF1400.jpg`,
           },
         ],
         [
@@ -532,9 +532,9 @@ export default {
         });
       }
 
-      doc.output("dataurlnewwindow");
+      //doc.output("dataurlnewwindow");
 
-      //doc.save("swemount.pdf");
+      doc.save("swemount.pdf");
     },
 
     cheker(checkerArr) {
@@ -1413,7 +1413,7 @@ this.SumTotalFinalResultArrObjects[i].Antal=sum;
   <div class="Visual-select">
     <div class="selection selection-pre">
       <img
-        src="/products/swemount9product.jpg"
+        src="/products/KL2000.jpg"
         alt=""
         :class="['imgs-selects ', 1 ? ' imgs-selects-active' : '']"
       />

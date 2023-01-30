@@ -677,6 +677,8 @@ tr {
 }
 .video-container {
 	width: 100%;
+	height: 100vh;
+
 	margin: 0 auto;
 	position: relative;
 	height: 123.4883721vw;
@@ -1342,7 +1344,7 @@ img{
 	}
 
 	.video-container {
-		height: 44.84375vw;
+		height: 100vh;
 	}
 	
 	.head-imgs {
@@ -1943,7 +1945,7 @@ img{
 	}
 
 	.video-container {
-		height: 44.84375*$wd;
+		height: 100vh;
 	}
 	
 	.head-imgs {

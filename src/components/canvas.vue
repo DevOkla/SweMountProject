@@ -82,6 +82,7 @@ export default {
       imageBack: null,
       imageFullScreen: null,
       imageSmallScreen: null,
+      imageUngroup: null,
 
       markedGroup: 0,
       scaleShiftX: 0,
@@ -123,6 +124,12 @@ export default {
     imageSmallScreen.onload = () => {
       this.imageSmallScreen = imageSmallScreen;
     };
+    const imageUngroup = new window.Image();
+    imageUngroup.src = "./icons/ungroup.png";
+    imageUngroup.onload = () => {
+      this.imageUngroup = imageUngroup;
+    };
+
 
     this.createShapesPoints();
     this.createRandzonPoints();
@@ -267,6 +274,44 @@ arr.push(arrAssist);
     },
   },
   methods: {
+
+    unGroup(e){
+      
+      let countsX = this.panelar[e].reduce((acc, obj) => {
+    acc[obj.x] = (acc[obj.x] || 0) + 1;
+    return acc;
+}, {});
+
+ let countsY = this.panelar[e].reduce((acc, obj) => {
+    acc[obj.y] = (acc[obj.y] || 0) + 1;
+    return acc;
+}, {});
+
+let along = !this.fastTillBredd[e]? this.rows[e]: this.columns[e];
+let cuts =!this.fastTillBredd[e]? this.columns[e]: this.rows[e];
+let unDeletedMatrix=[];
+
+if (!this.fastTillBredd[e]){
+
+for (let i in this.rows[e]){
+  this.panelGrouper[e].x==Object.keys(countsX)[i]?unDeletedMatrix.push(true):unDeletedMatrix.push(false);
+
+
+}
+
+
+};
+
+
+
+
+console.log(Object.entries(countsX)+' '+Object.entries(countsY) +' row'+along+'col'+cuts+' matrix'+unDeletedMatrix);
+
+
+
+    },
+
+
     stopScrolling() {},
 
     createShapesPoints() {
@@ -661,7 +706,7 @@ showHideArrows(){
 },
     completeProcess() {
       this.deletRedPanel();
-
+      this.unGroup(this.markedGroup)
       this.fixElement = false;
 
       this.distanceLines();
@@ -802,72 +847,11 @@ setTimeout(() => {
     },
     deletPanel(j, i) {
 
-      let countsXP = this.panelar[i].reduce((acc, obj) => {
-    acc[obj.x] = (acc[obj.x] || 0) + 1;
-    return acc;
-}, {});
-
- let countsYP = this.panelar[i].reduce((acc, obj) => {
-    acc[obj.y] = (acc[obj.y] || 0) + 1;
-    return acc;
-}, {});
-
-
-let rowsObjPK=(!this.fastTillBredd[i]? Object.keys(countsXP): Object.keys(countsYP));
-
-let panelInRows=(!this.fastTillBredd[i]? Object.values(countsXP)[0]: Object.values(countsYP)[0]);
-
-
+   
       this.panelar[i].splice(j, 1);
-
-      let countsX = this.panelar[i].reduce((acc, obj) => {
-    acc[obj.x] = (acc[obj.x] || 0) + 1;
-    return acc;
-}, {});
-
- let countsY = this.panelar[i].reduce((acc, obj) => {
-    acc[obj.y] = (acc[obj.y] || 0) + 1;
-    return acc;
-}, {});
-
-let rowsObjK=(!this.fastTillBredd[i]? countsX: countsY);
-
-
- let maxValue = Math.max(...Object.values(!this.fastTillBredd[i]? countsX: countsY));
-
- let ifNextX=[];
- let ifNextY=[];
-
- let arrCorrecter=0
-
-for (let i in Object.keys(countsXP) ){
-  if (Object.keys(countsXP)[i]==Object.keys(countsX)[i-arrCorrecter]){ifNextX.push(true)}else{ifNextX.push(false);arrCorrecter++};
-console.log(Object.keys(countsXP)[i]+' '+Object.keys(countsX)[i-arrCorrecter]);
-
-};
-
-for (let i in Object.keys(countsYP) ){
-  if (Object.keys(countsYP)[i]==Object.keys(countsY)[i-arrCorrecter]){ifNextY.push(true)}else{ifNextY.push(false);arrCorrecter++};
-  console.log(Object.keys(countsYP)[i]+' '+Object.keys(countsY)[i-arrCorrecter]);
-
-};
-
-
-console.log(ifNextX+' a '+ifNextY);
-
-
 
 
     },
-
-
-
-
-
-
-
-
-
 
 
     rulersLine() {
@@ -1737,6 +1721,7 @@ shape.setAbsolutePosition({
             @mouseover="cursorPoint"
             @mouseleave="cursorNorm"
             @click="deletePanelGroup(indexj)"
+            @touchstart="deletePanelGroup(indexj)"
             :config="{
               x: j[0].x,
               y: j[0].y,
@@ -1896,6 +1881,8 @@ shape.setAbsolutePosition({
             :config="{
               x: i.x,
               y: i.y,
+              visible: fixElement,
+
             }"
           >
             <v-circle
@@ -1990,7 +1977,7 @@ shape.setAbsolutePosition({
               offsetX: fastTillBredd[indexj] ? 10 : 8,
               offsetY: fastTillBredd[indexj] ? 6 : 6,
               x: fastTillBredd[indexj]
-                ? j[0].x +5
+                ? j[0].x +3
                 : j[0].x + bredd1[indexj] / 2.1,
               y: fastTillBredd[indexj]
                 ? j[0].y + hojd1[indexj] / 1.95
@@ -1999,6 +1986,8 @@ shape.setAbsolutePosition({
                 (fastTillBredd[indexj] ? hojd1[indexj] : bredd1[indexj]) -
                 distMellanFäst[indexj] * 2,
               textAlign: 'center',
+              align: 'center',
+              width:20,
               fill: 'white',
               fontSize: 10,
             }"
@@ -2107,6 +2096,11 @@ shape.setAbsolutePosition({
           @mouseover="cursorPoint"
           @mouseleave="cursorNorm"
           @click="addNewPanelGroup"
+          @touchstart="addNewPanelGroup"
+
+          :config="{
+        visible: fixElement,
+          }"
         >
           <v-circle
             :config="{
@@ -2115,6 +2109,7 @@ shape.setAbsolutePosition({
               width: 50,
               height: 50,
               fill: 'black',
+              
             }"
           />
 
@@ -2149,6 +2144,12 @@ shape.setAbsolutePosition({
           @mouseover="cursorPoint"
           @mouseleave="cursorNorm"
           @click="rotatePaler(markedGroup)"
+          @touchstart="rotatePaler(markedGroup)"
+
+          :config="{
+        visible: fixElement,
+          }"
+
         >
           <v-circle
             :config="{
@@ -2174,6 +2175,12 @@ shape.setAbsolutePosition({
           @mouseover="cursorPoint"
           @mouseleave="cursorNorm"
           @click="rotateFaster"
+          @touchstart="rotateFaster"
+
+          :config="{
+        visible: fixElement,
+          }"
+
         >
           <v-circle
             :config="{
@@ -2209,9 +2216,16 @@ shape.setAbsolutePosition({
           @mouseover="cursorPoint"
           @mouseleave="cursorNorm"
           @click="deletRedPanel"
+          @touchstart="deletRedPanel"
+
           :config="{
             x: w - 50,
             y: 180,
+
+
+        visible: fixElement,
+
+
           }"
         >
           <v-circle
@@ -2364,11 +2378,39 @@ shape.setAbsolutePosition({
         <v-group
           @mouseover="cursorPoint"
           @mouseleave="cursorNorm"
+          @click="unGroup(markedGroup)"
+          @touchstart="unGroup(markedGroup)"
+          :config="{
+            x: w - 110,
+            y: 180,
+            visible: fixElement,
+          }"
+        >
+          <v-circle
+            :config="{
+              radius: 25,
+              fill: 'black',
+            }"
+          />
+          <v-image
+            :config="{
+              image: imageUngroup,
+              x: -18,
+              y: -15,
+              width: 33,
+              height: 30,
+            }"
+          />
+        </v-group>
+
+        <v-group
+          @mouseover="cursorPoint"
+          @mouseleave="cursorNorm"
           @click="showHideArrows"
           @touchstart="showHideArrows"
           :config="{
             x: w - 140,
-            y: 180,
+            y: 240,
           }"
         >
           <v-ellipse
