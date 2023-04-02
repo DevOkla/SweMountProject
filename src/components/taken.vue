@@ -1,7 +1,7 @@
 <script >
 ////ABS of ccMatt?
 import canvasD from "../components/canvas.vue";
-var rootBrach = "";
+var rootBrach = "/swemounttest/";
 var appPassword = process.env.VUE_APP_PASSWORD;
 
 import matrials from "../assets/matrials.json";
