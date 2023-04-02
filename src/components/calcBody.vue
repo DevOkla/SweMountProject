@@ -1,5 +1,6 @@
 <script >
 import canvasD from "../components/canvas.vue";
+import { RouterLink, RouterView } from 'vue-router'
 
 import axios from "axios";
 import taket from "./taken.vue";
@@ -13,6 +14,8 @@ export default {
   },
   props: {
     langIsSe: Boolean,
+    userId:String,
+
   },
 
   data() {
@@ -84,6 +87,7 @@ export default {
       allTaken: 1,
       showKon: [false],
       whenPdf:'block',
+      addressValue:{address:'',langlat:{ lat: 0, lng: 0 }},
     };
   },
   computed: {
@@ -118,13 +122,20 @@ export default {
     getLatLng(event) {
       const lat = event.latLng.lat();
       const lng = event.latLng.lng();
+      //this.addressValue=event.va;
       this.markers[0].position = { lat: lat, lng: lng };
+      this.addressValue.langlat = { lat: lat, lng: lng };
+
     },
 
     setPlace(e) {
       const lat = e.geometry.location.lat();
       const lng = e.geometry.location.lng();
+
       this.markers[0].position = { lat: lat, lng: lng };
+      this.addressValue.langlat = { lat: lat, lng: lng };
+      this.addressValue.address = e.formatted_address;
+
     },
 
     getSnoAndVind() {
@@ -380,8 +391,11 @@ export default {
 </script>
 <template>
   <main>
+
     <div class="multi_elements">
-      <div
+      <RouterLink to="/history" class="a-button history">{{ langIsSe? "Min Projekthistoria": "Min Projekthistoria" }}</RouterLink>
+
+      <!--<div
         :class="['selection', isLaglutand ? ' selection-pre' : '']"
         @click="goParallella"
       >
@@ -398,7 +412,7 @@ export default {
             ></i>
           </span>
         </p>
-      </div>
+      </div>-->
       <div
         :class="['selection', !isLaglutand ? '  selection-pre' : '']"
         @click="goLaglutand"
@@ -847,7 +861,8 @@ export default {
                 :draggable="true"
                 @dragend="getLatLng"
                 :icon="{
-                  url: '/swemounttest/logomarker.png',
+                  url: '/logomarker.png', //                  url: '/swemounttest/logomarker.png',
+
                   scaledSize: { width: 40, height: 40 },
                   labelOrigin: { x: 16, y: -10 },
                 }"
@@ -894,7 +909,7 @@ export default {
               ]"
             />
             <p>
-              A
+              O
               <span v-if="Terrängtyp == 0"
                 >&nbsp;&nbsp;&nbsp;&nbsp;<i
                   class="fa-solid fa-square-check white"
@@ -918,7 +933,7 @@ export default {
               ]"
             />
             <p>
-              B
+              I
               <span v-if="Terrängtyp == 1"
                 >&nbsp;&nbsp;&nbsp;&nbsp;<i
                   class="fa-solid fa-square-check white"
@@ -943,7 +958,7 @@ export default {
               ]"
             />
             <p>
-              C
+              II
               <span v-if="Terrängtyp == 2"
                 >&nbsp;&nbsp;&nbsp;&nbsp;<i
                   class="fa-solid fa-square-check white"
@@ -969,7 +984,7 @@ export default {
               ]"
             />
             <p>
-              D
+              III
               <span v-if="Terrängtyp == 3"
                 >&nbsp;&nbsp;&nbsp;&nbsp;<i
                   class="fa-solid fa-square-check white"
@@ -995,7 +1010,7 @@ export default {
               ]"
             />
             <p>
-              E
+              IV
               <span v-if="Terrängtyp == 4"
                 >&nbsp;&nbsp;&nbsp;&nbsp;<i
                   class="fa-solid fa-square-check white"
@@ -1011,7 +1026,7 @@ export default {
       </div>
 
       <div v-for="(i, index) in allTaken" v-bind:key="index">
-        <taket :takNum="index" :sno="sno" :vind="vind" :places="Terrängtyp+1"/>
+        <taket :takNum="index" :sno="sno" :vind="vind" :places="Terrängtyp" :userId="userId" :adressInfo="addressValue"/>
       </div>
       <div style="max-width:1200px">
       <div class="p-buttons">

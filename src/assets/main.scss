@@ -17,6 +17,22 @@ $font-size-smallest-desktop-after:1.041666667 *12px ; /*1920/1200*/
 
 
 
+
+.loader {
+	margin: 2vw auto;
+	border: 10px solid $color_1;
+	border-radius: 50%;
+	border-top: 10px solid $color_2;
+	width: 50px;
+	height: 50px;
+	animation: spinner 4s linear infinite;
+  }
+  
+  @keyframes spinner {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+  }
+
 @font-face {
 	font-family: "Montserrat";
 	src: url("/Montserrat-Regular.ttf");
@@ -125,6 +141,8 @@ header {
 		justify-content: space-between;
 		>a {
 			>img {
+				display: block;
+				width: 31.15384615vw;
 				height: 6.279069767vw;
 				margin: 1vw auto 1vw 1vw;
 			}
@@ -266,6 +284,44 @@ button {
 		cursor: pointer;
 	}
 }
+
+.a-button{
+	display: block;
+	margin: auto;
+	width: 25%;
+	text-align: center;
+	background-color: $background-color_4;
+	border-radius: 3vw;
+	padding: 0.5vw 2vw;
+	border: 0;
+	font-size: $font-size-smallest-mobile;
+	margin: 2vw 0;
+	transition: 0.2s;
+	font-family: $font-family_1;
+	
+	&:hover {
+		background-color: $background-color_5;
+		cursor: pointer;
+		color: $color_1;
+
+	}
+}
+
+.history{
+	width: 15vw;
+	height: 15vw;
+	padding: 0;
+	top: 30vw;
+left :20vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	vertical-align: middle;
+}
+
+
+
 main {
 	margin-top: -23.72093023vw;
 	width: 100%;
@@ -378,6 +434,9 @@ form {
 		margin: 5vw auto;
 		font-family: $font-family_1;
 	}
+
+
+
 }
 .swe-form {
 	width: 100%;
@@ -565,7 +624,7 @@ margin: auto;
 	>div {
 
 		width: 79.6875vw;
-		row-gap: 10.46511628vw;
+		gap: 10.46511628vw;
 		flex-direction: column;
 		>div {
 
@@ -754,18 +813,133 @@ tr {
 .menu-bar {
 	font-size: 4vw;
 }
-/***************************************************************************************************************************************/
 
-@media screen and (min-width: 769px) {
-	.less768 {
-		display: none;
-	}
-	.over768 {
-		display: block;
-	}
+.video-present{
+    aspect-ratio: 15.88 / 9;
+    height: auto;
+    width: 100%;
 }
 
 
+.doks{
+	display: flex;
+flex-direction: column;
+gap: 5vw;
+text-align: center;
+
+.li-route{
+	font-family: $font-family_1;
+	font-size: $font-size-smallest-mobile*1.5;
+
+		background-color: $color_2;
+		width: 50%;
+		padding: 5vw;
+		border-radius: 1vw;
+		color: $color_1;
+
+		&:hover{
+			background-color: $color_1;
+
+			color: $color_2;
+
+		}
+
+	}
+
+}
+
+///***
+
+.B-history{
+	display: flex;
+	margin: 5vw auto;
+	width: 50vw;
+
+	button{
+	margin: 0 4vw;
+}
+
+}
+
+.his-body{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.history-list{
+		border: $color_1 1px solid;
+		margin: 0;
+		padding: 1vw;
+	width: auto;
+	height: 30vw;
+
+
+	li{
+		border: $color_1 1px solid;
+		margin: 1vw 0;
+		transition: ease 0.3s;
+		&:hover{
+			background-color: #fcb32477;
+		}
+	}
+
+	.marked{
+		background-color: $color_2;
+		&:hover{
+			background-color: #fcb324;
+		}
+
+	}
+
+
+}
+
+.invoice{
+	border: $color_1 1px solid;
+	margin: 0;
+	padding: 1vw;
+	height: 30vw;
+	width: 60%;
+}
+
+}
+.scroller{
+    overflow-y:scroll;
+
+&::-webkit-scrollbar-track
+{
+    background-color:#fff;
+}
+
+&::-webkit-scrollbar
+{
+    width: 5px;
+    background-color:$color_1;
+}
+
+&::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background-color:$color_1;
+    background-image: -webkit-linear-gradient(90deg,
+                                              transparent,
+                                              rgba(0, 0, 0, 0.4) 50%,
+                                              transparent,
+                                              transparent)
+}
+}
+
+.second-head-histoy{
+	margin-bottom:3vw;
+}
+
+.head-rapport{
+	display: flex;
+
+}
+/***************************************************************************************************************************************/
+
+
 
 
 
@@ -790,10 +964,12 @@ tr {
 
 /***************************************************************************************************************************************/
 
-@media screen and (min-width: 415px) {
+@media screen and (min-width: 429px) {
 	* {
 		font-size: $font-size-smallest-desktop;
 	}
+
+
 	.p-text {
 		width: 49.89583333vw;
 		text-align: left;
@@ -841,6 +1017,7 @@ tr {
 			justify-content: space-between;
 			>a {
 				>img {
+					width: 11.62860577vw;
 					height: 2.34375vw;
 					margin: 1vw auto 1vw 1vw;
 				}
@@ -1091,6 +1268,45 @@ tr {
 			cursor: pointer;
 		}
 	}
+
+	.a-button{
+		display: block;
+		margin: auto;
+		background-color: $background-color_4;
+		border-radius: 3vw;
+		padding: 0.5vw 1vw;
+		border: 0;
+		font-weight: bold;
+		margin: 2vw 0;
+		transition: 0.2s;
+		font-family: $font-family_1;
+		font-size: $font-size-smallest-desktop;
+
+		&:hover {
+			background-color: $background-color_5;
+			cursor: pointer;
+		}
+
+	
+	}
+
+	.history{
+		width: 15vw;
+		height: 15vw;
+		padding: 0;
+		top: 30vw;
+	
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		align-content: center;
+		vertical-align: middle;
+	}
+	
+
+
+
+
 	.all-products {
 		display: flex;
 		flex-wrap: wrap;
@@ -1236,7 +1452,7 @@ tr {
 		>div {
 			width: 79.6875vw;
 			flex-direction: row;
-			row-gap: 0vw;
+			gap: 1vw;
 margin-top: 7vw;
 			>div {
 				width: 22.23958333vw;
@@ -1378,10 +1594,52 @@ img{
 		display: block;
 		margin-top: 5vw;
 	}
+
+	.video-present{
+		width: 50%;
+	}
+
+	
+	.doks{
+		display: flex;
+	flex-direction: row;
+	gap: 1vw;
+	text-align: center;
+	.li-route{
+		font-family: $font-family_1;
+		font-size: $font-size-smallest-desktop*1.5;
+
+			background-color: $color_2;
+			width: 30%;
+			padding: 2vw 1vw;
+			border-radius: 1vw;
+			color: $color_1;
+	
+			&:hover{
+				background-color: $color_1;
+	
+				color: $color_2;
+	
+			}
+	
+		}
+	
+	}
+
 }
+
+
 /***************************************************************************************************************************************/
 
 
+@media screen and (min-width: 769px) {
+	.less768 {
+		display: none;
+	}
+	.over768 {
+		display: block;
+	}
+}
 
 
 @media screen and (min-width: ($wd*100 +1) ) {
@@ -1437,6 +1695,7 @@ img{
 			justify-content: space-between;
 			>a {
 				>img {
+					width: 11.62860577*$wd;
 					height: 2.34375*$wd;
 					margin: 1*$wd auto 1*$wd 1*$wd;
 				}
@@ -1685,6 +1944,40 @@ img{
 			cursor: pointer;
 		}
 	}
+
+	.a-button{
+		display: block;
+		margin: auto;
+		background-color: $background-color_4;
+		border-radius: 3*$wd;
+		padding: 0.5*$wd 1*$wd;
+		border: 0;
+		font-weight: bold;
+		margin: 2*$wd 0;
+		transition: 0.2s;
+		font-family: $font-family_1;
+		font-size: $font-size-smallest-desktop-after;
+
+		&:hover {
+			background-color: $background-color_5;
+			cursor: pointer;
+		}
+
+	
+	}
+	.history{
+		width: 15*$wd;
+		height: 15*$wd;
+		padding: 0;
+		top: 30*$wd;
+	
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		align-content: center;
+		vertical-align: middle;
+	}
+	
 	.all-products {
 		display: flex;
 		flex-wrap: wrap;
@@ -1829,7 +2122,7 @@ img{
 		>div {
 			width: 79.6875*$wd;
 			flex-direction: row;
-			row-gap: 0*$wd;
+			gap: 1*$wd;
 margin-top: 7*$wd;
 			>div {
 				width: 22.23958333*$wd;
@@ -1980,6 +2273,121 @@ img{
 		margin-top: 5*$wd;
 	}
 
+	.doks{
+		display: flex;
+	flex-direction: row;
+	gap: 1*$wd;
+	text-align: center;
+	.li-route{
+		font-family: $font-family_1;
+		font-size: $font-size-smallest-desktop-after*1.5;
 
+			background-color: $color_2;
+			width: 30%;
+			padding: 2*$wd 1*$wd;
+			border-radius: 1*$wd;
+			color: $color_1;
+	
+			&:hover{
+				background-color: $color_1;
+	
+				color: $color_2;
+	
+			}
+	
+		}
+	
+	}
+
+
+
+	.B-history{
+		display: flex;
+		margin: 5*$wd auto;
+		width: 50*$wd;
+	
+		button{
+		margin: 0 4*$wd;
+	}
+	
+	}
+	
+	.his-body{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	width: 100*$wd;
+		.history-list{
+			border: $color_1 1px solid;
+			margin: 0;
+			padding: 1*$wd;
+		width: auto;
+		height: 30*$wd;
+	
+	
+		li{
+			border: $color_1 1px solid;
+			margin: 1*$wd 0;
+			transition: ease 0.3s;
+			&:hover{
+				background-color: #fcb32477;
+			}
+		}
+	
+		.marked{
+			background-color: $color_2;
+			&:hover{
+				background-color: #fcb324;
+			}
+	
+		}
+	
+	
+	}
+	
+	.invoice{
+		
+		border: $color_1 1px solid;
+		margin: 0;
+		padding: 1*$wd;
+		height: 30*$wd;
+		width: 60%;
+	}
+	
+	}
+	.scroller{
+		overflow-y:scroll;
+	
+	&::-webkit-scrollbar-track
+	{
+		background-color:#fff;
+	}
+	
+	&::-webkit-scrollbar
+	{
+		width: 5px;
+		background-color:$color_1;
+	}
+	
+	&::-webkit-scrollbar-thumb
+	{
+		border-radius: 10px;
+		background-color:$color_1;
+		background-image: -webkit-linear-gradient(90deg,
+												  transparent,
+												  rgba(0, 0, 0, 0.4) 50%,
+												  transparent,
+												  transparent)
+	}
+	}
+	
+	.second-head-histoy{
+		margin-bottom:3*$wd;
+	}
+	
+	.head-rapport{
+		display: flex;
+	
+	}
 
 }
