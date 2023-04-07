@@ -79,7 +79,7 @@ signOut(auth).then(() => {
 -->
   <RouterView :langIsSe="langIsSe" :loggedInUser="loggedInUser" :userId="userId" @isSignedIn="valueSIgnIn"/>
   <footer>
-
+<!--
 <div class="footer-content">
   <h2> {{ langIsSe? "Kontakta oss": "Contact us" }} </h2>
 
@@ -97,7 +97,7 @@ signOut(auth).then(() => {
 </div>
 
 <div class="copy-right"  > Copyright CFW TRADING AB © 2023 </div>
-
+-->
 </footer>
 
 
