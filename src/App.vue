@@ -1,46 +1,43 @@
 <script>
+  import { getAuth, signOut } from "firebase/auth";
 
-import { getAuth, signOut } from "firebase/auth";
+  import { RouterLink, RouterView } from "vue-router";
+  //git subtree push --prefix dist origin gh-pages
 
-import { RouterLink, RouterView } from 'vue-router'
-//git subtree push --prefix dist origin gh-pages
-
-
-export default {
-  data(){
-    return {
-      langIsSe:true,
-      menuMobile:false,
-      loggedInUser:true,
-      userId: "",
-    }
-  },
-  methods:{
-    valueSIgnIn(v) {
-      this.loggedInUser=true;
-      this.userId=v;
-
+  export default {
+    data() {
+      return {
+        langIsSe: true,
+        menuMobile: false,
+        //Change true to log in. 
+        loggedInUser: true,
+        userId: "",
+      };
     },
-    signOutUser() {
-
-const auth = getAuth();
-signOut(auth).then(() => {
-  // Sign-out successful.
-  this.loggedInUser=false;
-  this.userId="";
-
-}).catch((error) => {
-  // An error happened.
-  alert(error);
-});
-
+    methods: {
+      valueSIgnIn(v) {
+        this.loggedInUser = true;
+        this.userId = v;
+      },
+      signOutUser() {
+        const auth = getAuth();
+        signOut(auth)
+          .then(() => {
+            // Sign-out successful.
+            this.loggedInUser = true;
+            this.userId = "";
+          })
+          .catch((error) => {
+            // An error happened.
+            alert(error);
+          });
+      },
     },
-  },
-}
+  };
 </script>
 
 <template>
-    <!--
+  <!--
 
   <header>
     <div class="header-content" style="max-width: 1300px;">
@@ -77,9 +74,9 @@ signOut(auth).then(() => {
 
   </header>
 -->
-  <RouterView :langIsSe="langIsSe" :loggedInUser="loggedInUser" :userId="userId" @isSignedIn="valueSIgnIn"/>
+  <RouterView :langIsSe="langIsSe" :loggedInUser="loggedInUser" :userId="userId" @isSignedIn="valueSIgnIn" />
   <footer>
-<!--
+    <!--
 <div class="footer-content">
   <h2> {{ langIsSe? "Kontakta oss": "Contact us" }} </h2>
 
@@ -98,13 +95,7 @@ signOut(auth).then(() => {
 
 <div class="copy-right"  > Copyright CFW TRADING AB © 2023 </div>
 -->
-</footer>
-
-
-
+  </footer>
 </template>
 
-<style>
-
-
-</style>
+<style></style>
