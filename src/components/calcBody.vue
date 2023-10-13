@@ -15,6 +15,7 @@
   import 'vue3-carousel/dist/carousel.css'
 
 
+
   //import pageslider for animating page transitions. 
   import PageSlider from './pageSlider.vue';
   import { Motion, Presence } from "motion/vue";
@@ -40,6 +41,8 @@
 
         //page animation
         current: 0,
+        current2: 0,
+
 
         center: { lat: 62.218112, lng: 14.977494 },
         markers: [
@@ -490,11 +493,11 @@
       </div>
       <div class="animation-container">
         <Presence>
-          <Motion :key="current" :initial="{ opacity: 0, x: 50 }" :animate="{
+          <Motion :key="current" :initial="{ opacity: 0, y: 100 }" :animate="{
               opacity: 1,
-              x: 0,
-              transition: { delay: 0.1 }
-            }" :exit="{ opacity: 0, x: -50 }" class="slide">
+              y: 0,
+              transition: { delay: 0 }
+            }" :exit="{ opacity: 0, y: -100 }" class="slide">
 
             <!--Set current === page/div number in order-->
             <div v-if="current === 0" class="motion-div">
@@ -1098,10 +1101,10 @@
               </div>
               <div style="max-width:1200px">
                 <div class="p-buttons">
-                  <!-- <button @click="allTaken++">Lägg till nytt tak <span>+</span></button>
-                  <button v-if="allTaken > 1" @click="allTaken--">
+                  <button class="nyttTak-button" @click="allTaken++">Lägg till nytt tak <span>+</span></button>
+                  <button class="taBort-button" v-if="allTaken > 1" @click="allTaken--">
                     Ta bort tak <span>-</span>
-                  </button> -->
+                  </button>
                 </div>
               </div>
             </div>

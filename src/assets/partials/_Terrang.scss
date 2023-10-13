@@ -12,6 +12,7 @@
   display: flex;
   gap: 0.5rem;
   flex-direction: column;
+  padding: 1rem;
 }
 .terrangtyp {
   display: flex;
@@ -62,7 +63,7 @@
   flex: 0.5;
   height: 100vh;
   z-index: 5;
-  padding: 1rem 1rem;
+  padding: 0 1rem;
   box-shadow: -10px 0 10px rgba(0, 0, 0, 0.315);
 }
 .terrang-img {

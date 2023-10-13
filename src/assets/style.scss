@@ -7,6 +7,7 @@
 @import "./partials/terrang";
 @import "./partials/tak";
 @import "./partials/canvas";
+///////
 //fonts (Eurosoft + Poppins)
 @import url(https://db.onlinewebfonts.com/c/f88dbea6d58cf679690b1f9f93714d4f?family=Eurosoft+W03+Medium);
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
@@ -54,6 +55,14 @@ body {
     font-family: $EuroFont;
     padding: 0.5rem 0.5rem;
   }
+  h2 {
+    font-family: $EuroFont;
+    padding: 0.5rem 0.5rem;
+  }
+
+  p {
+    padding: 2px 0 4px 0;
+  }
 }
 .slide {
   overflow: hidden;
@@ -72,12 +81,15 @@ body {
 .measurement {
   display: flex;
   gap: 1rem;
+  margin-top: 0.3rem;
 }
+
 .unit {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.3rem;
   min-width: fit-content;
   background: $mainBtn_bg;
   text-align: center;
@@ -94,7 +106,7 @@ input {
   width: 10rem;
   border-radius: 10px;
   padding: 1rem 1rem;
-  margin: 0;
+
   border-radius: 0.5rem;
 }
 
@@ -181,7 +193,22 @@ span.unit {
     display: flex;
   }
 }
-
+.nyttTak-button {
+  background: $mainBtn_bg;
+  position: absolute;
+  left: 0%;
+  bottom: 70px;
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+}
+.taBort-button {
+  background: $mainBtn_bg;
+  position: absolute;
+  left: 0%;
+  bottom: 20px;
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+}
 /////////////////////////
 /// * Media Queries * ///
 /////////////////////////

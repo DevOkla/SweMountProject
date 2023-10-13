@@ -50,7 +50,9 @@
     },
 
     components: {
-      Motion, Presence,
+
+      Motion,
+      Presence,
       canvasD,
     },
 
@@ -3145,7 +3147,7 @@
         </div>
         <div v-if="current2 === 1" class="motion-div">
 
-          <div class="klammar-installningar-container">
+          <div class="klammer-installningar-container">
             <div class="klammer-container">
               <div class="second-head">
                 <h1>
@@ -3488,6 +3490,7 @@
                   @unGroupFastar="unGroupFastarFromCanvas" @slataTak="slataTakExtra" />
 
                 <button @click="resetCalc" class="reset-button">Börja om</button>
+
               </div>
             </div>
           </div>

@@ -278,6 +278,7 @@ main {
   display: flex;
   gap: 0.5rem;
   flex-direction: column;
+  padding: 1rem;
 }
 
 .terrangtyp {
@@ -325,7 +326,7 @@ main {
   flex: 0.5;
   height: 100vh;
   z-index: 5;
-  padding: 1rem 1rem;
+  padding: 0 1rem;
   box-shadow: -10px 0 10px rgba(0, 0, 0, 0.315);
 }
 
@@ -465,11 +466,11 @@ main {
   height: 170px;
 }
 
-.klammar-installningar-container {
+.klammer-installningar-container {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 0 1rem;
+  padding: 1rem 1rem;
   width: 100%;
   justify-content: flex-start;
   align-items: flex-start;
@@ -491,12 +492,14 @@ main {
 
 .Visual-select-klammer {
   display: flex;
+  padding: 1rem 0;
 }
 .Visual-select-klammer div {
+  display: flex;
   flex: 0.5;
+  flex-direction: column-reverse;
 }
 .Visual-select-klammer div p {
-  display: flex;
   flex: 0.4;
 }
 
@@ -505,17 +508,20 @@ main {
   flex-wrap: wrap;
 }
 .Visual-select-installningar div, .Visual-select-taktyp div {
+  display: flex;
   flex: 0.5;
+  flex-direction: column-reverse;
 }
 .Visual-select-installningar div p, .Visual-select-taktyp div p {
-  display: flex;
   flex: 0.4;
 }
 .Visual-select-installningar .varmforzinkat, .Visual-select-taktyp .varmforzinkat {
+  min-height: 170px;
   background-color: #bac4c8;
   border: 3px dashed #000;
 }
 .Visual-select-installningar .svartlackerat, .Visual-select-taktyp .svartlackerat {
+  min-height: 170px;
   background-color: #000;
   border: 3px dashed gray;
 }
@@ -544,18 +550,18 @@ main {
 
 .motion-div-canvas {
   display: flex;
-  overflow: scroll;
+  scrollbar-width: none;
   width: 100%;
-  height: 100vh;
 }
 
 .canvas-hidden-sidebar {
   display: flex;
-  overflow: scroll;
+  scrollbar-width: none;
   flex-direction: column;
   padding: 1rem;
   width: 100%;
   color: black;
+  padding: 1rem;
 }
 
 .Visual-select-sidebar {
@@ -563,9 +569,11 @@ main {
   flex-direction: row;
   flex-wrap: wrap;
   gap: 20px;
+  padding: 0.5rem 0;
+  scrollbar-width: none;
 }
 .Visual-select-sidebar div {
-  width: 30%;
+  min-width: 30%;
   height: -moz-fit-content;
   height: fit-content;
   display: flex;
@@ -574,9 +582,11 @@ main {
   flex-wrap: wrap;
 }
 .Visual-select-sidebar img {
-  flex: 1;
   width: 50px;
   height: 50px;
+}
+.Visual-select-sidebar p {
+  min-width: 10rem;
 }
 
 .shape-big-photo {
@@ -591,14 +601,16 @@ main {
   top: 80px;
   padding: 0.4rem 1rem 20rem 0.4rem;
   border-top-left-radius: 0.5rem;
-  right: -50%; /* Initially hidden outside the screen */
+  right: -60%; /* Initially hidden outside the screen */
   width: 50%;
   height: 100%;
   z-index: 20;
   background-color: #ffffff;
   color: white;
-  transition: right 0.3s ease; /* Transition for smooth open/close animation */
-  overflow-y: auto; /* Enable vertical scrolling if content exceeds sidebar height */
+  transition: right 0.3s ease;
+  overflow-y: auto;
+  box-shadow: -10px 0 23px 5px rgba(0, 0, 0, 0.315);
+  scrollbar-width: none;
 }
 
 .sidebar.open {
@@ -628,6 +640,7 @@ main {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  margin: 5rem 0;
 }
 
 .reset-button {
@@ -680,6 +693,13 @@ body {
   font-family: "Eurosoft W03 Medium", sans-serif;
   padding: 0.5rem 0.5rem;
 }
+.motion-div h2 {
+  font-family: "Eurosoft W03 Medium", sans-serif;
+  padding: 0.5rem 0.5rem;
+}
+.motion-div p {
+  padding: 2px 0 4px 0;
+}
 
 .slide {
   overflow: hidden;
@@ -700,6 +720,7 @@ body {
 .measurement {
   display: flex;
   gap: 1rem;
+  margin-top: 0.3rem;
 }
 
 .unit {
@@ -707,6 +728,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.3rem;
   min-width: -moz-fit-content;
   min-width: fit-content;
   background: linear-gradient(-90deg, rgb(24, 159, 172) 0%, rgb(107, 159, 137) 100%);
@@ -725,7 +747,6 @@ input {
   width: 10rem;
   border-radius: 10px;
   padding: 1rem 1rem;
-  margin: 0;
   border-radius: 0.5rem;
 }
 
@@ -799,6 +820,24 @@ span.unit {
 }
 .p3 div {
   display: flex;
+}
+
+.nyttTak-button {
+  background: linear-gradient(-90deg, rgb(24, 159, 172) 0%, rgb(107, 159, 137) 100%);
+  position: absolute;
+  left: 0%;
+  bottom: 70px;
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+}
+
+.taBort-button {
+  background: linear-gradient(-90deg, rgb(24, 159, 172) 0%, rgb(107, 159, 137) 100%);
+  position: absolute;
+  left: 0%;
+  bottom: 20px;
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
 }
 
 @media screen and (max-width: 768px) {
